@@ -19,6 +19,7 @@ const sequelize=require('./util/database');
 const User=require('./models/user');
 const ForgotPasswordRequests=require('./models/forgotPasswordRequests');
 const Salon=require('./models/salon');
+const Service=require('./models/service');
 
 
 const userRouter=require('./routes/user');
@@ -57,6 +58,9 @@ app.use(salonRouter);
 
 User.hasMany(ForgotPasswordRequests);
 ForgotPasswordRequests.belongsTo(User);
+
+Salon.hasMany(Service);
+Service.belongsTo(Salon);
 
 
 sequelize

@@ -127,16 +127,18 @@ async function onLogin(e) {
              if(role=='user'){
 
                   result = await axios.post(`http://localhost:3000/login`, User);
+                  window.location.href = '../home/home.html';
              }
              else{
                 console.log(role);
                  result = await axios.post(`http://localhost:3000/bussiness-login`, User);
+                 window.location.href = '../salon/dashboard/dashboard.html';
+
              }
 
             
 
 
-            window.location.href = '../home/home.html';
 
             localStorage.setItem('token', result.data.token);
 

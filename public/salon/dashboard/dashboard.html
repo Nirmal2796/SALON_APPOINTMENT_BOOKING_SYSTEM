@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">Salon</h1>
+            <nav>
+                <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+                <ul class="nav-list">
+                    <li><a href="../services/services.html">Services</a></li>
+                    <!-- <li><a href="../recipes/recipes.html">Recipes</a></li> -->
+                    <li><a href="">Appointments</a></li>
+                    <li><a href="">Reviews</a></li>
+                    <li><a href="">Time</a></li>
+                    <li><a href="">Staff</a></li>
+                    <li><i class="fa fa-user-circle" id="profile_icon" onclick="toggleProfileMenu()" style="font-size: 24px; cursor: pointer;"></i></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Profile Menu -->
+    <div class="profile-menu" id="profile_menu">
+        <ul id="profile_menu_list">
+            
+            
+        </ul>
+    </div>
+
+
+    <div class="dashboard">
+        <h2>Today's Appointments</h2>
+        <div class="appointments-card">
+            <div>
+
+            </div>
+            <a href="">View More</a>
+        </div>
+    
+        <h2>Services</h2>
+        <div class="services-card">
+            <div>
+
+            </div>
+            <a href="../services/services.html">View More</a>
+        </div>
+    
+        <h2>Reviews</h2>
+        <div class="reviews-card">
+            <div>
+
+            </div>
+            <a href="">View More</a>
+        </div>
+    </div>
+ 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

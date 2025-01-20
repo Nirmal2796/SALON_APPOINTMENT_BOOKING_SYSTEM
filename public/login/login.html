@@ -10,9 +10,10 @@
 
 <body>
     <main>
+
         <div class="forms_div">
             <div id="sign_up_div" hidden>
-            <h2>Signup</h2>
+                <h2>Signup</h2>
                 <form action="" class="sign_up" id="sign_up_form">
                     <div id="sign_up_msg"></div>
                     <div class="form_input">
@@ -60,10 +61,11 @@
                     </div>
 
                     <div class="text">
-                        <h3><a href="#" id="forgot_password_link" onclick="ShowForgotPassword()">Forgot Password?</a></h3>
+                        <h3><a href="#" id="forgot_password_link" onclick="ShowForgotPassword()">Forgot Password?</a>
+                        </h3>
                     </div>
 
-                    
+
                 </form>
             </div>
 
@@ -76,7 +78,7 @@
                         <input type="email" id="forgot_password_email" placeholder="Email" required>
                     </div>
 
-                    
+
                     <div class="form_input button">
                         <input type="submit" id="forgot_password_submit" value="SUBMIT">
                     </div>
@@ -92,6 +94,17 @@
                 </form>
             </div>
         </div>
+
+
+        <div class="bussiness-section" id="bussiness-section">
+            <h3>Bussiness account? <a href="#" onclick="login_As('bussiness')">Login</a></h3>
+        </div>
+
+        <div class="user-section" id="user-section" hidden>
+            <h3>User account? <a href="#" onclick="login_As('user')">Login</a></h3>
+        </div>
+
+
     </main>
 
 

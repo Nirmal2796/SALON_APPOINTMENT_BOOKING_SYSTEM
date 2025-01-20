@@ -11,6 +11,7 @@ const login_msg = document.getElementById('login_msg');
 const login_error = document.getElementById('login_error');
 
 
+
 const forgot_email = document.getElementById('forgot_password_email');
 const forgot_msg = document.getElementById('forgot_password_msg');
 
@@ -26,7 +27,7 @@ sign_up_form.addEventListener('submit', onSignUp);
 login_form.addEventListener('submit', onLogin);
 forgot_form.addEventListener('submit', forgotPassword);
 
-
+let role='user';
 
 function ShowSignup() {
     document.getElementById('sign_up_div').hidden = false;
@@ -67,9 +68,20 @@ async function onSignUp(e) {
                 password: sign_up_user_password.value
             };
 
-            const result = await axios.post("http://localhost:3000/signup", User);
+            let result;
+            
+            if(role=='user'){
 
-            alert(result.data.message);
+                 result = await axios.post("http://localhost:3000/signup", User);
+                
+            }
+            else{
+                 result = await axios.post("http://localhost:3000/bussiness-signup", User);
+                
+            }
+
+
+            alert(result.data.message);            
 
             sign_up_form.reset();
         }
@@ -110,11 +122,18 @@ async function onLogin(e) {
                 password: login_user_password.value
             };
 
+            let result
 
-            const result = await axios.post(`http://localhost:3000/login`, User);
+             if(role=='user'){
 
-            console.log(result.data);
-            alert(result.data.message);
+                  result = await axios.post(`http://localhost:3000/login`, User);
+             }
+             else{
+                console.log(role);
+                 result = await axios.post(`http://localhost:3000/bussiness-login`, User);
+             }
+
+            
 
 
             window.location.href = '../home/home.html';
@@ -187,5 +206,24 @@ async function forgotPassword(e) {
         }
 
     }
+
+}
+
+//role assign
+function login_As(r){
+
+    // console.log(r);
+    
+    if(r =='user'){
+
+        document.getElementById('user-section').hidden=true;
+        document.getElementById('bussiness-section').hidden=false;
+    }
+    else{
+        document.getElementById('user-section').hidden=false;
+        document.getElementById('bussiness-section').hidden=true;
+    }
+
+    role=r;
 
 }

@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 
 
-const User = require('../models/user');
+const Salon = require('../models/salon');
 const JWTServices=require('../services/JWTservices');
 const sequelize = require('../util/database');
 
@@ -17,7 +17,7 @@ const postSignupUser = async (req, res) => {
         password = req.body.password;
 
 
-        const user = await User.findAll({where:{email:email}})
+        const user = await Salon.findAll({where:{email:email}})
 
         
         if (user.length>0) {
@@ -28,7 +28,7 @@ const postSignupUser = async (req, res) => {
             bcrypt.hash(password, 10, async (err, hash) => {
 
                 if (!err) {
-                    const newUser = await User.create({
+                    const newUser = await Salon.create({
                         email: email,
                         name: uname,
                         password: hash
@@ -58,7 +58,7 @@ const postLoginUser = async (req, res) => {
         const email = req.body.email;
         const password = req.body.password;
     
-        const user = await User.findAll({where:{email}});
+        const user = await Salon.findAll({where:{email}});
     
         if (user.length>0) {
 
@@ -87,73 +87,8 @@ const postLoginUser = async (req, res) => {
 
 };
 
-const getUser=async (req, res) => {
-
-
-    try{
-
-        const user = await User.findByPk(req.user.id);
-
-        if(user){
-            res.status(200).json({user:user});
-        }
-        else{
-            res.status(404).json({ message: 'User not found'});
-        }
-       
-    }
-    catch (err) {
-        res.status(500).json({ success: false, message: err });
-    }
-};
-
-
-const editProfile = async (req, res) => {
-
-    const t=await sequelize.transaction();
-
-    try{
-
-        const userId=req.user.id;
-        const email = req.body.email;
-        const uname = req.body.username;
-        const password = req.body.password;
-
-        const user = await User.findByPk(userId);
-
-        if(user){
-            bcrypt.hash(password, 10, async (err, hash) => {
-
-                if (!err) {
-                    user.email=email;
-                    user.name=uname;
-                    user.password=hash;
-    
-                    await user.save({transaction:t});
-    
-                    await t.commit();
-    
-                    res.status(200).json({ message: 'User Profile Updated Successfully' });
-                }
-                else {
-                    throw new Error('Something went wrong');
-                }
-            })
-        }
-        else{
-            res.status(404).json({ message: 'User not found'});
-        }
-       
-    }
-    catch (err) {
-        res.status(500).json({ success: false, message: err });
-    }
-};
-
-const validateToken=async(req,res)=>{
-    res.status(200).json({status:'success'});
-}
 
 
 
-module.exports={postLoginUser,postSignupUser,getUser,editProfile,validateToken};
+
+module.exports={postLoginUser,postSignupUser};

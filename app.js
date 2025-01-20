@@ -18,10 +18,12 @@ const sequelize=require('./util/database');
 
 const User=require('./models/user');
 const ForgotPasswordRequests=require('./models/forgotPasswordRequests');
+const Salon=require('./models/salon');
 
 
 const userRouter=require('./routes/user');
 const passwordRouter=require('./routes/password');
+const salonRouter=require('./routes/salon');
 
 
 
@@ -44,6 +46,7 @@ app.use(bodyParser.json({extended:false}));
 
 app.use(userRouter);
 app.use(passwordRouter);
+app.use(salonRouter);
 
 // app.use((req,res) => {
     // console.log("URL>>>",req.url);

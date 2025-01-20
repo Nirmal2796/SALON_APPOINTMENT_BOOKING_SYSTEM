@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SALON APPOINTMENT</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main>
+        <div class="forms_div">
+            <div id="sign_up_div" hidden>
+            <h2>Signup</h2>
+                <form action="" class="sign_up" id="sign_up_form">
+                    <div id="sign_up_msg"></div>
+                    <div class="form_input">
+                        <input type="text" id="sign_up_name" placeholder="Name" required>
+                    </div>
+                    <div class="form_input">
+                        <input type="email" id="sign_up_email" placeholder="Email" required>
+                    </div>
+                    <!-- <div class="form_input">
+                        <input type="text" id="sign_up_phone" placeholder="Phone Number" required>
+                    </div> -->
+                    <div class="form_input">
+                        <input type="password" id="sign_up_password" placeholder="Password" required>
+                    </div>
+
+                    <div class="form_input button">
+                        <input type="submit" id="sign_up_submit" value="SUBMIT">
+                    </div>
+                    <div class="text">
+                        <h3>Already have an account? <a href="#" onclick="ShowLogin()">Login</a></h3>
+                    </div>
+
+                </form>
+            </div>
+
+            <div id="login_div">
+                <h2>LogIn</h2>
+                <form action="#" class="login" id="login_form">
+                    <div id="login_msg"></div>
+
+                    <div class="form_input">
+                        <input type="email" id="login_email" placeholder="Email" required>
+                    </div>
+
+                    <div class="form_input">
+                        <input type="password" id="login_password" placeholder="Password" required>
+                    </div>
+
+                    <div class="form_input button">
+                        <input type="submit" id="login_submit" value="SUBMIT">
+                    </div>
+
+                    <div class="text">
+                        <h3>Don't have an account? <a href="#" id="sign_up_link" onclick="ShowSignup()">Signup</a></h3>
+                    </div>
+
+                    <div class="text">
+                        <h3><a href="#" id="forgot_password_link" onclick="ShowForgotPassword()">Forgot Password?</a></h3>
+                    </div>
+
+                    
+                </form>
+            </div>
+
+            <div id="forgot_password_div" hidden>
+                <h2>Forgot Password?</h2>
+                <form action="#" class="login" id="forgot_password_form">
+                    <div id="forgot_password_msg"></div>
+
+                    <div class="form_input">
+                        <input type="email" id="forgot_password_email" placeholder="Email" required>
+                    </div>
+
+                    
+                    <div class="form_input button">
+                        <input type="submit" id="forgot_password_submit" value="SUBMIT">
+                    </div>
+
+                    <div class="text">
+                        <h3>Don't have an account? <a href="#" id="sign_up_link" onclick="ShowSignup()">Signup</a></h3>
+                    </div>
+
+                    <div class="text">
+                        <h3>Already have an account? <a href="#" onclick="ShowLogin()">Login</a></h3>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </main>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>

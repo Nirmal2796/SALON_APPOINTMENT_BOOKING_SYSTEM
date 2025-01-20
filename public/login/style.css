@@ -1,0 +1,119 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins' sans-serif;
+}
+
+body{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(133, 133, 212);
+}
+
+.forms_div{
+    position: relative;
+    max-width: 430px;
+    width: 100%;
+    background: #fff;
+    padding: 34px;
+    border-radius: 6px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+.forms_div h2{
+    position: relative;
+    font-size: 22px;
+    font-weight: 600;
+    color: rgb(21, 21, 83);
+    letter-spacing: 0.5px;
+}
+
+.forms_div h2::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 28px;
+    border-radius: 12px;
+    background: rgb(133, 133, 212);
+}
+
+.forms_div form{
+    margin-top: 30px;
+}
+
+.forms_div form .form_input{
+    height: 52px;
+    margin: 18px 0;
+}
+
+form .form_input input{
+    height: 100%;
+    width: 100%;
+    outline: none;
+    padding: 0 15px;
+    font-size: 17px;
+    font-weight: 400;
+    color: #333;
+    border: 1.5px solid rgb(133, 133, 212);
+    border-bottom-width: 2.5px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+form .form_input input::placeholder{
+    color: rgb(163, 163, 240);
+}
+
+.form_input input:focus,
+.form_input input:valid{
+    border-color: rgb(21, 21, 83);
+
+}
+
+.form_input.button input{
+    color: #fff;
+    letter-spacing: 1px;
+    border: none;
+    background: rgb(21, 21, 83);
+    cursor: pointer;
+}
+
+.form_input.button input:hover{
+    background: rgb(5, 5, 22);
+    font-size: medium;
+}
+
+form h3{
+    color: #707070;
+    font-size: 14px;
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+form .text h3{
+    color: #333;
+    width: 100%;
+    text-align: center;
+}
+
+form .text h3 a{
+    color: rgb(78, 78, 211);
+    text-decoration: none;
+}
+
+form .text h3 a:hover{
+    text-decoration: underline;
+    font-size: medium;
+    color: rgb(21, 21, 83);
+    font-weight: bold;
+}
+
+form #login_msg, #sign_up_msg{
+    color: red;
+    font-weight: bold;
+}

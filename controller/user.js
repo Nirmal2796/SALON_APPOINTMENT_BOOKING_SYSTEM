@@ -87,8 +87,73 @@ const postLoginUser = async (req, res) => {
 
 };
 
+const getUser=async (req, res) => {
+
+
+    try{
+
+        const user = await User.findByPk(req.user.id);
+
+        if(user){
+            res.status(200).json({user:user});
+        }
+        else{
+            res.status(404).json({ message: 'User not found'});
+        }
+       
+    }
+    catch (err) {
+        res.status(500).json({ success: false, message: err });
+    }
+};
+
+
+const editProfile = async (req, res) => {
+
+    const t=await sequelize.transaction();
+
+    try{
+
+        const userId=req.user.id;
+        const email = req.body.email;
+        const uname = req.body.username;
+        const password = req.body.password;
+
+        const user = await User.findByPk(userId);
+
+        if(user){
+            bcrypt.hash(password, 10, async (err, hash) => {
+
+                if (!err) {
+                    user.email=email;
+                    user.name=uname;
+                    user.password=hash;
+    
+                    await user.save({transaction:t});
+    
+                    await t.commit();
+    
+                    res.status(200).json({ message: 'User Profile Updated Successfully' });
+                }
+                else {
+                    throw new Error('Something went wrong');
+                }
+            })
+        }
+        else{
+            res.status(404).json({ message: 'User not found'});
+        }
+       
+    }
+    catch (err) {
+        res.status(500).json({ success: false, message: err });
+    }
+};
+
+const validateToken=async(req,res)=>{
+    res.status(200).json({status:'success'});
+}
 
 
 
-
-module.exports={postLoginUser,postSignupUser};
+module.exports={postLoginUser,postSignupUser,getUser,editProfile,validateToken};

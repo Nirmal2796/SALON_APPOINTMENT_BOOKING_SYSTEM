@@ -117,7 +117,7 @@ async function onLogin(e) {
             alert(result.data.message);
 
 
-            // window.location.href = '../chat/chat.html';
+            window.location.href = '../home/home.html';
 
             localStorage.setItem('token', result.data.token);
 

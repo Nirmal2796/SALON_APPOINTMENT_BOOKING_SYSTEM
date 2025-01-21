@@ -1,4 +1,5 @@
 
+const service_table_body=document.getElementById('service-table-body');
 
 const profile_menu_list = document.getElementById('profile_menu_list');
 
@@ -37,7 +38,7 @@ async function changeProfileMenu() {
 
         if (res.data.status === 'success') {
             profile_menu_list.innerHTML = `
-            <li><a href="../edit-profile/edit-profile.html">Edit Profile</a></li>
+            <li><a href="../../edit-profile/edit-profile.html">Edit Profile</a></li>
             `;
         }
         else {
@@ -74,9 +75,47 @@ async function getServies() {
 
         console.log(result);
 
+        for(service in result.data.services){
+            showServices(result.data.services[service]);
+        }
+
     }
     catch (err) {
         console.log(err);
     }
 
+}
+
+
+//SHOW SERVICES
+function showServices(service){
+    const newRow=`<tr id=${service.id}>
+                    <td>${service.name}</td>
+                    <td>${service.description}</td>
+                    <td>${service.duration}</td>
+                    <td>${service.price}</td>
+                    <td><a href="../edit-service/edit-service.html?id=${service.id}"><button>Edit</button></a></td>
+                    <td><button onclick="deleteService(${service.id})">Delete</button></td>
+                </tr>
+    `
+
+    service_table_body.innerHTML+=newRow;
+}
+
+
+//REMOVE SERVICE
+async function deleteService(id){
+    try{
+        const token=localStorage.getItem('token');
+
+        const res=await axios.delete(`http://localhost:3000/delete-service/${id}`,{headers:{'Auth':token}});
+
+        document.getElementById(id).remove();
+        alert(res.data.message);
+
+
+    }
+    catch(err){
+        console.log(err);
+    }
 }

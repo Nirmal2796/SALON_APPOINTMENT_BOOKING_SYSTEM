@@ -13,6 +13,12 @@ router.get('/get-salon-services',salonAuthentication.authentication,serviceContr
 
 router.post('/add-service',salonAuthentication.authentication,serviceController.addService);
 
+router.get('/get-service-details/:id',salonAuthentication.authentication,serviceController.getServiceDetails);
+
+router.post('/edit-service/:id',salonAuthentication.authentication,serviceController.editService);
+
+router.delete('/delete-service/:id',salonAuthentication.authentication,serviceController.deleteService);
+
 // router.get('/validate-token',salonAuthentication.authentication,userController.validateToken);
 
 module.exports=router;

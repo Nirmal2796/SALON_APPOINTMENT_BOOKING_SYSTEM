@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', DomLoad);
 async function DomLoad() { 
     try{
         // console.log('Dom Loaded');
-        await changeProfileMenu();
+        changeProfileMenu();
         window.scrollTo(0, 0);
     }
     catch(err){

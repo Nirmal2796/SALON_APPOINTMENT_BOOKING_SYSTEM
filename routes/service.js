@@ -9,7 +9,7 @@ const salonAuthentication=require('../middleware/salonAuthentication');
 
 
 
-router.get('/get-services',salonAuthentication.authentication,serviceController.getServices);
+router.get('/get-salon-services',salonAuthentication.authentication,serviceController.getServices);
 
 router.post('/add-service',salonAuthentication.authentication,serviceController.addService);
 

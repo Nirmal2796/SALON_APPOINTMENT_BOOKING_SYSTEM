@@ -10,15 +10,16 @@ document.addEventListener('DOMContentLoaded', DomLoad);
 
 
 //DOM CONTENT LOADED
-async function DomLoad() { 
-    try{
+async function DomLoad() {
+    try {
         // console.log('Dom Loaded');
-        await changeProfileMenu();
+        changeProfileMenu();
         window.scrollTo(0, 0);
+        getServies();
     }
-    catch(err){
+    catch (err) {
         console.log(err);
-    } 
+    }
 }
 
 
@@ -26,25 +27,25 @@ async function DomLoad() {
 
 //CHANGE PROFILE MENU
 async function changeProfileMenu() {
-    try{
-        const token=localStorage.getItem('token');
+    try {
+        const token = localStorage.getItem('token');
 
-        const res=await axios.get('http://localhost:3000/validate-token',{ headers: { 'Auth': token } });
+        const res = await axios.get('http://localhost:3000/validate-token', { headers: { 'Auth': token } });
 
         // const status='false';
         // console.log(profile_menu_list);
 
-        if(res.data.status==='success'){
-            profile_menu_list.innerHTML=`
+        if (res.data.status === 'success') {
+            profile_menu_list.innerHTML = `
             <li><a href="../edit-profile/edit-profile.html">Edit Profile</a></li>
             `;
         }
-        else{
-            profile_menu_list.innerHTML=`
+        else {
+            profile_menu_list.innerHTML = `
             <li><a href="../login/login.html">Login</a></li>`;
         }
     }
-    catch(err){
+    catch (err) {
         console.log(err);
     }
 }
@@ -61,4 +62,21 @@ function toggleProfileMenu() {
 function toggleMenu() {
     var Menu = document.getElementById("nav-list");
     Menu.classList.toggle("show");
+}
+
+//GET ALL SERVICES
+async function getServies() {
+    try {
+
+        const token = localStorage.getItem('token');
+
+        const result = await axios.get('http://localhost:3000/get-salon-services', { headers: { 'Auth': token } });
+
+        console.log(result);
+
+    }
+    catch (err) {
+        console.log(err);
+    }
+
 }

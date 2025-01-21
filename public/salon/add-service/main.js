@@ -1,7 +1,16 @@
 
+const servicename = document.getElementById('service-name');
+const description = document.getElementById('description');
+const duration = document.getElementById('duration');
+const price = document.getElementById('price');
+
+const add_service_form=document.getElementById('add-service-form');
+
+add_service_form.addEventListener('submit', addService);
+
+
 
 const profile_menu_list = document.getElementById('profile_menu_list');
-
 
 
 
@@ -61,4 +70,28 @@ function toggleProfileMenu() {
 function toggleMenu() {
     var Menu = document.getElementById("nav-list");
     Menu.classList.toggle("show");
+}
+
+
+async function addService(e) {
+    e.preventDefault();
+    const token = localStorage.getItem('token');
+    try {
+
+        service = {
+            name: servicename.value,
+            description: description.value,
+            duration: duration.value,
+            price:price.value
+        };
+
+        const res = await axios.post('http://localhost:3000/add-service', service, { headers: { 'Auth': token } });
+
+        console.log(res);
+
+        add_service_form.reset();
+    }
+    catch (err) {
+        console.log(err);
+    }
 }

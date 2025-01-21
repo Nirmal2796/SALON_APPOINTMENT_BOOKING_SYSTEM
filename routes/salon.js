@@ -16,6 +16,6 @@ router.post('/bussiness-login',salonController.postLoginUser);
 
 // router.post('/edit-profile',salonAuthentication.authentication,userController.editProfile);
 
-// router.get('/validate-token',salonAuthentication.authentication,userController.validateToken);
+router.get('/salon-validate-token',salonAuthentication.authentication,salonController.validateToken);
 
 module.exports=router;

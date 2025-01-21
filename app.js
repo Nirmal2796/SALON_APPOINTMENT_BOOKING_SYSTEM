@@ -25,6 +25,7 @@ const Service=require('./models/service');
 const userRouter=require('./routes/user');
 const passwordRouter=require('./routes/password');
 const salonRouter=require('./routes/salon');
+const serviceRouter=require('./routes/service');
 
 
 
@@ -48,6 +49,7 @@ app.use(bodyParser.json({extended:false}));
 app.use(userRouter);
 app.use(passwordRouter);
 app.use(salonRouter);
+app.use(serviceRouter);
 
 // app.use((req,res) => {
     // console.log("URL>>>",req.url);

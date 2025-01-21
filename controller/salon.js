@@ -87,8 +87,10 @@ const postLoginUser = async (req, res) => {
 
 };
 
+const validateToken=async(req,res)=>{
+    res.status(200).json({status:'success'});
+}
 
 
 
-
-module.exports={postLoginUser,postSignupUser};
+module.exports={postLoginUser,postSignupUser,validateToken};

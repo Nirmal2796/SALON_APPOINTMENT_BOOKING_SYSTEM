@@ -116,15 +116,13 @@ async function onLogin(e) {
         try {
 
             User = {
-                name: sign_up_user_name.value,
                 email: login_user_email.value,
-                // phone: sign_up_user_phone.value,
                 password: login_user_password.value
             };
 
-            let result
+            let result;
 
-             if(role=='user'){
+             if(role =='user'){
 
                   result = await axios.post(`http://localhost:3000/login`, User);
                   window.location.href = '../home/home.html';
@@ -136,11 +134,10 @@ async function onLogin(e) {
 
              }
 
-            
-
-
 
             localStorage.setItem('token', result.data.token);
+
+            // console.log(localStorage.getItem('token'));
 
             login_form.reset();
         }

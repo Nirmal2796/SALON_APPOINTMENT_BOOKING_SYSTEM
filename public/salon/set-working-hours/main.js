@@ -1,16 +1,3 @@
-
-const servicename = document.getElementById('service-name');
-const description = document.getElementById('description');
-const category=document.getElementById('category');
-const duration = document.getElementById('duration');
-const price = document.getElementById('price');
-
-const add_service_form=document.getElementById('add-service-form');
-
-add_service_form.addEventListener('submit', addService);
-
-
-
 const profile_menu_list = document.getElementById('profile_menu_list');
 
 
@@ -73,27 +60,22 @@ function toggleMenu() {
     Menu.classList.toggle("show");
 }
 
+function toggleTab(){
+    document.getElementById("working-hours-tab").classList.toggle("active-li");
+    document.getElementById("closed-period-tab").classList.toggle("active-li");
 
-async function addService(e) {
-    e.preventDefault();
-    const token = localStorage.getItem('token');
-    try {
+    document.getElementById('set-working-hours-section').classList.toggle('hidden');
+    document.getElementById('set-closed-period-section').classList.toggle('hidden');
+}
 
-        service = {
-            name: servicename.value,
-            description: description.value,
-            category:category.value,
-            duration: duration.value,
-            price:price.value
-        };
+function showAddClosedPeriodForm(){
+    document.getElementById('set-closed-period-container').classList.toggle('hidden');
+    const button=document.getElementById('add-closed-period-button');
 
-        const res = await axios.post('http://localhost:3000/add-service', service, { headers: { 'Auth': token } });
-
-        console.log(res);
-
-        add_service_form.reset();
+    if(button.innerText=='Close'){
+        button.innerText='Add Closed Period';
     }
-    catch (err) {
-        console.log(err);
+    else{
+        button.innerText='Close';
     }
 }

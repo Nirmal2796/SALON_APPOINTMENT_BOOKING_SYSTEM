@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Working Hours</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo"><a href="../dashboard/dashboard.html">Salon</a></h1>
+            <nav>
+                <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+                <ul class="nav-list">
+                    <li><a href="../services/services.html">Services</a></li>
+                    <!-- <li><a href="../recipes/recipes.html">Recipes</a></li> -->
+                    <li><a href="">Appointments</a></li>
+                    <li><a href="">Reviews</a></li>
+                    <li><a href="../set-working-hours/set-working-hours.html">Time</a></li>
+                    <li><a href="">Staff</a></li>
+                    <li><i class="fa fa-user-circle" id="profile_icon" onclick="toggleProfileMenu()" style="font-size: 24px; cursor: pointer;"></i></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- Profile Menu -->
+    <div class="profile-menu" id="profile_menu">
+        <ul id="profile_menu_list">
+            
+        </ul>
+    </div>
+
+    <div class="salon-time">
+
+        <div class="tabs">
+            <ul>
+                <li onclick="toggleTab()" class="active-li" id="working-hours-tab">Working Hours</li>
+                <li onclick="toggleTab()" id="closed-period-tab">Closed Period</li>
+            </ul>
+        </div>
+        
+        <section class="set-working-hours-section" id="set-working-hours-section">
+            <div class="set-working-hours-container">
+                <h1>Working Hours</h1>
+                <form action="" method="post" class="set-working-hours-form" id="set-working-hours-form">
+    
+                    <div class="day-time-div">
+    
+                        <div class="day-div">
+                            <div class="day-input">
+                                <input type="checkbox" name="monday" id="monday">
+                                <label for="monday">Monday</label>
+                            </div>
+                            <div class="time-input">
+                                <input type="time"> 
+                                <input type="time">
+                            </div>
+                        </div>
+                        <div class="day-div">
+                            <div class="day-input">
+                                <input type="checkbox" name="tuesday" id="tuesday">
+                                <label for="tuesday">Tuesday</label>
+                            </div>
+                            <div class="time-input">
+                                <input type="time"> 
+                                <input type="time">
+                            </div>
+                        </div>
+                        <div class="day-div">
+                            <div class="day-input">
+                                <input type="checkbox" name="wednesday" id="wednesday">
+                                <label for="wednesday">Wednesday</label>
+                            </div>
+                            <div class="time-input">
+                                <input type="time"> 
+                                <input type="time">
+                            </div>
+                        </div>
+                        <div class="day-div">
+                            <div class="day-input">
+                                <input type="checkbox" name="thursday" id="thursday">
+                                <label for="thursday">Thursday</label>
+                            </div>
+                            <div class="time-input">
+                                <input type="time"> 
+                                <input type="time">
+                            </div>
+                        </div>
+                        <div class="day-div">
+                            <div class="day-input">
+                                <input type="checkbox" name="friday" id="friday">
+                                <label for="friday">Friday</label>
+                            </div>
+                            <div class="time-input">
+                                <input type="time"> 
+                                <input type="time">
+                            </div>
+                        </div>
+                        <div class="day-div">
+                            <div class="day-input">
+                                <input type="checkbox" name="saturday" id="saturday">
+                                <label for="saturday">Saturday</label>
+                            </div>
+                            <div class="time-input">
+                                <input type="time"> 
+                                <input type="time">
+                            </div>
+                        </div>
+                        <div class="day-div">
+                            <div class="day-input">
+                                <input type="checkbox" name="sunday" id="sunday">
+                                <label for="sunday">Sunday</label>
+                            </div>
+                            <div class="time-input">
+                                <input type="time"> 
+                                <input type="time">
+                            </div>
+                        </div>
+                        
+                    </div>
+    
+    
+                    <!-- Submit Button -->
+                    <button type="submit" class="submit-btn">Save</button>
+                </form>
+            </div>
+        </section>
+        
+        <section class="set-closed-period-section hidden" id="set-closed-period-section">
+
+            <div class="closed-period-div">
+
+                <div class="top-div">
+                    <h1>Closed Period</h1>
+                </div>
+                
+                
+                <div class="closed-period-table-div">
+
+                    <table id="closed-period-table" class="closed-period-table">
+                        <thead id="closed-period-table-head" class="closed-period-table-head">
+                            <tr>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Description</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody id="closed-period-table-body" class="closed-period-table-body">
+                            <!-- <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><button>Delete</button></td>
+                            </tr> -->
+                            
+                        </tbody>
+                    </table>
+                    
+                </div>
+                
+            </div>
+
+            <div class="top-div">
+                <button onclick="showAddClosedPeriodForm()" id="add-closed-period-button">Add Closed Period</button>
+
+            </div>
+
+
+            <div class="set-closed-period-container hidden" id="set-closed-period-container">
+                <h1>Add Closed Period</h1>
+                <form action="" method="post" class="set-closed-period-form" id="set-closed-period-form">
+       
+                    <label for="start-date">Start Date</label>
+                    <input type="date" id="start-date" name="start-date" placeholder="e.g., 13-01-2025" required>
+    
+                    <label for="end-date">End Date</label>
+                    <input type="date" id="end-date" name="end-date" placeholder="e.g., 13-01-2025" required>
+    
+                    <!-- Description -->
+                    <label for="description">Description:</label>
+                    <input type="text" id="description" name="description" placeholder="e.g., Public Holiday" required>
+    
+                    <!-- Submit Button -->
+                    <button type="submit" class="submit-btn">Add</button>
+                </form>
+            </div>
+        </section>
+        
+    </div>
+
+
+    
+
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script src="main.js"></script>
+
+   
+
+</body>
+</html>

@@ -1,0 +1,355 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    width: 100%;
+    min-width: 100vh;
+    background: #f8f8f8;
+}
+
+header {
+    width: 100%;
+    height: 60px;
+    background: #222121;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-list{
+    display: none;
+}
+
+nav ul li {
+    list-style: none;
+    display: inline;
+    margin-right: 20px;
+    font-weight: 550;
+}
+
+.logo {
+    font-size: 20px;
+}
+
+footer{
+    background: #333;
+    padding: 20px 0;
+    color: #fff;
+    text-align: center;
+}
+
+/* Profile Menu */
+.profile-menu {
+    display: none;
+    position: fixed;
+    top: 60px; 
+    right: 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 101;
+}
+
+.profile-menu ul {
+    list-style: none;
+}
+
+.profile-menu ul li {
+    padding: 10px 15px;
+}
+
+.profile-menu ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.profile-menu ul li a:hover {
+    background: #f1f1f1;
+}
+
+.profile-menu.show {
+    display: block;
+}
+
+
+/* Add Recipe Section */
+.tabs{
+    justify-items: center;
+    margin: 10px 20px;
+}
+
+
+.tabs li{
+    list-style: none;
+    display: inline;
+    font-weight: bolder;
+    margin:0 5em;
+    font-size: 30px;
+    cursor: pointer;
+    color: #222121;
+    border: 5px solid #222121;
+    padding: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.tabs li:hover{
+   background-color: #222121;
+   color: #fff;
+}
+
+.hidden{
+    display: none;
+}
+
+.tabs  .active-li{
+    border: 5px solid #222121;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px;
+    background: #222121;
+    color: #fff;
+}
+
+
+.set-working-hours-section, .set-closed-period-section {
+    background-color: #fff;
+    padding: 30px 0;
+    min-height: 100vh;
+}
+
+.set-working-hours-section h1 ,.set-closed-period-section h1 {
+    text-align: center;
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.set-working-hours-form , .set-closed-period-form{
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.set-closed-period-form label ,.set-closed-period-form label{
+    display: block;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.set-closed-period-form input{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+
+
+
+.day-div{
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+}
+
+.day-div div{
+    flex: 1;
+}
+
+
+.day-input input{
+    width: 6%;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.day-input label{
+    font-size: larger;
+    color: #333;
+    margin: 15px;
+    vertical-align: middle;
+}
+
+.time-input input{
+    padding: 5px 20px;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+.set-working-hours-form input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+
+.set-working-hours-form button ,.set-closed-period-form button{
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.set-working-hours-form button:hover, .set-closed-period-form button:hover {
+    background-color: #222121;
+}
+
+.submit-btn {
+    width: 100%;
+}
+
+
+.top-div button{
+    width: auto;
+    height: auto;
+    background: #333;
+    color: #fff;
+    border-radius: 20px;
+    font-size: medium;
+    padding: 12px 15px;
+    /* margin: 10px; */
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    right: 10em;
+}
+
+.top-div button:hover{
+    background: #202020;
+    /* text-decoration: underline; */
+    letter-spacing: 1px;
+}
+
+
+.closed-period-table-div{
+    background: #f9f9f9;
+    margin: 50px 10rem;
+    padding: 20px;
+    /* border-radius: 10px; */
+}
+
+.closed-period-table{
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-collapse: collapse;
+    overflow: scroll;
+}
+
+td,th {padding: .5em 1em;}
+
+.closed-period-table thead tr {
+    border-bottom: 5px solid #333;
+    color: #333;
+    font-size: larger;
+    box-shadow: 0 1px 10px #000000; 
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+ 
+
+.closed-period-table-body td {
+    padding: 10px 15px;
+    font-size: large;
+    text-align: center;
+}
+
+tbody:before {
+    line-height:1em;
+    content:".";
+    color:white; 
+    display:block;
+}
+
+.closed-period-table-body button{
+    /* width: auto;
+    height: auto; */
+    background: #333;
+    color: #fff;
+    border-radius: 20px;
+    font-size: small;
+    padding: 12px 15px;
+    /* margin: 10px; */
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.closed-period-table-body button:hover{
+    background: #202020;
+}
+
+
+
+@media (max-width: 768px) {
+    .set-working-hours-form {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .set-working-hours-form label {
+        font-size: 16px;
+    }
+
+    .set-working-hours-form input {
+        font-size: 14px;
+    }
+
+    .set-working-hours-form h2 {
+        font-size: 20px;
+    }
+}
+
+
+/* ...........  Media Queries ............... */
+@media only screen and (min-width: 768px){
+    .menu-icon{
+        display: none;
+    }
+
+    .nav-list{
+        display: block;
+    }
+
+    header {
+        position: sticky;
+        top: 0;
+        overflow: hidden;
+    }
+    
+
+}

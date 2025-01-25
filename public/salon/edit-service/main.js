@@ -1,6 +1,7 @@
 
 const servicename = document.getElementById('service-name');
 const description = document.getElementById('description');
+const category=document.getElementById('category');
 const duration = document.getElementById('duration');
 const price = document.getElementById('price');
 
@@ -82,6 +83,7 @@ async function editService(e) {
         service = {
             name: servicename.value,
             description: description.value,
+            category:category.value,
             duration: duration.value,
             price: price.value
         };
@@ -124,6 +126,7 @@ async function getServiceDetails() {
 
         servicename.value = res.data.service.name;
         description.value = res.data.service.description;
+        category.value=res.data.service.category;
         duration.value = res.data.service.duration;
         price.value = res.data.service.price;
 

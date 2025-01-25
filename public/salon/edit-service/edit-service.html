@@ -11,7 +11,7 @@
 <body>
     <header>
         <div class="container">
-            <h1 class="logo">Salon</h1>
+            <h1 class="logo"><a href="../dashboard/dashboard.html">Salon</a></h1>
             <nav>
                 <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
                 <ul class="nav-list">
@@ -19,7 +19,7 @@
                     <!-- <li><a href="../recipes/recipes.html">Recipes</a></li> -->
                     <li><a href="">Appointments</a></li>
                     <li><a href="">Reviews</a></li>
-                    <li><a href="">Time</a></li>
+                    <li><a href="../set-working-hours/set-working-hours.html">Time</a></li>
                     <li><a href="">Staff</a></li>
                     <li><i class="fa fa-user-circle" id="profile_icon" onclick="toggleProfileMenu()" style="font-size: 24px; cursor: pointer;"></i></li>
                 </ul>
@@ -45,6 +45,20 @@
                 <!-- Description -->
                 <label for="description">Description:</label>
                 <input type="text" id="description" name="description" placeholder="Deep Layer U cut" required>
+
+                <!-- Category -->
+                <label>Category:</label>
+                <select name="category" id="category">
+                  <option value="hair">Hair & Styling</option>
+                  <option value="nails">Nails</option>
+                  <option value="facial">Facial</option>
+                  <option value="massage">Massage</option>
+                  <option value="barbering">Barbering</option>
+                  <option value="hair removal">Hair Removal</option>
+                  <option value="makeup">Makeup</option>
+                  <option value="eyebrow and eyelashes">Eyebrows and Eyelashes</option>
+                  <option value="tattoo and piercing">Tattoo and Piercing</option>
+                  <!-- Add more categories -->
 
                 <!-- Duration -->
                 <label for="duration">Duration (in minutes):</label>

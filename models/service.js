@@ -17,6 +17,10 @@ const Service=sequelize.define('service',{
         type:Sequelize.STRING,
         allowNull:false
     },
+    category:{
+        type:Sequelize.STRING,
+        allowNull:false
+    },
     duration:{
         type:Sequelize.INTEGER,
         allowNull:false

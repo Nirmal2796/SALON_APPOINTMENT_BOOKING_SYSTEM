@@ -79,6 +79,7 @@ Closed_Period.belongsTo(Salon);
 sequelize
 .sync()
 // .sync({force:true})
+// .sync({alter:true})
 .then(result=>{
     app.listen(3000);
 })

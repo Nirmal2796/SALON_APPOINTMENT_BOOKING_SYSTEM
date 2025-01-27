@@ -26,6 +26,7 @@ async function DomLoad() {
         changeProfileMenu();
         window.scrollTo(0, 0);
         initializeCheckboxListeners();
+        await getWorkingHours();
     }
     catch(err){
         console.log(err);
@@ -123,8 +124,6 @@ function initializeCheckboxListeners() {
   }
   
  
-  
-
 
 async function setWorkingHours(e) {
 
@@ -165,7 +164,7 @@ async function setWorkingHours(e) {
     }
     catch(err){
         console.log(err);
-        set_working_hours_form.reset();
+        // set_working_hours_form.reset();
     }
     
 }
@@ -191,6 +190,47 @@ async function setClosedPeriod(e) {
     catch(err){
         console.log(err);
         set_closed_period_form.reset();
+    }
+    
+}
+
+
+
+async function getWorkingHours() {
+
+    // e.preventDefault();
+
+    try{
+
+        const token=localStorage.getItem('token');
+
+    
+
+
+  const res=await axios.get('http://localhost:3000/get-working-hours',{headers : {'Auth': token}});
+
+  console.log(res);
+//   set_working_hours_form.reset();
+
+const working_hours=res.data.data;
+
+  for (let working_hour of working_hours) {
+    // console.log(working_hour.day);
+    const checkbox=document.getElementById(working_hour.day.toLowerCase().toLowerCase());
+    checkbox.checked=true;
+      const startTime = document.getElementById(`start-${working_hour.day.toLowerCase()}`);
+      const endTime = document.getElementById(`end-${working_hour.day.toLowerCase()}`);
+
+      startTime.value=working_hour.start_time;
+      endTime.value=working_hour.end_time;
+      
+  }
+
+
+    }
+    catch(err){
+        console.log(err);
+        // set_working_hours_form.reset();
     }
     
 }

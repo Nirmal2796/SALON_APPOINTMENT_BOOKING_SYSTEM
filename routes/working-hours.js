@@ -9,7 +9,7 @@ const salonAuthentication=require('../middleware/salonAuthentication');
 
 
 
-// router.get('/get-salon-services',salonAuthentication.authentication,serviceController.getWorkingHours);
+router.get('/get-working-hours',salonAuthentication.authentication,workingHoursController.getWorkingHours);
 
 router.post('/set-working-hours',salonAuthentication.authentication,workingHoursController.addWorkingHours);
 

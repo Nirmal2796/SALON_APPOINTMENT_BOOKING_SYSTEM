@@ -1,6 +1,19 @@
+
+const closed_period_start_date=document.getElementById('start-date');
+const closed_period_end_date=document.getElementById('end-date');
+const closed_period_description=document.getElementById('description');
+
+
+const set_working_hours_form=document.getElementById('set-working-hours-form');
+const set_closed_period_form=document.getElementById('set-closed-period-form');
+
+
 const profile_menu_list = document.getElementById('profile_menu_list');
 
 
+
+set_working_hours_form.addEventListener('submit',setWorkingHours);
+set_closed_period_form.addEventListener('submit',setClosedPeriod);
 
 //DOM CONTENT LOAD EVENT
 document.addEventListener('DOMContentLoaded', DomLoad);
@@ -12,6 +25,7 @@ async function DomLoad() {
         // console.log('Dom Loaded');
         changeProfileMenu();
         window.scrollTo(0, 0);
+        initializeCheckboxListeners();
     }
     catch(err){
         console.log(err);
@@ -78,4 +92,105 @@ function showAddClosedPeriodForm(){
     else{
         button.innerText='Close';
     }
+}
+
+
+
+function initializeCheckboxListeners() {
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+      checkbox.addEventListener('change', function () {
+        const day = this.value.toLowerCase(); // Get the day (e.g., "monday")
+        const startTimeInput = document.getElementById(`start-${day.toLowerCase()}`);
+        const endTimeInput = document.getElementById(`end-${day.toLowerCase()}`);
+  
+        if (this.checked) {
+          // Enable the time inputs and make them required
+          startTimeInput.disabled = false;
+          endTimeInput.disabled = false;
+          startTimeInput.required = true;
+          endTimeInput.required = true;
+        } else {
+          // Disable the time inputs and clear values
+          startTimeInput.disabled = true;
+          endTimeInput.disabled = true;
+          startTimeInput.required = false;
+          endTimeInput.required = false;
+          startTimeInput.value = "";
+          endTimeInput.value = "";
+        }
+      });
+    });
+  }
+  
+ 
+  
+
+
+async function setWorkingHours(e) {
+
+    e.preventDefault();
+
+    try{
+
+        const token=localStorage.getItem('token');
+
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]'); // Get all checkboxes
+        const data = {}; // Object to store the data
+
+  for (let checkbox of checkboxes) {
+    if (checkbox.checked) {
+      const day = checkbox.value; // Get the day (e.g., Monday)
+      const startTime = document.getElementById(`start-${day.toLowerCase()}`).value;
+      const endTime = document.getElementById(`end-${day.toLowerCase()}`).value;
+
+      // Add the data to the object
+      data[day] = {
+        start_time: startTime,
+        end_time: endTime
+      };
+    //   console.log(data[day]);
+    }
+
+    // console.log(checkbox)
+  }
+
+  console.log(data);
+
+
+  const res=await axios.post('http://localhost:3000/set-working-hours',data, {headers : {'Auth': token}});
+
+  console.log(res);
+//   set_working_hours_form.reset();
+
+    }
+    catch(err){
+        console.log(err);
+        set_working_hours_form.reset();
+    }
+    
+}
+
+async function setClosedPeriod(e) {
+
+    e.preventDefault();
+
+    try{
+
+        const closed_period={
+            start_date:closed_period_start_date,
+            end_date:closed_period_end_date,
+            description:closed_period_description
+        };
+
+        const res=await axios.post('http://localhost:3000/set-closed-period',closed_period, {headers : {'Auth': token}});
+
+        console.log(res);
+
+        set_closed_period_form.reset();
+    }
+    catch(err){
+        console.log(err);
+        set_closed_period_form.reset();
+    }
+    
 }

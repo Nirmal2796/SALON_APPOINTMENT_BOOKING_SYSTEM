@@ -1,4 +1,5 @@
-const Salon = require('../models/salon');
+// const Salon = require('../models/salon');
+const Working_hours=require('../models/working_hours')
 const sequelize=require('../util/database');
 
 exports.addWorkingHours=async(req,res)=>{
@@ -12,7 +13,7 @@ exports.addWorkingHours=async(req,res)=>{
         // Object.keys(data).forEach(async(d) => { //never use for each for async operations.
             console.log(d);
 
-            const[working_hour,created]=await Salon.findOrCreate({
+            const[working_hour,created]=await Working_hours.findOrCreate({
                 where:{
                     day:d,
                     salonId:req.user.id
@@ -56,15 +57,15 @@ exports.getWorkingHours=async(req,res)=>{
 
         const working_hours=await req.user.getWorking_hours();
 
-        console.log(working_hours);
+        // console.log(working_hours);
 
 //to get magicalmethods name
-        const associations = Salon.associations; 
-for (const associationName in associations) {
-  const association = associations[associationName];
-  console.log(`Association: ${associationName}`);
-  console.log(`Methods:`, association.accessors); 
-}
+//         const associations = Salon.associations; 
+// for (const associationName in associations) {
+//   const association = associations[associationName];
+//   console.log(`Association: ${associationName}`);
+//   console.log(`Methods:`, association.accessors); 
+// }
 // 
         // console.log('data',data);
         res.status(200).json({data:working_hours});

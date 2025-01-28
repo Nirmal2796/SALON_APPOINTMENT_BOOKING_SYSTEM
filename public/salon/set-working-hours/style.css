@@ -263,6 +263,15 @@ footer{
     /* border-radius: 10px; */
 }
 
+#closed-period-message-div p{
+    background: #f9f9f9;
+    margin: 50px 10rem;
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+}
+
 .closed-period-table{
     width: 100%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);

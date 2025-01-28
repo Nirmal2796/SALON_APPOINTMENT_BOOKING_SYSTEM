@@ -9,9 +9,12 @@ const salonAuthentication=require('../middleware/salonAuthentication');
 
 
 
-// router.get('/get-salon-services',salonAuthentication.authentication,serviceController.getWorkingHours);
+router.get('/get-closed-period',salonAuthentication.authentication,closedPeriodController.getClosedPeriod);
 
 router.post('/set-closed-period',salonAuthentication.authentication,closedPeriodController.addClosedPeriod);
+
+router.delete('/delete-closed-period/:id',salonAuthentication.authentication,closedPeriodController.deleteClosedPeriod);
+
 
 
 module.exports=router;

@@ -26,7 +26,9 @@ async function DomLoad() {
         changeProfileMenu();
         window.scrollTo(0, 0);
         initializeCheckboxListeners();
-        await getWorkingHours();
+        getWorkingHours();
+        getClosedPeriod();
+
     }
     catch(err){
         console.log(err);
@@ -175,15 +177,21 @@ async function setClosedPeriod(e) {
 
     try{
 
+        const token=localStorage.getItem('token');
+
         const closed_period={
-            start_date:closed_period_start_date,
-            end_date:closed_period_end_date,
-            description:closed_period_description
+            start_date:closed_period_start_date.value,
+            end_date:closed_period_end_date.value,
+            description:closed_period_description.value
         };
 
         const res=await axios.post('http://localhost:3000/set-closed-period',closed_period, {headers : {'Auth': token}});
 
-        console.log(res);
+        console.log(res.data.closed_period);
+
+        alert('Closed period added');
+
+        showClosedPeriod(res.data.closed_period);
 
         set_closed_period_form.reset();
     }
@@ -218,11 +226,13 @@ const working_hours=res.data.data;
     // console.log(working_hour.day);
     const checkbox=document.getElementById(working_hour.day.toLowerCase().toLowerCase());
     checkbox.checked=true;
-      const startTime = document.getElementById(`start-${working_hour.day.toLowerCase()}`);
-      const endTime = document.getElementById(`end-${working_hour.day.toLowerCase()}`);
+    const startTime = document.getElementById(`start-${working_hour.day.toLowerCase()}`);
+    const endTime = document.getElementById(`end-${working_hour.day.toLowerCase()}`);
 
       startTime.value=working_hour.start_time;
       endTime.value=working_hour.end_time;
+      startTime.disabled=false;
+      endTime.disabled=false;
       
   }
 
@@ -233,4 +243,85 @@ const working_hours=res.data.data;
         // set_working_hours_form.reset();
     }
     
+}
+
+
+async function getClosedPeriod() {
+    
+    try {
+
+        const token=localStorage.getItem('token');
+        
+        const closed_period=await axios.get('http://localhost:3000/get-closed-period',{headers:{'Auth':token}});
+
+        console.log(closed_period.data.data);
+
+        const data=closed_period.data.data;
+
+        if(data.length==0){
+            console.log('No upcoming closed periods');
+
+            document.getElementById('closed-period-table-div').hidden=true;
+
+            document.getElementById('closed-period-message-div').innerHTML=`<p>No upcoming closed periods</p>`
+        }
+        else{
+            document.getElementById('closed-period-table-div').hidden=false;
+
+            for(const closed_period in data){
+                showClosedPeriod(data[closed_period]);
+            }
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//SHOW CLOSED PERIOD
+function showClosedPeriod(closed_period){
+    
+    if(document.getElementById('closed-period-table-div').hidden){
+        document.getElementById('closed-period-table-div').hidden=false;
+        document.getElementById('closed-period-message-div').hidden=true;
+    }
+
+    const newRow=`<tr id=${closed_period.id}>
+                                <td>${new Date(closed_period.start_date).toLocaleDateString("en-GB" )}</td>
+                                <td>${new Date(closed_period.end_date).toLocaleDateString("en-GB" )}</td>
+                                <td>${closed_period.description}</td>
+                                <td><button onClick="deleteClosedPeriod(${closed_period.id})">Delete</button></td>
+                </tr>
+    `
+
+    document.getElementById('closed-period-table-body').innerHTML+=newRow;
+}
+
+
+//REMOVE CLOSED PERIOD
+async function deleteClosedPeriod(id){
+    try{
+        const token=localStorage.getItem('token');
+
+        const res=await axios.delete(`http://localhost:3000/delete-closed-period/${id}`,{headers:{'Auth':token}});
+
+        document.getElementById(id).remove();
+        alert(res.data.message);
+
+
+        const rows=document.getElementById('closed-period-table').querySelectorAll('tr').length-1;
+
+        console.log(rows);
+        if(rows==0){
+            console.log(rows);
+
+            document.getElementById('closed-period-table-div').hidden=true;
+
+            document.getElementById('closed-period-message-div').innerHTML=`<p>No upcoming closed periods</p>`
+        }   
+
+    }
+    catch(err){
+        console.log(err);
+    }
 }

@@ -76,6 +76,7 @@ exports.editService=async(req,res)=>{
                 name:req.body.name,
                 description:req.body.description,
                 duration:req.body.duration,
+                category:req.body.category,
                 price:req.body.price
         },{transaction:t})
 

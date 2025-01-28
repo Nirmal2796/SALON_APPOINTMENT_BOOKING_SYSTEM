@@ -92,8 +92,8 @@ function showServices(service){
     const newRow=`<tr id=${service.id}>
                     <td>${service.name}</td>
                     <td>${service.description}</td>
-                    <td>${service.duration}</td>
                     <td>${service.category}</td>
+                    <td>${service.duration}</td>
                     <td>${service.price}</td>
                     <td><a href="../edit-service/edit-service.html?id=${service.id}"><button>Edit</button></a></td>
                     <td><button onclick="deleteService(${service.id})">Delete</button></td>

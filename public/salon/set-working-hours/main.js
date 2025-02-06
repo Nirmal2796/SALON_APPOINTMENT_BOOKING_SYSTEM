@@ -125,8 +125,8 @@ function initializeCheckboxListeners() {
     });
   }
   
- 
 
+  
 async function setWorkingHours(e) {
 
     e.preventDefault();

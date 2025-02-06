@@ -1,0 +1,379 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    width: 100%;
+    min-width: 100vh;
+    background: #fff;
+}
+
+header {
+    width: 100%;
+    height: 60px;
+    background: #222121;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-list {
+    display: none;
+}
+
+nav ul li {
+    list-style: none;
+    display: inline;
+    margin-right: 20px;
+    font-weight: 550;
+}
+
+.logo {
+    font-size: 20px;
+}
+
+/* Profile Menu */
+.profile-menu {
+    display: none;
+    position: fixed;
+    top: 60px;
+    /* Position it just below the header */
+    right: 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+.profile-menu ul {
+    list-style: none;
+}
+
+.profile-menu ul li {
+    padding: 10px 15px;
+}
+
+.profile-menu ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.profile-menu ul li a:hover {
+    background: #f1f1f1;
+}
+
+/* Show profile menu when toggled */
+.profile-menu.show {
+    display: block;
+}
+
+
+.menu-icon {
+    font-size: 24px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    display: block;
+}
+
+.top-div{
+    display: flex;
+    justify-content: space-between;
+    margin: 50px 10rem;
+    /* background: #222121; */
+}
+
+.regular-shift-top-div{
+    margin: 20px 10rem;
+}
+
+
+.team-table-div{
+    background: #f9f9f9;
+    margin: 50px 10rem;
+    padding: 20px;
+    /* border-radius: 10px; */
+}
+
+.team-table{
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-collapse: collapse;
+    overflow: scroll;
+}
+
+td,th {padding: .5em 1em;}
+
+.team-table thead tr {
+    border-bottom: 5px solid #333;
+    color: #333;
+    font-size: larger;
+    box-shadow: 0 1px 10px #000000; 
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+ 
+
+.team-table-body td {
+    padding: 10px 15px;
+    font-size: large;
+    text-align: center;
+}
+
+tbody:before {
+    line-height:1em;
+    content:".";
+    color:white; 
+    display:block;
+}
+
+.team-table-body button{
+    /* width: auto;
+    height: auto; */
+    background: #333;
+    color: #fff;
+    border-radius: 20px;
+    font-size: small;
+    padding: 12px 15px;
+    /* margin: 10px; */
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.team-table-body button:hover{
+    background: #202020;
+}
+
+
+/* ...........  Media Queries ............... */
+@media only screen and (min-width: 768px) {
+    .menu-icon {
+        display: none;
+    }
+
+    .nav-list {
+        display: block;
+    }
+
+
+    header {
+        position: sticky;
+        top: 0;
+        overflow: hidden;
+    }
+
+
+}
+
+
+.tabs{
+    justify-items: center;
+    margin: 10px 20px;
+}
+
+
+.tabs li{
+    list-style: none;
+    display: inline;
+    font-weight: bolder;
+    margin:0 5em;
+    font-size: 30px;
+    cursor: pointer;
+    color: #222121;
+    border: 5px solid #222121;
+    padding: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.tabs li:hover{
+   background-color: #222121;
+   color: #fff;
+}
+
+.hidden{
+    display: none;
+}
+
+.tabs  .active-li{
+    border: 5px solid #222121;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 10px;
+    background: #222121;
+    color: #fff;
+}
+
+
+.set-regular-shift-section, .add-employee-section {
+    background-color: #fff;
+    padding: 30px 0;
+    min-height: 100vh;
+}
+
+.set-regular-shift-section h1 ,.add-employee-section h1 {
+    text-align: center;
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.set-regular-shift-form , .add-employee-form{
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.add-employee-form label ,.add-employee-form label{
+    display: block;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.add-employee-form input, .add-employee-form select{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+
+
+
+.day-div{
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+}
+
+.day-div div{
+    flex: 1;
+}
+
+
+.day-input input{
+    width: 6%;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.day-input label{
+    font-size: larger;
+    color: #333;
+    margin: 15px;
+    vertical-align: middle;
+}
+
+.time-input input{
+    padding: 5px 20px;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+}
+
+.set-regular-shift-form input:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+
+.set-regular-shift-form button ,.add-employee-form button{
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.set-regular-shift-form button:hover, .add-employee-form button:hover {
+    background-color: #222121;
+}
+
+.submit-btn {
+    width: 100%;
+}
+
+
+.top-div button , .regular-shift-top-div button{
+    width: auto;
+    height: auto;
+    background: #333;
+    color: #fff;
+    border-radius: 20px;
+    font-size: medium;
+    padding: 12px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    right: 10em;
+}
+
+.top-div button:hover ,.regular-shift-top-div button:hover{
+    background: #202020;
+    /* text-decoration: underline; */
+    letter-spacing: 1px;
+}
+
+
+#team-msg-div p{
+    background: #f9f9f9;
+    margin: 50px 10rem;
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+}
+
+
+@media (max-width: 768px) {
+    .set-regular-shift-form {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .set-regular-shift-form label {
+        font-size: 16px;
+    }
+
+    .set-regular-shift-form input {
+        font-size: 14px;
+    }
+
+    .set-regular-shift-form h2 {
+        font-size: 20px;
+    }
+}

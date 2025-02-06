@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo"><a href="../dashboard/dashboard.html">Salon</a></h1>
+            <nav>
+                <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+                <ul class="nav-list">
+                    <li><a href="../services/services.html">Services</a></li>
+                    <!-- <li><a href="../recipes/recipes.html">Recipes</a></li> -->
+                    <li><a href="">Appointments</a></li>
+                    <li><a href="">Reviews</a></li>
+                    <li><a href="../set-working-hours/set-working-hours.html">Time</a></li>
+                    <li><a href="../team/team.html">Team</a></li>
+                    <li><i class="fa fa-user-circle" id="profile_icon" onclick="toggleProfileMenu()" style="font-size: 24px; cursor: pointer;"></i></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Profile Menu -->
+    <div class="profile-menu" id="profile_menu">
+        <ul id="profile_menu_list">
+            
+            
+        </ul>
+    </div>
+
+    
+    <div class="regular-shift-top-div">
+        <button onclick="showRegularShift()" id="regular-shift-button">Regular Shift</button>
+    </div>
+
+    <section class="set-regular-shift-section hidden" id="set-regular-shift-section" >
+        <div class="set-regular-shift-container">
+            <h1>Regular Shift</h1>
+            <form action="" method="post" class="set-regular-shift-form" id="set-regular-shift-form">
+
+                <div class="day-time-div">
+
+                    <div class="day-div">
+                        <div class="day-input">
+                            <input type="checkbox" name="monday" id="monday" value="Monday">
+                            <label for="monday">Monday</label>
+                        </div>
+                        <div class="time-input">
+                            <input type="time" required disabled id="start-monday"> 
+                            <input type="time" required disabled id="end-monday">
+                        </div>
+                    </div>
+                    <div class="day-div">
+                        <div class="day-input">
+                            <input type="checkbox" name="tuesday" id="tuesday" value="Tuesday">
+                            <label for="tuesday">Tuesday</label>
+                        </div>
+                        <div class="time-input">
+                            <input type="time" required disabled id="start-tuesday"> 
+                            <input type="time" required disabled id="end-tuesday">
+                        </div>
+                    </div>
+                    <div class="day-div">
+                        <div class="day-input">
+                            <input type="checkbox" name="wednesday" id="wednesday" value="Wensday">
+                            <label for="wednesday">Wednesday</label>
+                        </div>
+                        <div class="time-input">
+                            <input type="time" required disabled id="start-wednesday"> 
+                            <input type="time" required disabled id="end-wednesday">
+                        </div>
+                    </div>
+                    <div class="day-div">
+                        <div class="day-input">
+                            <input type="checkbox" name="thursday" id="thursday" value="Thursday">
+                            <label for="thursday">Thursday</label>
+                        </div>
+                        <div class="time-input">
+                            <input type="time" required disabled id="start-thursday"> 
+                            <input type="time" required disabled id="end-thursday">
+                        </div>
+                    </div>
+                    <div class="day-div">
+                        <div class="day-input">
+                            <input type="checkbox" name="friday" id="friday" value="Friday">
+                            <label for="friday">Friday</label>
+                        </div>
+                        <div class="time-input">
+                            <input type="time" required disabled id="start-friday"> 
+                            <input type="time" required disabled id="end-friday">
+                        </div>
+                    </div>
+                    <div class="day-div">
+                        <div class="day-input">
+                            <input type="checkbox" name="saturday" id="saturday" value="Saturday">
+                            <label for="saturday">Saturday</label>
+                        </div>
+                        <div class="time-input">
+                            <input type="time" required disabled id="start-saturday"> 
+                            <input type="time" required disabled id="end-saturday">
+                        </div>
+                    </div>
+                    <div class="day-div">
+                        <div class="day-input">
+                            <input type="checkbox" name="sunday" id="sunday" value="Sunday">
+                            <label for="sunday">Sunday</label>
+                        </div>
+                        <div class="time-input">
+                            <input type="time" required disabled id="start-sunday"> 
+                            <input type="time" required disabled id="end-sunday">
+                        </div>
+                    </div>
+                    
+                </div>
+
+
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn">Save</button>
+            </form>
+        </div>
+    </section>
+
+
+    <section class="add-employee-section" id="add-employee-section">
+
+        <div class="add-employee-div">
+
+            <div class="top-div">
+                <h1>Team</h1>
+                <button onclick="showAddEmployeeForm()" id="add-employee-button">Add Employee</button>
+            </div>
+
+
+            <div class="add-employee-container hidden" id="add-employee-container">
+                <h1>Add Employee</h1>
+                <form action="" method="post" class="add-employee-form" id="add-employee-form">
+
+                    <!-- Name -->
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" placeholder="e.g., John " required>
+
+                    <!-- Email -->
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="e.g., Public Holiday" required>
+
+                    <!-- Specialization -->
+                <label>Specialization:</label>
+                <select name="specialization" id="specialization">
+                  <option value="Hair Stylist">Hair Stylist</option>
+                  <option value="Barber">Barber</option>
+                  <option value="Beautician">Beautician</option>
+                  <option value="Massage Therapist">Massage Therapist</option>
+                  <option value="Barbering">Barbering</option>
+                  <option value="Nail Technician">Nail Technician</option>
+                  <option value="Epilation">Epilation</option>
+                  <option value="Brow technician">Brow technician</option>
+                  <option value="Makeup Artist">Makeup Artist</option>
+                  <option value="Tattoo Artist">Tattoo Artist</option>
+                  <option value="All Services Specialist">All Services Specialist</option>
+                  <!-- Add more categories -->
+                </select>
+
+                    <label for="start-date">Start Date</label>
+                    <input type="date" id="start-date" name="start-date" placeholder="e.g., 13-01-2025" required>
+    
+                    <!-- Submit Button -->
+                    <button type="submit" class="submit-btn">Add</button>
+                </form>
+            </div>
+            
+            
+            <div class="team-table-div" id="team-table-div">
+                <table id="team-table" class="team-table">
+                    <thead id="team-table-head" class="team-table-head">
+                        <tr>
+                            <th>Name</th>
+                            <th>Contact  &#11166;</th>
+                        </tr>
+                    </thead>
+                    <tbody id="team-table-body" class="team-table-body">
+                        <tr>
+                            <!-- <td>John</td>
+                            <td>654654</td> -->
+                            
+                        </tr>
+                        
+                    </tbody>
+                </table>
+                
+            </div>
+            
+
+            <div id="team-msg-div">
+            </div>
+        </div>
+
+        
+
+
+        
+    </section>
+
+    
+ 
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

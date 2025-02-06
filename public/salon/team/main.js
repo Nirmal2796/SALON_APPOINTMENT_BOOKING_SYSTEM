@@ -193,7 +193,7 @@ async function addEmployee(e) {
             name:employee_name.value,
             email:employee_email.value,
             specialization:employee_specialization.value,
-            start_date:closed_period_start_date.value,
+            start_date:employee_start_date.value,
         };
 
         const res=await axios.post('http://localhost:3000/add-employee',employee, {headers : {'Auth': token}});
@@ -298,9 +298,9 @@ function showEmployee(employee){
         document.getElementById('team-msg-div').hidden=true;
     }
 
-   const newRow=`<tr id=${employee.id}>
-                    <td>${employee.name}</td>
-                    <td>${employee.specialization}</td>
+   const newRow=`<tr id=${employee.employee.id}>
+                    <td>${employee.employee.name}</td>
+                    <td>${employee.specialization.name}</td>
                 </tr>
     `
 

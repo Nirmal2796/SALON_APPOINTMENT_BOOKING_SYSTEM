@@ -2,37 +2,43 @@ const sequelize=require('../util/database');
 const Specialization=require('../models/specialization');
 const Employee_Specialization=require('../models/employee_specialization');
 const Employee = require('../models/employee');
-// const { where } = require('sequelize');
 
 exports.addEmployee=async (req,res)=>{
     const t=await sequelize.transaction();
 
     try {
 
-        const specialization_arr=req.body.specialization;
+        const specialization=req.body.specialization;
 
-        for(let specialization in specialization_arr){
+        console.log(specialization);
 
-            const found_specialization=await Specialization.findOne({where:{
-                name:{specialization}
-            }});
+        const employee=await req.user.createEmployee({
+            name:req.body.name,
+            email:req.body.email,
+            start_date:req.body.start_date
+        },{transaction:t});
+
+
+        // for(let specialization in specialization_arr){
+
+            const found_specialization=await Specialization.findOne({where:
+                {name:specialization}
+            });
     
-            const employee=await req.user.createEmployee({
-                name:req.body.name,
-                email:req.body.email,
-                start_date:new Date().toJSON().slice(0, 10)
-            },{transaction:t});
-    
-            await Employee_Specialization.create({
+            console.log(found_specialization);
+            
+            const d=await Employee_Specialization.create({
                 employeeId:employee.id,
                 specializationId:found_specialization.id
             },{transaction:t});
-        }
+
+            // console.log(d);
+        // }
 
 
         await t.commit();
 
-        res.status(200).json({employee:employee,message:'Employee added successfully'});
+        res.status(200).json({employee:{employee,specialization:found_specialization},message:'Employee added successfully'});
         
     } catch (error) {
         await t.rollback();
@@ -46,11 +52,19 @@ exports.getEmployees=async (req,res)=>{
 
     try {
 
-        // const specialization=Specialization.findOne({where:{
-        //     name:{req.body.specialization}
-        // }})
-
+        
         const employee=await req.user.getEmployees();
+
+        for(let e in employee){
+            const s=await Employee_Specialization.findAll({
+                where:{
+                    employeeId:employee[e].id
+                }
+            });
+            const specialization=await Specialization.findByPk(s[0].specializationId);
+
+            employee[e]={employee:employee[e],specialization:specialization};
+        }
 
         
 
@@ -74,12 +88,12 @@ exports.editEmployee=async (req,res)=>{
         const newEmployee=await employee.update({
             name:req.body.name,
             email:req.body.email,
-            start_date:new Date().toJSON().slice(0, 10)
+            start_date:req.body.start_date
         },{transaction:t})
 
         await t.commit();
 
-        res.status(200).json({employee:newEmployee,message:'Employee added successfully'});
+        res.status(200).json({employee:newEmployee,message:'Employee updated successfully'});
         
     } catch (error) {
         await t.rollback();

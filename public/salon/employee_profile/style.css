@@ -343,6 +343,23 @@ tbody:before {
 }
 
 
+.shift-leave-table-body button{
+    /* width: auto;
+    height: auto; */
+    background: #333;
+    color: #fff;
+    border-radius: 20px;
+    font-size: small;
+    padding: 12px 15px;
+    /* margin: 10px; */
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.shift-leave-table-body button:hover{
+    background: #202020;
+}
+
 @media (max-width: 768px) {
     .personal-form {
         width: 100%;

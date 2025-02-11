@@ -8,6 +8,15 @@ const specialization = document.getElementById('specialization');
 const specialization_form = document.getElementById('specialization-form');
 // const service_table_body=document.getElementById('service-table-body');
 
+
+const leave_start_date=document.getElementById('start-date');
+const leave_end_date=document.getElementById('end-date');
+const leave_description=document.getElementById('description');
+const shift_leave_form=document.getElementById('shift-leave-form');
+
+
+shift_leave_form.addEventListener('submit',addLeave);
+
 const profile_menu_list = document.getElementById('profile_menu_list');
 
 
@@ -73,7 +82,7 @@ function toggleMenu() {
     Menu.classList.toggle("show");
 }
 
-
+//TOGGLE TABS
 function toggleTab(flag) {
 
     console.log(flag);
@@ -108,10 +117,13 @@ function toggleTab(flag) {
         document.getElementById('personal-section').classList.add('hidden');
         document.getElementById('specialization-section').classList.add('hidden');
         document.getElementById('shift-leave-section').classList.remove('hidden');
+
+        getLeave();
     }
 
 }
 
+//SHOW ADD LEAVE FORM
 function showAddLeaveForm() {
     document.getElementById('shift-leave-container').classList.toggle('hidden');
     const button = document.getElementById('add-shift-leave-button');
@@ -125,119 +137,7 @@ function showAddLeaveForm() {
 }
 
 
-async function setLeave(e) {
-
-    e.preventDefault();
-
-    try {
-
-        const token = localStorage.getItem('token');
-
-        const closed_period = {
-            start_date: closed_period_start_date.value,
-            end_date: closed_period_end_date.value,
-            description: closed_period_description.value
-        };
-
-        const res = await axios.post('http://localhost:3000/set-shift-leave', closed_period, { headers: { 'Auth': token } });
-
-        console.log(res.data.closed_period);
-
-        alert('Closed period added');
-
-        showClosedPeriod(res.data.closed_period);
-
-        set_closed_period_form.reset();
-    }
-    catch (err) {
-        console.log(err);
-        set_closed_period_form.reset();
-    }
-
-}
-
-
-
-async function getLeave() {
-
-    try {
-
-        const token = localStorage.getItem('token');
-
-        const leave = await axios.get('http://localhost:3000/get-leave', { headers: { 'Auth': token } });
-
-        console.log(leave.data.data);
-
-        const data = leave.data.data;
-
-        if (data.length == 0) {
-            console.log('No upcoming leaves');
-
-            document.getElementById('shift-leave-table-div').hidden = true;
-
-            document.getElementById('shift-leave-message-div').innerHTML = `<p>No upcoming closed periods</p>`
-        }
-        else {
-            document.getElementById('shift-leave-table-div').hidden = false;
-
-            for (const leave in data) {
-                showClosedPeriod(data[leave]);
-            }
-        }
-
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-//SHOW CLOSED PERIOD
-function showLeave(leave) {
-
-    if (document.getElementById('shift-leave-table-div').hidden) {
-        document.getElementById('shift-leave-table-div').hidden = false;
-        document.getElementById('shift-leave-message-div').hidden = true;
-    }
-
-    const newRow = `<tr id=${leave.id}>
-                                <td>${new Date(leave.start_date).toLocaleDateString("en-GB")}</td>
-                                <td>${new Date(leave.end_date).toLocaleDateString("en-GB")}</td>
-                                <td>${leave.description}</td>
-                                <td><button onClick="deleteLeave(${leave.id})">Delete</button></td>
-                </tr>
-    `
-
-    document.getElementById('shift-leave-table-body').innerHTML += newRow;
-}
-
-
-//REMOVE CLOSED PERIOD
-async function deleteLeave(id) {
-    try {
-        const token = localStorage.getItem('token');
-
-        const res = await axios.delete(`http://localhost:3000/delete-leave/${id}`, { headers: { 'Auth': token } });
-
-        document.getElementById(id).remove();
-        alert(res.data.message);
-
-
-        const rows = document.getElementById('shift-leave-table').querySelectorAll('tr').length - 1;
-
-        console.log(rows);
-        if (rows == 0) {
-            console.log(rows);
-
-            document.getElementById('shift-leave-table-div').hidden = true;
-
-            document.getElementById('shift-leave-message-div').innerHTML = `<p>No upcoming closed periods</p>`
-        }
-
-    }
-    catch (err) {
-        console.log(err);
-    }
-}
-
+//FORMAT DATE FOR INPUT
 function formatDateForInput(date) {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -245,6 +145,7 @@ function formatDateForInput(date) {
     return `${year}-${month}-${day}`;
 }
 
+//GET EMPLOYEE DETAILS
 async function getEmployeeDetails() {
 
     const token = localStorage.getItem('token');
@@ -282,7 +183,7 @@ async function getEmployeeDetails() {
 
 }
 
-
+//ENAABLE EDIT AND EDIT THE DATA
 async function enableEditAndEdit(e) {
 
     e.preventDefault();
@@ -342,7 +243,7 @@ async function enableEditAndEdit(e) {
 
 }
 
-
+//GET SPECILIZATION
 function getSpecilization() {
 
     const checkboxes = document.querySelectorAll('input[type="checkbox"]'); // Get all checkboxes
@@ -357,6 +258,7 @@ if (checkbox.checked) {
 return selectedSpecializations;
 }
 
+//ENABLE SPECIALIZATION AND EDIT THE DATA
 async function enableSpecializationEditAndEdit(e) {
 
     e.preventDefault();
@@ -413,4 +315,98 @@ async function enableSpecializationEditAndEdit(e) {
         console.log(error);
     }
 
+}
+
+
+//ADD LEAVE
+async function addLeave(e) {
+
+    e.preventDefault();
+
+    try {
+
+        const token = localStorage.getItem('token');
+
+        const leave = {
+            start_date: leave_start_date.value,
+            end_date: leave_end_date.value,
+            description: leave_description.value
+        };
+
+        const res = await axios.post(`http://localhost:3000/set-leave/${id}`, leave, { headers: { 'Auth': token } });
+
+        console.log(res.data.leave);
+
+        alert('Leave added');
+
+        // showClosedPeriod(res.data.leave);
+
+        shift_leave_form.reset();
+    }
+    catch (err) {
+        console.log(err);
+        shift_leave_form.reset();
+    }
+
+}
+
+
+//GET LEAVE
+async function getLeave() {
+    const token = localStorage.getItem('token');
+
+    try {
+
+        const urlParams = new URLSearchParams(window.location.search);
+        id = urlParams.get('id');
+
+        const res = await axios.get(`http://localhost:3000/get-leave/${id}`, { headers: { 'Auth': token } });
+
+        console.log(res.data.data);
+
+        const data=res.data.data;
+
+        if(data.length==0){
+            console.log('No Leaves');
+
+            document.getElementById('shift-leave-table-div').hidden=true;
+
+            document.getElementById('shift-leave-message-div').innerHTML=`<p>No Leaves</p>`
+        }
+        else{
+            document.getElementById('shift-leave-table-div').hidden=false;
+
+            document.getElementById('shift-leave-table-body').innerHTML='';
+
+            for(const leave in data){
+                showLeave(data[leave]);
+            }
+        }
+
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+//DELETE LEAVE
+
+
+//SHOW LEAVE
+function showLeave(leave){
+    
+      if(document.getElementById('shift-leave-table-div').hidden){
+        document.getElementById('shift-leave-table-div').hidden=false;
+        document.getElementById('shift-leave-message-div').hidden=true;
+    }
+
+    const newRow=`<tr id=${leave.id}>
+                                <td>${new Date(leave.start_date).toLocaleDateString("en-GB" )}</td>
+                                <td>${new Date(leave.end_date).toLocaleDateString("en-GB" )}</td>
+                                <td>${leave.description}</td>
+                                <td><button onClick="deleteClosedPeriod(${leave.id})">Delete</button></td>
+                </tr>
+    `
+
+    document.getElementById('shift-leave-table-body').innerHTML+=newRow;
 }

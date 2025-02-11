@@ -25,6 +25,7 @@ const Closed_Period=require('./models/closed_period');
 const Employee=require('./models/employee');
 const Specialization=require('./models/specialization');
 const Employee_Specialization=require('./models/employee_specialization');
+const Leave=require('./models/leave');
 
 
 const userRouter=require('./routes/user');
@@ -34,6 +35,7 @@ const serviceRouter=require('./routes/service');
 const workingHoursRouter=require('./routes/working-hours');
 const closedPeriodRouter=require('./routes/closed-period');
 const employeeRouter=require('./routes/employee');
+const leaveRouter = require('./routes/leave');
 
 
 const accessLogStream=fs.createWriteStream(path.join(__dirname, 'access.log'),{flags:'a'})
@@ -60,6 +62,7 @@ app.use(serviceRouter);
 app.use(workingHoursRouter);
 app.use(closedPeriodRouter);
 app.use(employeeRouter);
+app.use(leaveRouter);
 
 // app.use((req,res) => {
     // console.log("URL>>>",req.url);
@@ -85,6 +88,9 @@ Employee.belongsTo(Salon);
 
 Employee.belongsToMany(Specialization,{through:Employee_Specialization});
 Specialization.belongsToMany(Employee,{through:Employee_Specialization});
+
+Employee.hasMany(Leave);
+Leave.belongsTo(Employee);
 
 sequelize
 .sync()

@@ -21,7 +21,8 @@ exports.addWorkingHours=async(req,res)=>{
                 defaults:{
                     day:d,
                 start_time:data[d].start_time,
-                end_time:data[d].end_time
+                end_time:data[d].end_time,
+                salonId:req.user.id
                 },
                 transaction:t
             });

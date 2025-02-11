@@ -224,7 +224,7 @@ const working_hours=res.data.data;
 
   for (let working_hour of working_hours) {
     // console.log(working_hour.day);
-    const checkbox=document.getElementById(working_hour.day.toLowerCase().toLowerCase());
+    const checkbox=document.getElementById(working_hour.day.toLowerCase());
     checkbox.checked=true;
     const startTime = document.getElementById(`start-${working_hour.day.toLowerCase()}`);
     const endTime = document.getElementById(`end-${working_hour.day.toLowerCase()}`);

@@ -93,84 +93,6 @@ nav ul li {
     display: block;
 }
 
-.top-div{
-    display: flex;
-    justify-content: space-between;
-    margin: 50px 10rem;
-    /* background: #222121; */
-}
-
-.regular-shift-top-div{
-    margin: 20px 10rem;
-}
-
-
-
-.team-table-div{
-    background: #f9f9f9;
-    margin: 50px 10rem;
-    padding: 20px;
-    /* border-radius: 10px; */
-}
-
-.team-table{
-    width: 100%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    padding: 20px;
-    border-collapse: collapse;
-    overflow: scroll;
-}
-
-td,th {padding: .5em 1em;}
-
-.team-table thead tr {
-    border-bottom: 5px solid #333;
-    color: #333;
-    font-size: larger;
-    box-shadow: 0 1px 10px #000000; 
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
-}
- 
-.team-table-body tr{
-    cursor: pointer;
-}
-
-.team-table-body tr:hover{
-    background-color: #b6b0b0;
-}
-
-.team-table-body td {
-    padding: 10px 15px;
-    font-size: large;
-    text-align: center;
-}
-
-tbody:before {
-    line-height:1em;
-    content:".";
-    color:white; 
-    display:block;
-}
-
-.team-table-body button{
-    /* width: auto;
-    height: auto; */
-    background: #333;
-    color: #fff;
-    border-radius: 20px;
-    font-size: small;
-    padding: 12px 15px;
-    /* margin: 10px; */
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.team-table-body button:hover{
-    background: #202020;
-}
-
-
 /* ...........  Media Queries ............... */
 @media only screen and (min-width: 768px) {
     .menu-icon {
@@ -192,29 +114,38 @@ tbody:before {
 }
 
 
+.top-div{
+    display: flex;
+    justify-content: space-between;
+    margin: 50px 10rem;
+    /* background: #222121; */
+}
+
 .tabs{
     justify-items: center;
-    margin: 10px 20px;
+    margin: 10px 0;
+    /* background: #222121; */
+    padding: 10px;
 }
+
 
 
 .tabs li{
     list-style: none;
     display: inline;
     font-weight: bolder;
-    margin:0 5em;
-    font-size: 30px;
+    border-radius: 10px;
+    font-size: 20px;
     cursor: pointer;
-    color: #222121;
-    border: 5px solid #222121;
-    padding: 10px;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    color: white;
+    padding: 10px 9em;
+    background-color: #222121;
 }
 
 .tabs li:hover{
-   background-color: #222121;
-   color: #fff;
+    background-color: #fff;
+    color: #222121;
+    border: 1px solid #222121;
 }
 
 .hidden{
@@ -222,29 +153,28 @@ tbody:before {
 }
 
 .tabs  .active-li{
-    border: 5px solid #222121;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    padding: 10px;
-    background: #222121;
-    color: #fff;
+    background-color: #fff;
+    color: #222121;
+    border: 1px solid #222121;
 }
 
 
-.set-regular-shift-section, .add-employee-section {
+.personal-section ,.specialization-section ,.shift-leave-section{
     background-color: #fff;
-    padding: 30px 0;
+    padding: 50px 0;
     min-height: 100vh;
 }
 
-.set-regular-shift-section h1 ,.add-employee-section h1 {
+.personal-section h1 , .specialization-section h1 , .shift-leave-section h1{
     text-align: center;
     font-size: 32px;
     color: #333;
     margin-bottom: 20px;
 }
 
-.set-regular-shift-form , .add-employee-form{
+
+
+.personal-form , .specialization-form{
     width: 90%;
     max-width: 800px;
     margin: 0 auto;
@@ -254,16 +184,14 @@ tbody:before {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-
-
-.add-employee-form label{
+.personal-form label , .specialization-form label{
     display: block;
     font-size: 18px;
     color: #333;
     margin-bottom: 8px;
 }
 
-.add-employee-form input{
+.personal-form input{
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
@@ -273,49 +201,132 @@ tbody:before {
     color: #333;
 }
 
-
-
-
-.day-div{
-    display: flex;
-    margin: 10px;
-    padding: 10px;
-}
-
-.day-div div{
-    flex: 1;
+.personal-form input:focus {
+    outline: none;
+    border-color: #007bff;
 }
 
 
-.day-input input{
-    width: 6%;
-    height: 100%;
-    vertical-align: middle;
+.personal-form button ,.specialization-form button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.day-input label{
+.personal-form button:hover ,.specialization-form button:hover{
+    background-color: #222121;
+}
+
+.submit-btn {
+    width: 100%;
+}
+
+#shift-leave-message-div p{
+    background: #f9f9f9;
+    margin: 50px 10rem;
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
     font-size: larger;
-    color: #333;
-    margin: 15px;
-    vertical-align: middle;
 }
 
-.time-input input{
-    padding: 5px 20px;
-    margin: 10px;
+
+.top-div button{
+    width: auto;
+    height: auto;
+    background: #333;
+    color: #fff;
+    border-radius: 20px;
+    font-size: medium;
+    padding: 12px 15px;
+    /* margin: 10px; */
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    right: 10em;
+}
+
+.top-div button:hover{
+    background: #202020;
+    /* text-decoration: underline; */
+    letter-spacing: 1px;
+}
+
+
+
+.shift-leave-table-div{
+    background: #f9f9f9;
+    margin: 50px 10rem;
+    padding: 20px;
+    /* border-radius: 10px; */
+}
+
+.shift-leave-table{
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-collapse: collapse;
+    overflow: scroll;
+}
+
+td,th {padding: .5em 1em;}
+
+.shift-leave-table thead tr {
+    border-bottom: 5px solid #333;
+    color: #333;
+    font-size: larger;
+    box-shadow: 0 1px 10px #000000; 
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+ 
+
+.shift-leave-table-body td {
+    padding: 10px 15px;
+    font-size: large;
+    text-align: center;
+}
+
+tbody:before {
+    line-height:1em;
+    content:".";
+    color:white; 
+    display:block;
+}
+
+
+.shift-leave-form{
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.shift-leave-form label{
+    display: block;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 8px;
+}
+.shift-leave-form input{
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 16px;
     color: #333;
 }
 
-.set-regular-shift-form input:focus {
-    outline: none;
-    border-color: #007bff;
-}
-
-
-.set-regular-shift-form button ,.add-employee-form button{
+.shift-leave-form button{
     margin-top: 10px;
     padding: 10px 20px;
     background-color: #333;
@@ -327,80 +338,46 @@ tbody:before {
     transition: background-color 0.3s;
 }
 
-.set-regular-shift-form button:hover, .add-employee-form button:hover {
+.shift-leave-form button:hover {
     background-color: #222121;
-}
-
-.submit-btn {
-    width: 100%;
-}
-
-
-.top-div button , .regular-shift-top-div button{
-    width: auto;
-    height: auto;
-    background: #333;
-    color: #fff;
-    border-radius: 20px;
-    font-size: medium;
-    padding: 12px 15px;
-    font-weight: bold;
-    cursor: pointer;
-    position: absolute;
-    right: 10em;
-}
-
-.top-div button:hover ,.regular-shift-top-div button:hover{
-    background: #202020;
-    /* text-decoration: underline; */
-    letter-spacing: 1px;
-}
-
-
-#team-msg-div p{
-    background: #f9f9f9;
-    margin: 50px 10rem;
-    padding: 20px;
-    text-align: center;
-    font-weight: bold;
-    font-size: larger;
 }
 
 
 @media (max-width: 768px) {
-    .set-regular-shift-form {
+    .personal-form {
         width: 100%;
         padding: 15px;
     }
 
-    .set-regular-shift-form label {
+    .personal-form label {
         font-size: 16px;
     }
 
-    .set-regular-shift-form input {
+    .personal-form input{
         font-size: 14px;
     }
 
-    .set-regular-shift-form h2 {
+    .personal-form h2 {
         font-size: 20px;
     }
 }
 
-.specialization-container {
+
+.specialization-chechkbox-container {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     margin: 20px 0;
 }
 
-.specialization-container div {
+.specialization-chechkbox-container div {
     width: calc(50% - 5px); /* Makes two columns */
     display: flex;
     gap: 10px;
 }
 
 
-.add-employee-form input[type="checkbox"]{
+.specialization-form input[type="checkbox"]{
     width: 18px; /* Adjust size */
     height: 18px;
     margin-top: 3px;

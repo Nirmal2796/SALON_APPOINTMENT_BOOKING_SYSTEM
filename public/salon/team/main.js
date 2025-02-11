@@ -189,10 +189,11 @@ async function addEmployee(e) {
 
         const token=localStorage.getItem('token');
 
+
         const employee={
             name:employee_name.value,
             email:employee_email.value,
-            specialization:employee_specialization.value,
+            specialization:getSpecilization(),
             start_date:employee_start_date.value,
         };
 
@@ -298,11 +299,24 @@ function showEmployee(employee){
         document.getElementById('team-msg-div').hidden=true;
     }
 
-   const newRow=`<tr id=${employee.employee.id}>
+   const newRow=`<tr id=${employee.employee.id} onclick="window.open('../employee_profile/employee_profile.html?id=${employee.employee.id}','_self')">
                     <td>${employee.employee.name}</td>
-                    <td>${employee.specialization.name}</td>
-                </tr>
-    `
+                    <td>${employee.employee.email}</td></tr>`
 
     team_table_body.innerHTML+=newRow;
+}
+
+
+ function getSpecilization() {
+
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]'); // Get all checkboxes
+        const selectedSpecializations=[]; // Object to store the data
+
+  for (let checkbox of checkboxes) {
+    if (checkbox.checked) {
+        selectedSpecializations.push(checkbox.value);
+    }
+}
+ 
+return selectedSpecializations;
 }

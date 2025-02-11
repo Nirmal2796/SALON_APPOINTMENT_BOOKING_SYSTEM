@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo"><a href="../dashboard/dashboard.html">Salon</a></h1>
+            <nav>
+                <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+                <ul class="nav-list">
+                    <li><a href="../services/services.html">Services</a></li>
+                    <!-- <li><a href="../recipes/recipes.html">Recipes</a></li> -->
+                    <li><a href="">Appointments</a></li>
+                    <li><a href="">Reviews</a></li>
+                    <li><a href="../set-working-hours/set-working-hours.html">Time</a></li>
+                    <li><a href="../team/team.html">Team</a></li>
+                    <li><i class="fa fa-user-circle" id="profile_icon" onclick="toggleProfileMenu()" style="font-size: 24px; cursor: pointer;"></i></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Profile Menu -->
+    <div class="profile-menu" id="profile_menu">
+        <ul id="profile_menu_list">
+            
+            
+        </ul>
+    </div>
+
+
+    <div class="top-div">
+        <h2 id="emp_name">Employee Name</h2>
+        <!-- <a href="../add-service/add-service.html"><button>Add Service</button></a> -->
+    </div>
+
+    
+    <div class="employee_profile">
+
+        <div class="tabs">
+            <ul>
+                <li onclick="toggleTab(1)" class="active-li" id="perosnal-tab">Perosnal</li>
+                <li onclick="toggleTab(2)" id="specialization-tab">Specialization</li>
+                <li onclick="toggleTab(3)" id="shift-leave-tab">Shift/Leave</li>
+            </ul>
+        </div>
+
+        <section class="personal-section" id="personal-section">
+                <div class="personal-container">
+                    <h1>Perosnal Information</h1>
+                    <form action="" method="post" class="personal-form" id="personal-form">
+                        <!-- User Name -->
+                        <label for="username">User Name:</label>
+                        <input type="text" id="username" name="username" required disabled>
+        
+                        <!-- Email Id -->
+                        <label for="email">Email Id:</label>
+                        <input type="email" id="email" name="email" required disabled>
+        
+                        <label for="start-date">Start Date</label>
+                    <input type="date" id="start-date" name="start-date" placeholder="e.g., 13-01-2025" required disabled>
+            
+                        <!-- Submit Button -->
+                        <button type="submit" class="submit-btn" id="edit-profile-btn">Edit Profile</button>
+                    </form>
+                </div>
+        </section>
+        
+        <section class="specialization-section hidden" id="specialization-section">
+            <div class="specialization-container">
+                <h1>Specialization Information</h1>
+                <form action="" method="post" class="specialization-form" id="specialization-form">
+                 <!-- Specialization -->
+                <label>Specialization:</label>
+                <div class="specialization-chechkbox-container">
+                <div class="">
+                    <input type="checkbox" name="Hair Stylist" id="Hair Stylist" value="Hair Stylist" disabled>
+                    <label for="Hair Stylist">Hair Stylist</label>
+                </div>
+                <div class="">
+                    <input type="checkbox" disabled name="Barber" id="Barber" value="Barber">
+                    <label for="Barber">Barber</label>
+                </div>
+                <div class="">
+                    <input type="checkbox" disabled name="Beautician" id="Beautician" value="Beautician">
+                    <label for="Beautician">Beautician</label>
+                </div>
+                <div class="">
+                    <input type="checkbox" disabled name="Massage Therapist" id="Massage Therapist" value="Massage Therapist">
+                    <label for="Massage Therapist">Massage Therapist</label>
+                </div>
+                <div class="">
+                    <input type="checkbox" disabled name="Nail Technician" id="Nail Technician" value="Nail Technician">
+                    <label for="Nail Technician">Nail Technician</label>
+                </div>
+                <div class="">
+                    <input type="checkbox" disabled name="Epilation" id="Epilation" value="Epilation">
+                    <label for="Epilation">Epilation</label>
+                </div>
+                <div class="">
+                    <input type="checkbox" disabled name="Brow technician" id="Brow technician" value="Brow technician">
+                    <label for="Brow technician">Brow technician</label>
+                </div>
+                <div class="">
+                    <input type="checkbox" disabled name="Makeup Artist" id="Makeup Artist" value="Makeup Artist">
+                    <label for="Makeup Artist">Makeup Artist</label>
+                </div>
+                <div class="">
+                    <input type="checkbox" disabled name="Tattoo Artist" id="Tattoo Artist" value="Tattoo Artist">
+                    <label for="Tattoo Artist">Tattoo Artist</label>
+                </div>
+                <div class="">
+                    <input type="checkbox" disabled name="All Services Specialist" id="All Services Specialist" value="All Services Specialist">
+                    <label for="All Services Specialist">All Services Specialist</label>
+                </div>
+            </div>
+        
+                    <!-- Submit Button -->
+                    <button type="submit" class="submit-btn" id="edit-specialization-btn">Edit Specialization</button>
+                </form>
+            </div>
+        </section>
+        
+        <section class="shift-leave-section hidden" id="shift-leave-section" >
+
+            <div class="shift-leave-div">
+                <!-- <div class="top-div"> -->
+                    <h1>Leave</h1>
+                <!-- </div> -->
+                
+                
+                <div class="shift-leave-table-div" id="shift-leave-table-div">
+
+                    <table id="shift-leave-table" class="shift-leave-table">
+                        <thead id="shift-leave-table-head" class="shift-leave-table-head">
+                            <tr>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Description</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody id="shift-leave-table-body" class="shift-leave-table-body">
+                            <!-- <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><button>Delete</button></td>
+                            </tr> -->
+                            
+                        </tbody>
+                    </table>
+                    
+                </div>
+                
+
+                <div id="shift-leave-message-div">
+                </div>
+            </div>
+
+            <div class="top-div">
+                <button onclick="showAddLeaveForm()" id="add-shift-leave-button">Add Leave</button>
+
+            </div>
+
+
+            <div class="shift-leave-container hidden" id="shift-leave-container">
+                <h1>Add Leave</h1>
+                <form action="" method="post" class="shift-leave-form" id="shift-leave-form">
+       
+                    <label for="start-date">Start Date</label>
+                    <input type="date" id="start-date" name="start-date" placeholder="e.g., 13-01-2025" required>
+    
+                    <label for="end-date">End Date</label>
+                    <input type="date" id="end-date" name="end-date" placeholder="e.g., 13-01-2025" required>
+    
+                    <!-- Description -->
+                    <label for="description">Description:</label>
+                    <input type="text" id="description" name="description" placeholder="e.g., Public Holiday" required>
+    
+                    <!-- Submit Button -->
+                    <button type="submit" class="submit-btn">Add</button>
+                </form>
+            </div>
+        </section>
+        
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

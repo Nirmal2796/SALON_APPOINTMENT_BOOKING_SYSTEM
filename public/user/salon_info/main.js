@@ -1,4 +1,7 @@
 
+const service_table_body=document.getElementById('service-table-body');
+
+const working_hours_list=document.getElementById('working_hours_list');
 
 const profile_menu_list = document.getElementById('profile_menu_list');
 
@@ -79,7 +82,11 @@ async function getSalonInfo() {
 
         const res = await axios.get(`http://localhost:3000/get-salon/${id}`, { headers: { 'Auth': token } });
 
-       console.log(res.data);
+       console.log(res.data.salon.services);
+
+       for(service in res.data.salon.services){
+        showServices(res.data.salon.services[service]);
+    }
 
 
     }
@@ -89,3 +96,66 @@ async function getSalonInfo() {
 }
 
 
+//SHOW SERVICES
+function showServices(service){
+    const newRow=`<tr id=${service.id}>
+                    <td>${service.name}</td>
+                    <td>${service.description}</td>
+                    <td>${service.category}</td>
+                    <td>${service.duration}</td>
+                    <td>${service.price}</td>
+                </tr>
+    `
+
+    service_table_body.innerHTML+=newRow;
+}
+
+//GET SALONS
+async function getSalonInfo() {
+
+    const token = localStorage.getItem('token');
+
+    try {
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+
+        const res = await axios.get(`http://localhost:3000/get-salon/${id}`, { headers: { 'Auth': token } });
+
+       console.log(res.data.salon.services);
+
+       for(service in res.data.salon.services){
+        showServices(res.data.salon.services[service]);
+    }
+
+    for(working_hour in res.data.salon.working_hours){
+        showWorkingHours(res.data.salon.working_hours[working_hour]);
+    }
+
+
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+
+//SHOW WORKING HOURS
+function showWorkingHours(working_hour){
+
+    console.log(working_hour);
+    const newRow=`<li class="working_hours_list_item">
+                ${working_hour.day} <span>${formatTime(working_hour.start_time)}  --  ${formatTime(working_hour.end_time)}</span>
+            </li>
+    `
+
+    working_hours_list.innerHTML+=newRow;
+}
+
+//FORMAT TIME
+function formatTime(timeString) {
+    let [hours, minutes] = timeString.split(":").map(Number);
+    let ampm = hours >= 12 ? "PM" : "AM";
+    hours = hours % 12 || 12; // Convert 0 or 12-hour format
+    return `${hours}:${minutes} ${ampm}`;
+  }

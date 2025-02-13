@@ -125,7 +125,7 @@ async function onLogin(e) {
              if(role =='user'){
 
                   result = await axios.post(`http://localhost:3000/login`, User);
-                  window.location.href = '../home/home.html';
+                  window.location.href = '../user/home/home.html';
              }
              else{
                 console.log(role);

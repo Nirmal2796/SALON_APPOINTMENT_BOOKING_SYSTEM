@@ -112,3 +112,123 @@ nav ul li {
 }
 
 
+
+.top-div{
+    display: flex;
+    justify-content: space-between;
+    margin: 50px 10rem;
+    /* background: #222121; */
+}
+
+.top-div button{
+    width: auto;
+    height: auto;
+    background: #333;
+    color: #fff;
+    border-radius: 20px;
+    font-size: medium;
+    padding: 12px 15px;
+    /* margin: 10px; */
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.top-div button:hover{
+    background: #202020;
+    /* text-decoration: underline; */
+    letter-spacing: 1px;
+}
+
+
+.service-table-div{
+    background: #f9f9f9;
+    margin: 50px 10rem;
+    padding: 20px;
+    /* border-radius: 10px; */
+}
+
+.service-table{
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-collapse: collapse;
+    overflow: scroll;
+}
+
+td,th {padding: .5em 1em;}
+
+.service-table thead tr {
+    border-bottom: 5px solid #333;
+    color: #333;
+    font-size: larger;
+    box-shadow: 0 1px 10px #000000; 
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+ 
+
+.service-table-body td {
+    padding: 10px 15px;
+    font-size: large;
+    text-align: center;
+}
+
+tbody:before {
+    line-height:1em;
+    content:".";
+    color:white; 
+    display:block;
+}
+
+.service-table-body button{
+    /* width: auto;
+    height: auto; */
+    background: #333;
+    color: #fff;
+    border-radius: 20px;
+    font-size: small;
+    padding: 12px 15px;
+    /* margin: 10px; */
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.service-table-body button:hover{
+    background: #202020;
+}
+
+.working_hours_div{
+    width: 50%;
+    margin: 50px 10rem;
+}
+
+
+.working_hours_list {
+    margin: 30px 100px;
+    list-style: none; /* Remove default bullets */
+}
+
+.working_hours_list_item {
+    display: flex;
+    justify-content: space-between; /* Ensures even spacing */
+    align-items: center;
+    font-size: large;
+    padding: 10px 30px;
+    border-bottom: 1px solid #ddd; /* Optional: Adds a separator */
+    position: relative;
+}
+
+.working_hours_list_item::before {
+    content: "•"; /* Green dot marker */
+    color: green;
+    font-size: xx-large;
+    margin-right: 15px;
+    position: absolute;
+    left: 0;
+}
+
+.working_hours_list_item span {
+    flex-grow: 1; /* Pushes time to the right */
+    text-align: right;
+}
+

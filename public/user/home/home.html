@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Salon Appointments</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">Salon</h1>
+            <nav>
+                <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+                <ul class="nav-list">
+                    <li><a href="../home/home.html">Home</a></li>
+                    <!-- <li><a href="../salons/recipes.html">Recipes</a></li> -->
+                    <li>About Us</li>
+                    <li>Contact Us</li>
+                    <li><i class="fa fa-user-circle" id="profile_icon" onclick="toggleProfileMenu()" style="font-size: 24px; cursor: pointer;"></i></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Profile Menu -->
+    <div class="profile-menu" id="profile_menu">
+        <ul id="profile_menu_list">
+            
+            
+        </ul>
+    </div>
+
+ 
+     <!--................... Hero Section .................. -->
+
+     <section class="hero">
+        <div class="hero-section">
+            <h2>Book local beauty and wellness services</h2>
+
+            <form action="" class="search-box">
+                <input type="text" name="search" placeholder="Search Salon">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </section>
+
+
+    <!--................... Salon Section .................. -->
+
+    <section class="salons">
+        <h1>Recommended</h1>
+        <div class="salon-section">
+            <!-- <div class="salon-card">
+                <img src="" alt="salon Image">
+                <h2>Salon Name</h2>
+                <p>salon address</p>
+                <a href="../salon-info/salon-info.html?id=1">View salon</a>
+            </div>
+
+            <div class="salon-card">
+                <img src="" alt="salon Image">
+                <h2>Salon Name</h2>
+                <p>salon address</p>
+                <a href="../salon-info/salon-info.html?id=1">View salon</a>
+            </div>
+
+            <div class="salon-card">
+                <img src="" alt="salon Image">
+                <h2>Salon Name</h2>
+                <p>salon address</p>
+                <a href="../salon-info/salon-info.html?id=1">View salon</a>
+            </div> -->
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

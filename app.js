@@ -36,6 +36,7 @@ const workingHoursRouter=require('./routes/working-hours');
 const closedPeriodRouter=require('./routes/closed-period');
 const employeeRouter=require('./routes/employee');
 const leaveRouter = require('./routes/leave');
+const userSalonRouter=require('./routes/user_salon');
 
 
 const accessLogStream=fs.createWriteStream(path.join(__dirname, 'access.log'),{flags:'a'})
@@ -63,6 +64,7 @@ app.use(workingHoursRouter);
 app.use(closedPeriodRouter);
 app.use(employeeRouter);
 app.use(leaveRouter);
+app.use(userSalonRouter);
 
 // app.use((req,res) => {
     // console.log("URL>>>",req.url);

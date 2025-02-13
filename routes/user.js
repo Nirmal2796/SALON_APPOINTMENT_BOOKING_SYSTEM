@@ -18,4 +18,5 @@ router.post('/edit-profile',userAuthentication.authentication,userController.edi
 
 router.get('/validate-token',userAuthentication.authentication,userController.validateToken);
 
+
 module.exports=router;

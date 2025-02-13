@@ -1,0 +1,257 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    width: 100%;
+    min-width: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), url('../image/DomMiguelPhotography6164+copy.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+header {
+    width: 100%;
+    height: 60px;
+    background: #222121;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-list{
+    display: none;
+}
+
+nav ul li {
+    list-style: none;
+    display: inline;
+    margin-right: 20px;
+    font-weight: 550;
+}
+
+.logo {
+    font-size: 20px;
+}
+
+/* Profile Menu */
+.profile-menu {
+    display: none;
+    position: fixed;
+    top: 60px; /* Position it just below the header */
+    right: 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+.profile-menu ul {
+    list-style: none;
+}
+
+.profile-menu ul li {
+    padding: 10px 15px;
+}
+
+.profile-menu ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.profile-menu ul li a:hover {
+    background: #f1f1f1;
+}
+
+/* Show profile menu when toggled */
+.profile-menu.show {
+    display: block;
+}
+
+
+.menu-icon{
+    font-size: 24px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    display: block;
+}
+
+
+/* ...........  Media Queries ............... */
+@media only screen and (min-width: 768px){
+    .menu-icon{
+        display: none;
+    }
+
+    .nav-list{
+        display: block;
+    }
+
+
+    header {
+        position: sticky;
+        top: 0;
+        overflow: hidden;
+    }
+
+
+}
+
+
+@media only screen and (max-width: 768px){
+    .hero h2{
+        font-size: 28px;
+    }
+
+    .hero p{
+        font-size: 15px;
+    }
+
+    .featured-and-ingredients {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+
+
+.hero {
+    width: 100%;
+    height: auto;
+    /* background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5)), url('../image/DomMiguelPhotography6164+copy.jpg'); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    text-align: center;
+    padding: 150px 0;
+    /* margin-bottom: 20px; */
+}
+
+.hero h2 {
+    font-size: 50px;
+    margin-bottom: 10px;
+}
+
+
+.search-box {
+    max-width: 550px;
+    margin: 15px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+
+.search-box input {
+    width: 70%;
+    padding: 9px;
+    /* border: 0; */
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    font-size: 1rem;
+    border: 1px solid rgb(247, 37, 9);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-box input:focus{
+    border:3px solid rgb(247, 37, 9);
+}
+
+.search-box button {
+    padding: 10px 20px;
+    border: 0;
+    border-radius: 0 5px 5px 0;
+    outline: none;
+    font-size: 1rem;
+    background: rgb(247, 37, 9);
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-box button:hover{
+    background: rgb(226, 34, 9);
+    font-weight: bold;
+}
+
+
+/* <!--................... salon Section .................. --> */
+
+.salons {
+    padding: 50px 0;
+}
+
+.salons h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: #fff;
+}
+
+.salon-section {
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    column-gap: 10px;
+}
+
+.salon-card {
+    background: #fff;
+    margin: 30px 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.salon-card img{
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.salon-card h2{
+    font-size: 22px;
+    padding: 20px;
+}
+
+.salon-card p{
+    font-size: 18px;
+    padding: 20px;
+}
+
+.salon-card a{
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    background: #333;
+    color: #fff;
+    padding: 15px 0;
+    cursor: pointer;
+}
+
+.salon-card a:hover{
+    background: #222121;
+}

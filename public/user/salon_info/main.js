@@ -18,7 +18,7 @@ async function DomLoad() {
         // console.log('Dom Loaded');
          changeProfileMenu();
         window.scrollTo(0, 0);
-        getSalonInfo();
+        await getSalonInfo();
     }
     catch(err){
         console.log(err);
@@ -70,31 +70,6 @@ function toggleMenu() {
 }
 
 
-//GET SALONS
-async function getSalonInfo() {
-
-    const token = localStorage.getItem('token');
-
-    try {
-
-        const urlParams = new URLSearchParams(window.location.search);
-        const id = urlParams.get('id');
-
-        const res = await axios.get(`http://localhost:3000/get-salon/${id}`, { headers: { 'Auth': token } });
-
-       console.log(res.data.salon.services);
-
-       for(service in res.data.salon.services){
-        showServices(res.data.salon.services[service]);
-    }
-
-
-    }
-    catch (err) {
-        console.log(err);
-    }
-}
-
 
 //SHOW SERVICES
 function showServices(service){
@@ -106,6 +81,8 @@ function showServices(service){
                     <td>${service.price}</td>
                 </tr>
     `
+
+    // console.log(service);
 
     service_table_body.innerHTML+=newRow;
 }
@@ -132,6 +109,8 @@ async function getSalonInfo() {
         showWorkingHours(res.data.salon.working_hours[working_hour]);
     }
 
+    console.log(document.getElementById('book-btn'));
+    document.getElementById('book-btn').href=`../book_appoointment/book_apointment.html?id=${id}`;
 
     }
     catch (err) {

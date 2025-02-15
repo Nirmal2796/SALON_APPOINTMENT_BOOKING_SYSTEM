@@ -7,6 +7,8 @@ const cors=require('cors');
 const helemt=require('helmet');
 const morgan=require('morgan');
 
+const cron = require("cron");
+
 require('dotenv').config(); 
 
 const app=express();
@@ -93,6 +95,44 @@ Specialization.belongsToMany(Employee,{through:Employee_Specialization});
 
 Employee.hasMany(Leave);
 Leave.belongsTo(Employee);
+
+Specialization.hasMany(Service);
+Service.belongsTo(Specialization);
+
+
+
+// Run every day at midnight
+const job = new cron.CronJob('0 0 * * *', async () => {
+
+    const t = await sequelize.transaction();
+    try {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+    
+        await Closed_Period.destroy({
+          where: {
+            end_date: {
+              [Op.lte]: yesterday, // Delete records where end_date is yesterday or earlier
+            },
+          },
+          transaction:t
+        });
+
+        await t.commit();
+    
+        console.log("Expired records deleted successfully.");
+      } catch (error) {
+        await t.rollback();
+        console.error("Error deleting expired records:", error);
+      }
+},
+null, // This function is executed when the job stops
+true, // Start the job right now
+'Asia/Kolkata' // Time zone of this job.
+);
+
+
+
 
 sequelize
 .sync()

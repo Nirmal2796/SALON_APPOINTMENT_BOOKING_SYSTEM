@@ -26,8 +26,8 @@ async function DomLoad() {
         changeProfileMenu();
         window.scrollTo(0, 0);
         initializeCheckboxListeners();
-        getWorkingHours();
-        getClosedPeriod();
+        await getWorkingHours();
+        await getClosedPeriod();
 
     }
     catch(err){

@@ -19,17 +19,18 @@ const Specialization = sequelize.define('specialization', {
 // Insert predefined specializations when the table is created
 Specialization.sync().then(async () => {
     const count = await Specialization.count();
+    // Specialization.drop();
     if (count === 0) { // Only insert if table is empty
         await Specialization.bulkCreate([
-            { name: 'Hair Stylist' },
-            { name: 'Barber' },
-            { name: 'Beautician' },
-            { name: 'Massage Therapist' },
-            { name: 'Nail Technician' },
-            { name: 'Epilation' },
-            { name: 'Brow technician' },
-            { name: 'Makeup Artist' },
-            { name: 'Tattoo Artist' },
+            { name: 'Hair & Styling' },
+            { name: 'Nails' },
+            { name: 'Facial' },
+            { name: 'Massage' },
+            { name: 'Barbering' },
+            { name: 'Hair Removal' },
+            { name: 'Makeup' },
+            { name: 'Eyebrows and Eyelashes' },
+            { name: 'Tattoo and Piercing' },
             { name: 'All Services Specialist' }, // Can do everything
         ]);
         console.log("Specializations added successfully!");

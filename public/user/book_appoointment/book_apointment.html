@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salon</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">Salon</h1>
+            <nav>
+                <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+                <ul class="nav-list">
+                    <li><a href="../home/home.html">Home</a></li>
+                    <!-- <li><a href="../salons/recipes.html">Recipes</a></li> -->
+                    <li>About Us</li>
+                    <li>Contact Us</li>
+                    <li><i class="fa fa-user-circle" id="profile_icon" onclick="toggleProfileMenu()" style="font-size: 24px; cursor: pointer;"></i></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Profile Menu -->
+    <div class="profile-menu" id="profile_menu">
+        <ul id="profile_menu_list">
+            
+            
+        </ul>
+    </div>
+
+ 
+    <section class="book-appointment-section">
+        <div class="book-appointment-container">
+            <h1>BOOK AN APPOINMENT</h1>
+            <form action="" method="post" class="book-appointment-form" id="book-appointment-form">
+
+                <!-- Category -->
+                <label>Category:</label>
+                <select name="category" id="category">
+                  <option value="Hair & Styling">Hair & Styling</option>
+                  <option value="Nails">Nails</option>
+                  <option value="Facial">Facial</option>
+                  <option value="Massage">Massage</option>
+                  <option value="Barbering">Barbering</option>
+                  <option value="Hair Removal">Hair Removal</option>
+                  <option value="Makeup">Makeup</option>
+                  <option value="Eyebrows and Eyelashes">Eyebrows and Eyelashes</option>
+                  <option value="Tattoo and Piercing">Tattoo and Piercing</option>
+                  <!-- Add more categories -->
+                </select>
+
+            <div id="service-details" hidden>
+
+                <!-- Service Name -->
+                <label for="service-name">Service Name:</label>
+                <input type="text" id="service-name" name="service-name" placeholder="e.g., HairCut" required>
+
+                <!-- Description -->
+                <label for="description">Description:</label>
+                <input type="text" id="description" name="description" placeholder="Deep Layer U cut" required>
+
+
+                <!-- Duration -->
+                <label for="duration">Duration (in minutes):</label>
+                <input type="number" id="duration" name="duration" placeholder="e.g., 30" required>
+
+                <!-- Price -->
+                <label for="price">Price:</label>
+                <input type="number" id="price" name="price" placeholder="Rs." required>
+
+                <label>Specialist:</label>
+                <select name="specialist" id="specialist">
+                  <!-- <option value="Hair & Styling">Hair & Styling</option>
+                  <option value="Nails">Nails</option>
+                  <option value="Facial">Facial</option>
+                  <option value="Massage">Massage</option>
+                  <option value="Barbering">Barbering</option>
+                  <option value="Hair Removal">Hair Removal</option>
+                  <option value="Makeup">Makeup</option>
+                  <option value="Eyebrows and Eyelashes">Eyebrows and Eyelashes</option>
+                  <option value="Tattoo and Piercing">Tattoo and Piercing</option> -->
+                  <!-- Add more categories -->
+                </select>
+
+
+                <!-- Date -->
+                <label for="date">Date:</label>
+                <div id="date-msg"></div>
+                <input type="date" id="date" name="date" placeholder="Rs." required>
+
+
+                <!-- Submit Button -->
+                <button type="submit" class="submit-btn" id="submit-btn">BOOK</button>
+            </div>
+    
+                <button type="button" class="submit-btn" id="select-btn">SELECT</button>
+            </form>
+        </div>
+    </section>
+    
+
+  
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

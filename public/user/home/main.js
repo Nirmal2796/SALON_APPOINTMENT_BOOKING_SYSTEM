@@ -15,7 +15,7 @@ async function DomLoad() {
         // console.log('Dom Loaded');
          changeProfileMenu();
         window.scrollTo(0, 0);
-        getSalons();
+        await getSalons();
     }
     catch(err){
         console.log(err);

@@ -28,7 +28,7 @@ async function DomLoad() {
         window.scrollTo(0, 0);
         initializeCheckboxListeners();
         // getRegularShift();
-        getEmployees();
+        await getEmployees();
     }
     catch (err) {
         console.log(err);

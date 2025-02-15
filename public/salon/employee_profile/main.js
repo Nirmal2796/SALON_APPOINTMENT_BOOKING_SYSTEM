@@ -33,7 +33,7 @@ async function DomLoad() {
         // console.log('Dom Loaded');
         changeProfileMenu();
         window.scrollTo(0, 0);
-        getEmployeeDetails();
+        await getEmployeeDetails();
     }
     catch (err) {
         console.log(err);

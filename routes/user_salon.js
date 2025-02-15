@@ -11,6 +11,10 @@ router.get('/get-salons',userAuthentication.authentication,userSalonController.g
 
 router.get('/get-salon/:id',userAuthentication.authentication,userSalonController.getSalon);
 
+router.get('/get-closedPeriod/:id',userAuthentication.authentication,userSalonController.getClosedPeriod);
+
+router.get('/get-specialits/:id',userAuthentication.authentication,userSalonController.getSpecialists);
+
 
 
 module.exports=router;

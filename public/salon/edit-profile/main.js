@@ -18,7 +18,7 @@ async function DomLoad() {
          changeProfileMenu();
         window.scrollTo(0, 0);
 
-         getUserDetails();
+        await getUserDetails();
 
     }
     catch (err) {

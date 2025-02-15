@@ -82,7 +82,7 @@ async function addService(e) {
         service = {
             name: servicename.value,
             description: description.value,
-            category:category.value,
+            specialization:category.value,
             duration: duration.value,
             price:price.value
         };
@@ -96,4 +96,18 @@ async function addService(e) {
     catch (err) {
         console.log(err);
     }
+}
+
+function getSpecilization() {
+
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]'); // Get all checkboxes
+    const selectedSpecializations=[]; // Object to store the data
+
+for (let checkbox of checkboxes) {
+if (checkbox.checked) {
+    selectedSpecializations.push(checkbox.value);
+}
+}
+
+return selectedSpecializations;
 }

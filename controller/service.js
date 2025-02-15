@@ -1,6 +1,7 @@
 
 const Service=require('../models/service');
 const sequelize=require('../util/database');
+const Specialization=require('../models/specialization');
 
 
 exports.getServices=async(req,res)=>{
@@ -23,12 +24,20 @@ exports.addService=async(req,res)=>{
 
     try{
 
+        const specialization=req.body.specialization;
+
+        const found_specialization =await Specialization.findAll({
+            where:{
+                name:specialization
+            }
+        });
            
             const service=await req.user.createService({
                 name:req.body.name,
                 description:req.body.description,
                 duration:req.body.duration,
-                price:req.body.price
+                price:req.body.price,
+                specializationId:found_specialization[0].id
 
             },{transaction:t});
 
@@ -55,7 +64,9 @@ exports.getServiceDetails=async(req,res)=>{
     try{
             const service=await Service.findByPk(req.params.id);
 
-            res.status(200).json({ service: service });
+            const specialization=await Specialization.findByPk(service.specializationId);
+
+            res.status(200).json({ service: {service, specialization} });
 
     }
     catch (err) {
@@ -70,14 +81,22 @@ exports.editService=async(req,res)=>{
 
     try{
 
+        const specialization=req.body.specialization;
+
+        const found_specialization =await Specialization.findAll({
+            where:{
+                name:specialization
+            }
+        });
+
         const service=await Service.findByPk(req.params.id);
 
         const newService=await service.update({
                 name:req.body.name,
                 description:req.body.description,
                 duration:req.body.duration,
-                category:req.body.category,
-                price:req.body.price
+                price:req.body.price,
+                specializationId:found_specialization[0].id
         },{transaction:t})
 
            

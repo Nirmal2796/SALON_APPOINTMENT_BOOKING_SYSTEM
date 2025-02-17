@@ -73,12 +73,12 @@ function toggleMenu() {
 
 //SHOW SERVICES
 function showServices(service){
-    const newRow=`<tr id=${service.id}>
-                    <td>${service.name}</td>
-                    <td>${service.description}</td>
-                    <td>${service.category}</td>
-                    <td>${service.duration}</td>
-                    <td>${service.price}</td>
+    const newRow=`<tr id=${service.service.id}>
+                    <td>${service.service.name}</td>
+                    <td>${service.service.description}</td>
+                    <td>${service.specialization.name}</td>
+                    <td>${service.service.duration}</td>
+                    <td>${service.service.price}</td>
                 </tr>
     `
 
@@ -109,7 +109,7 @@ async function getSalonInfo() {
         showWorkingHours(res.data.salon.working_hours[working_hour]);
     }
 
-    console.log(document.getElementById('book-btn'));
+    // console.log(document.getElementById('book-btn'));
     document.getElementById('book-btn').href=`../book_appoointment/book_apointment.html?id=${id}`;
 
     }
@@ -122,7 +122,7 @@ async function getSalonInfo() {
 //SHOW WORKING HOURS
 function showWorkingHours(working_hour){
 
-    console.log(working_hour);
+    // console.log(formatTime(working_hour.start_time));
     const newRow=`<li class="working_hours_list_item">
                 ${working_hour.day} <span>${formatTime(working_hour.start_time)}  --  ${formatTime(working_hour.end_time)}</span>
             </li>
@@ -133,7 +133,7 @@ function showWorkingHours(working_hour){
 
 //FORMAT TIME
 function formatTime(timeString) {
-    let [hours, minutes] = timeString.split(":").map(Number);
+    let [hours, minutes] = timeString.split(":");
     let ampm = hours >= 12 ? "PM" : "AM";
     hours = hours % 12 || 12; // Convert 0 or 12-hour format
     return `${hours}:${minutes} ${ampm}`;

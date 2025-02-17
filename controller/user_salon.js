@@ -33,6 +33,16 @@ exports.getSalon = async (req, res) => {
             }
         });
 
+        for(let s in services){
+
+            const specialization = await Specialization.findByPk(services[s].specializationId);
+
+            const service=services[s];
+
+            services[s]={service , specialization};
+
+        }
+
         const working_hours = await Working_Hours.findAll({
             where: {
                 salonId: id

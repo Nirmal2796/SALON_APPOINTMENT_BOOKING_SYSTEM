@@ -109,7 +109,7 @@ function showAddEmployeeForm(){
 
 //INITIALISE CHECKBOXES
 function initializeCheckboxListeners() {
-    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+    document.querySelectorAll('.day-time-div input[type="checkbox"]').forEach(checkbox => {
       checkbox.addEventListener('change', function () {
         const day = this.value.toLowerCase(); // Get the day (e.g., "monday")
         const startTimeInput = document.getElementById(`start-${day.toLowerCase()}`);
@@ -310,7 +310,7 @@ function showEmployee(employee){
 
  function getSpecilization() {
 
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]'); // Get all checkboxes
+        const checkboxes = document.querySelectorAll('.specialization-container input[type="checkbox"]'); // Get all checkboxes
         const selectedSpecializations=[]; // Object to store the data
 
   for (let checkbox of checkboxes) {

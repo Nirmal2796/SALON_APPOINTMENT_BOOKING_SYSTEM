@@ -10,7 +10,7 @@ exports.addEmployee = async (req, res) => {
 
         const specialization_arr = req.body.specialization;
 
-        console.log(specialization_arr);
+        // console.log('specialization_arr',specialization_arr);
 
         const employee = await req.user.createEmployee({
             name: req.body.name,
@@ -18,7 +18,7 @@ exports.addEmployee = async (req, res) => {
             start_date: req.body.start_date
         }, { transaction: t });
 
-
+        
         const specializations = [];
 
         for (let specialization in specialization_arr) {
@@ -28,7 +28,7 @@ exports.addEmployee = async (req, res) => {
                     { name: specialization_arr[specialization] }
             });
 
-            console.log(found_specialization);
+            // console.log('specialization' ,found_specialization);
 
             specializations.push(found_specialization);
 

@@ -163,6 +163,8 @@ async function setWorkingHours(e) {
   console.log(res);
 //   set_working_hours_form.reset();
 
+alert('Working Hours Set Sucessfully');
+
     }
     catch(err){
         console.log(err);

@@ -39,7 +39,7 @@ async function changeProfileMenu() {
     try{
         const token=localStorage.getItem('token');
 
-        const res=await axios.get('http://localhost:3000/validate-token',{ headers: { 'Auth': token } });
+        const res=await axios.get('http://localhost:3000/salon-validate-token',{ headers: { 'Auth': token } });
 
         // const status='false';
         // console.log(profile_menu_list);
@@ -92,6 +92,8 @@ async function addService(e) {
         console.log(res);
 
         add_service_form.reset();
+
+        alert('Service Added Successfully');
     }
     catch (err) {
         console.log(err);

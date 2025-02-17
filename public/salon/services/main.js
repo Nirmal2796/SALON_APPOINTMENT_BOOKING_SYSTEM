@@ -31,7 +31,7 @@ async function changeProfileMenu() {
     try {
         const token = localStorage.getItem('token');
 
-        const res = await axios.get('http://localhost:3000/validate-token', { headers: { 'Auth': token } });
+        const res = await axios.get('http://localhost:3000/salon-validate-token', { headers: { 'Auth': token } });
 
         // const status='false';
         // console.log(profile_menu_list);
@@ -73,9 +73,9 @@ async function getServies() {
 
         const result = await axios.get('http://localhost:3000/get-salon-services', { headers: { 'Auth': token } });
 
-        console.log(result);
+        console.log(result.data.services);
 
-        for(service in result.data.services){
+        for(let service in result.data.services){
             showServices(result.data.services[service]);
         }
 
@@ -89,14 +89,15 @@ async function getServies() {
 
 //SHOW SERVICES
 function showServices(service){
-    const newRow=`<tr id=${service.id}>
-                    <td>${service.name}</td>
-                    <td>${service.description}</td>
-                    <td>${service.category}</td>
-                    <td>${service.duration}</td>
-                    <td>${service.price}</td>
-                    <td><a href="../edit-service/edit-service.html?id=${service.id}"><button>Edit</button></a></td>
-                    <td><button onclick="deleteService(${service.id})">Delete</button></td>
+    // console.log(service);
+    const newRow=`<tr id=${service.service.id}>
+                    <td>${service.service.name}</td>
+                    <td>${service.service.description}</td>
+                    <td>${service.specialization.name}</td>
+                    <td>${service.service.duration}</td>
+                    <td>${service.service.price}</td>
+                    <td><a href="../edit-service/edit-service.html?id=${service.service.id}"><button>Edit</button></a></td>
+                    <td><button onclick="deleteService(${service.service.id})">Delete</button></td>
                 </tr>
     `
 

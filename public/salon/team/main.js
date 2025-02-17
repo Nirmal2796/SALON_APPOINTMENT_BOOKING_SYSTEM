@@ -27,7 +27,7 @@ async function DomLoad() {
         changeProfileMenu();
         window.scrollTo(0, 0);
         initializeCheckboxListeners();
-        // getRegularShift();
+        await getRegularShift();
         await getEmployees();
     }
     catch (err) {
@@ -43,7 +43,7 @@ async function changeProfileMenu() {
     try {
         const token = localStorage.getItem('token');
 
-        const res = await axios.get('http://localhost:3000/validate-token', { headers: { 'Auth': token } });
+        const res = await axios.get('http://localhost:3000/salon-validate-token', { headers: { 'Auth': token } });
 
         // const status='false';
         // console.log(profile_menu_list);
@@ -140,6 +140,7 @@ async function setRegularShift(e) {
 
     e.preventDefault();
 
+
     try{
 
         const token=localStorage.getItem('token');
@@ -167,7 +168,7 @@ async function setRegularShift(e) {
   console.log(data);
 
 
-  const res=await axios.post('http://localhost:3000/set-regular-shift',data, {headers : {'Auth': token}});
+  const res=await axios.post('http://localhost:3000/set-regular_shift',data, {headers : {'Auth': token}});
 
   console.log(res);
 //   set_working_hours_form.reset();

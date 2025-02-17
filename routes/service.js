@@ -19,6 +19,6 @@ router.post('/edit-service/:id',salonAuthentication.authentication,serviceContro
 
 router.delete('/delete-service/:id',salonAuthentication.authentication,serviceController.deleteService);
 
-// router.get('/validate-token',salonAuthentication.authentication,userController.validateToken);
+// router.get('/validate-token',salonAuthentication.authentication,ser.validateToken);
 
 module.exports=router;

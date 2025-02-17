@@ -28,6 +28,7 @@ const Employee=require('./models/employee');
 const Specialization=require('./models/specialization');
 const Employee_Specialization=require('./models/employee_specialization');
 const Leave=require('./models/leave');
+const RegularShift=require('./models/regular_shift');
 
 
 const userRouter=require('./routes/user');
@@ -39,6 +40,7 @@ const closedPeriodRouter=require('./routes/closed-period');
 const employeeRouter=require('./routes/employee');
 const leaveRouter = require('./routes/leave');
 const userSalonRouter=require('./routes/user_salon');
+const regularShiftRouter=require('./routes/regular_shift');
 
 
 const accessLogStream=fs.createWriteStream(path.join(__dirname, 'access.log'),{flags:'a'})
@@ -67,6 +69,7 @@ app.use(closedPeriodRouter);
 app.use(employeeRouter);
 app.use(leaveRouter);
 app.use(userSalonRouter);
+app.use(regularShiftRouter);
 
 // app.use((req,res) => {
     // console.log("URL>>>",req.url);
@@ -86,6 +89,9 @@ Working_Hours.belongsTo(Salon);
 
 Salon.hasMany(Closed_Period);
 Closed_Period.belongsTo(Salon);
+
+Salon.hasMany(RegularShift);
+RegularShift.belongsTo(Salon);
 
 Salon.hasMany(Employee);
 Employee.belongsTo(Salon);

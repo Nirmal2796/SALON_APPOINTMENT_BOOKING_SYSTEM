@@ -8,6 +8,16 @@ exports.getServices=async(req,res)=>{
     try{
             const services=await req.user.getServices();
 
+            for(let s in services){
+
+                const specialization = await Specialization.findByPk(services[s].specializationId);
+
+                const service=services[s];
+
+                services[s]={service , specialization};
+
+            }
+
             res.status(200).json({ services: services });
 
     }
@@ -47,7 +57,7 @@ exports.addService=async(req,res)=>{
             res.status(201).json({
                 message: 'Service added successfully',
                 status: 'success',
-                service: service
+                service: {service, specialization:found_specialization}
             });
 
 
@@ -63,6 +73,8 @@ exports.addService=async(req,res)=>{
 exports.getServiceDetails=async(req,res)=>{
     try{
             const service=await Service.findByPk(req.params.id);
+
+            console.log(service);
 
             const specialization=await Specialization.findByPk(service.specializationId);
 

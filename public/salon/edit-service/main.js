@@ -40,7 +40,7 @@ async function changeProfileMenu() {
     try {
         const token = localStorage.getItem('token');
 
-        const res = await axios.get('http://localhost:3000/validate-token', { headers: { 'Auth': token } });
+        const res = await axios.get('http://localhost:3000/salon-validate-token', { headers: { 'Auth': token } });
 
         // const status='false';
         // console.log(profile_menu_list);
@@ -122,13 +122,13 @@ async function getServiceDetails() {
 
         const res = await axios.get(`http://localhost:3000/get-service-details/${id}`, { headers: { 'Auth': token } });
 
-        // console.log(res);
+        console.log(res.data);
 
-        servicename.value = res.data.service.name;
-        description.value = res.data.service.description;
-        category.value=res.data.service.category;
-        duration.value = res.data.service.duration;
-        price.value = res.data.service.price;
+        servicename.value = res.data.service.service.name;
+        description.value = res.data.service.service.description;
+        category.value=res.data.service.specialization.name;
+        duration.value = res.data.service.service.duration;
+        price.value = res.data.service.service.price;
 
     }
     catch (err) {

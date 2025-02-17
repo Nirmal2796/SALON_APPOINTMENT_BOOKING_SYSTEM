@@ -55,7 +55,7 @@ exports.getRegularShifts=async(req,res)=>{
     // const t=sequelize.transaction();
     try{
 
-        const regular_shifts=await req.user.getRegular_shift();
+        const regular_shifts=await req.user.getRegular_shifts();
 
 
         // console.log('data',data);

@@ -30,6 +30,9 @@ async function DomLoad() {
 }
 
 
+let leaveDates = [];
+let closedPeriodDates =[];
+
 
 
 //CHANGE PROFILE MENU
@@ -104,7 +107,10 @@ async function getClosedPeriod() {
 
        console.log(res.data.closedPeriod);
 
-       disableDates(res.data.closedPeriod);
+    //    disableDates(res.data.closedPeriod);
+
+    closedPeriodDates = res.data.closedPeriod;  
+        disableDates([...closedPeriodDates, ...leaveDates]);
         
     } catch (error) {
         console.log(error);
@@ -206,7 +212,14 @@ async function getLeave(id) {
 
         console.log(res.data.data);
 
-        disableDates(res.data.data);
+        // document.getElementById("date").removeEventListener("input");
+
+        // disableDates(res.data.data);
+
+        leaveDates = res.data.data;  
+        disableDates([...closedPeriodDates, ...leaveDates]); 
+
+
     }
     catch (err) {
         console.log(err);
@@ -218,27 +231,13 @@ async function getLeave(id) {
 function disableDates(disabledDates){
     // const disabledDates=await getClosedPeriod();
 
-    if(disabledDates.length!=0){
-        
-            const Sdate=((disabledDates[0].start_date).split('T')[0]);
-            const Edate=((disabledDates[0].end_date).split('T')[0]);
-        
-           
-                
-            document.getElementById("date").addEventListener("input", function () {
-        
-                    let selectedDate = this.value; 
-            if (selectedDate >= Sdate && selectedDate <= Edate)  {
-                        this.value = "";
-                        document.getElementById('date-msg').innerHTML = '<b>Not Available</b>';
-        
-        
-                        setTimeout(() => {
-                            document.getElementById('date-msg').removeChild(document.getElementById('date-msg').firstChild);
-                        }, 2000);
-                    }
-                });
-    }
+    const dateInput = document.getElementById("date");
+    const dateMsg = document.getElementById("date-msg");
+
+    dateInput.removeEventListener("input", handleDateSelection);
+    
+
+    dateInput.addEventListener("input", handleDateSelection);
 
 }
 
@@ -249,7 +248,7 @@ async function selectedEmployee(){
 
     const price = parseInt(priceTxt.match(/\d+/)[0]);
 
-    document.getElementById("date").value='';
+     document.getElementById("date").value='';
 
     if(document.getElementById('specialist').value != 'Any'){
 
@@ -261,6 +260,7 @@ async function selectedEmployee(){
 
         const eId= document.getElementById('specialist').value;
      
+        leaveDates = []; 
         await getLeave(eId);
     }
     else{
@@ -273,5 +273,29 @@ async function selectedEmployee(){
                             Price:
                             ${price -100}/-
                         </p>`;
+
+        leaveDates = [];  
+        disableDates([...closedPeriodDates]);
+    }
+}
+
+
+//EVENT FUNCTION FOR DATE INPUT
+function handleDateSelection(event) {
+    let selectedDate = event.target.value;
+
+    for (let dateRange of [...closedPeriodDates, ...leaveDates]) {
+        let Sdate = dateRange.start_date.split('T')[0];
+        let Edate = dateRange.end_date.split('T')[0];
+
+        if (selectedDate >= Sdate && selectedDate <= Edate) {
+            event.target.value = "";
+            document.getElementById("date-msg").innerHTML = '<b>Not Available</b>';
+
+            setTimeout(() => {
+                document.getElementById("date-msg").innerHTML = '';
+            }, 2000);
+            break;
+        }
     }
 }

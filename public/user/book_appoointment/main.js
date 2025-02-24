@@ -110,7 +110,7 @@ async function getClosedPeriod() {
     //    disableDates(res.data.closedPeriod);
 
     closedPeriodDates = res.data.closedPeriod;  
-        disableDates([...closedPeriodDates, ...leaveDates]);
+    disableDates();
         
     } catch (error) {
         console.log(error);
@@ -217,7 +217,7 @@ async function getLeave(id) {
         // disableDates(res.data.data);
 
         leaveDates = res.data.data;  
-        disableDates([...closedPeriodDates, ...leaveDates]); 
+        disableDates(); 
 
 
     }
@@ -228,7 +228,7 @@ async function getLeave(id) {
 
 
 //DISABLE DATES
-function disableDates(disabledDates){
+function disableDates(){
     // const disabledDates=await getClosedPeriod();
 
     const dateInput = document.getElementById("date");
@@ -275,7 +275,7 @@ async function selectedEmployee(){
                         </p>`;
 
         leaveDates = [];  
-        disableDates([...closedPeriodDates]);
+        disableDates();
     }
 }
 

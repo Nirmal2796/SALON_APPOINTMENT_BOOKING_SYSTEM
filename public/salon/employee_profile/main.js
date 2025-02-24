@@ -339,7 +339,7 @@ async function addLeave(e) {
 
         alert('Leave added');
 
-        // showClosedPeriod(res.data.leave);
+        showLeave(res.data.leave);
 
         shift_leave_form.reset();
     }
@@ -404,9 +404,37 @@ function showLeave(leave){
                                 <td>${new Date(leave.start_date).toLocaleDateString("en-GB" )}</td>
                                 <td>${new Date(leave.end_date).toLocaleDateString("en-GB" )}</td>
                                 <td>${leave.description}</td>
-                                <td><button onClick="deleteClosedPeriod(${leave.id})">Delete</button></td>
+                                <td><button onClick="deleteLeave(${leave.id})">Delete</button></td>
                 </tr>
     `
 
     document.getElementById('shift-leave-table-body').innerHTML+=newRow;
+}
+
+//REMOVE CLOSED PERIOD
+async function deleteLeave(id){
+    try{
+        const token=localStorage.getItem('token');
+
+        const res=await axios.delete(`http://localhost:3000/delete-leave/${id}`,{headers:{'Auth':token}});
+
+        document.getElementById(id).remove();
+        alert(res.data.message);
+
+
+        const rows=document.getElementById('shift-leave-table').querySelectorAll('tr').length-1;
+
+        console.log(rows);
+        if(rows==0){
+            console.log(rows);
+
+            document.getElementById('shift-leave-table-div').hidden=true;
+
+             document.getElementById('shift-leave-message-div').innerHTML=`<p>No Leaves</p>`
+        }   
+
+    }
+    catch(err){
+        console.log(err);
+    }
 }

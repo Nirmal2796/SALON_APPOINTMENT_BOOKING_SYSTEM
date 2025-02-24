@@ -57,24 +57,23 @@
             <div id="service-details" hidden>
 
                 <!-- Service Name -->
+                <!-- <label>Specialist:</label> -->
+                <!-- <select name="specialist" id="specialist"> -->
                 <label for="service-name">Service Name:</label>
-                <input type="text" id="service-name" name="service-name" placeholder="e.g., HairCut" required>
+                <select id="service-name" name="service-name" placeholder="e.g., HairCut" required>
+                </select>
+
+                <!-- <label for="service-name">Service Name:</label> -->
+                <!-- <input type="text" id="service-name" name="service-name" placeholder="e.g., HairCut" required> -->
 
                 <!-- Description -->
-                <label for="description">Description:</label>
-                <input type="text" id="description" name="description" placeholder="Deep Layer U cut" required>
+                <!-- <label for="description">Description:</label>
+                <input type="text" id="description" name="description" placeholder="Deep Layer U cut" required> -->
 
-
-                <!-- Duration -->
-                <label for="duration">Duration (in minutes):</label>
-                <input type="number" id="duration" name="duration" placeholder="e.g., 30" required>
-
-                <!-- Price -->
-                <label for="price">Price:</label>
-                <input type="number" id="price" name="price" placeholder="Rs." required>
+                
 
                 <label>Specialist:</label>
-                <select name="specialist" id="specialist">
+                <select name="specialist" id="specialist" onchange="selectedEmployee()">
                   <!-- <option value="Hair & Styling">Hair & Styling</option>
                   <option value="Nails">Nails</option>
                   <option value="Facial">Facial</option>
@@ -92,6 +91,22 @@
                 <label for="date">Date:</label>
                 <div id="date-msg"></div>
                 <input type="date" id="date" name="date" placeholder="Rs." required>
+
+                <!-- Duration -->
+                <!-- <label for="duration">Duration (in minutes):</label>
+                <input type="number" id="duration" name="duration" placeholder="e.g., 30" required> -->
+
+                <div id="duration">
+
+                </div>
+
+                <!-- Price -->
+                <!-- <label for="price">Price:</label>
+                <input type="number" id="price" name="price" placeholder="Rs." required> -->
+
+                <div id="price">
+
+                </div>
 
 
                 <!-- Submit Button -->

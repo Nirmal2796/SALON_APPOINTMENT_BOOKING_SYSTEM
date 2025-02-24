@@ -92,9 +92,11 @@ exports.getSpecialists = async (req, res) => {
 
         const specialization=req.query.specialization;
 
-        console.log(specialization);
+        // console.log(specialization);
 
         const salon = await Salon.findByPk(id);
+
+        // console.log(salon);
 
         const employees=await Employee.findAll({
             where:
@@ -103,7 +105,7 @@ exports.getSpecialists = async (req, res) => {
             }
         });
 
-        console.log(employees);
+        // console.log(employees);
 
         const found_specialization=await Specialization.findAll({
             where:{
@@ -111,7 +113,7 @@ exports.getSpecialists = async (req, res) => {
             }
         });
 
-        console.log(found_specialization);
+        // console.log(found_specialization);
 
 
         const emp_spec=await Employee_Specialization.findAll({
@@ -119,6 +121,8 @@ exports.getSpecialists = async (req, res) => {
                 specializationId:found_specialization[0].id
             }
         });
+
+        // console.log(emp_spec);
 
 
         let employee=[];
@@ -144,3 +148,40 @@ exports.getSpecialists = async (req, res) => {
     }
 }
 
+
+exports.getServices = async (req, res) => {
+    try {
+
+        const id = req.params.id;
+
+        const specialization=req.query.specialization;
+
+        console.log(specialization);
+
+        const salon = await Salon.findByPk(id);
+
+        
+        const found_specialization=await Specialization.findAll({
+            where:{
+                name:specialization
+            }
+        });
+
+
+        const services=await Service.findAll({
+            where:
+            {
+                salonId:salon.id,
+                specializationId:found_specialization[0].id
+            }
+        });
+
+        
+
+        res.status(200).json({ services:services});
+
+
+    } catch (error) {
+        res.status(500).json({ success: false, message: error });
+    }
+}

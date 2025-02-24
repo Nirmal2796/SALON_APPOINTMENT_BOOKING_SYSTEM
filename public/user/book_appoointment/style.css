@@ -135,11 +135,15 @@ nav ul li {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.book-appointment-form label {
+.book-appointment-form label , #duration ,#price {
     display: block;
     font-size: 18px;
     color: #333;
     margin-bottom: 8px;
+}
+
+#duration ,#price{
+    padding: 10px 0;
 }
 
 .book-appointment-form input, .book-appointment-form select {
@@ -195,4 +199,8 @@ nav ul li {
     .book-appointment-form h2 {
         font-size: 20px;
     }
+}
+
+#date-msg{
+    color: red;
 }

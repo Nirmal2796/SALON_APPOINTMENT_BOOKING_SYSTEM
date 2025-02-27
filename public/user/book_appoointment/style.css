@@ -21,6 +21,7 @@ header {
     position: sticky;
     top: 0;
     overflow: hidden;
+    z-index: 1000;
 }
 
 .container {
@@ -112,13 +113,13 @@ nav ul li {
 }
 
 
-.book-appointment-section {
+.book-appointment-section , .service-list-section{
     background-color: #fff;
     padding: 30px 0;
-    min-height: 100vh;
+    /* min-height: 100vh; */
 }
 
-.book-appointment-section h1 {
+.book-appointment-section h1 , .service-list-section h1{
     text-align: center;
     font-size: 32px;
     color: #333;
@@ -204,3 +205,67 @@ nav ul li {
 #date-msg{
     color: red;
 }
+
+.appointment-container {
+    display: flex;
+    gap: 30px; /* Adds space between the sections */
+    margin: 30px;
+}
+
+.book-appointment-section , .service-list-section{
+    flex: 1; /* Makes both sections flexible */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+ .service-list-section:last-child{
+    flex: 0.4; /* Makes the last section smaller */
+}
+
+#main-service-list{
+    list-style-type: none;
+}
+
+#main-service-list li{
+    margin-bottom: 10px;
+}
+
+.main-service-list_item {
+    display: flex;
+    justify-content: space-between; 
+    /* align-items: center; */
+    /* font-size: large; */
+    padding: 10px 0;
+    /* border-bottom: 1px solid #ddd; Optional: Adds a separator */
+    position: relative;
+}
+
+.main-service-list_item span {
+    flex-grow: 1; /* Pushes time to the right */
+    text-align: center;
+}
+
+.main-service-list-total{
+    display: flex;
+    padding: 10px 0;
+    justify-content: space-between;
+}
+
+.main-service-list-pay button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.main-service-list-pay button:hover {
+    background-color: #222121;
+}
+

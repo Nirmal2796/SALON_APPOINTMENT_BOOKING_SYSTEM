@@ -8,8 +8,12 @@ const book_appointment_form = document.getElementById('book-appointment-form');
 const profile_menu_list = document.getElementById('profile_menu_list');
 
 
-// book_appointment_form.addEventListener('submit',showServiceDetails);
-select_btn.addEventListener('click', showServiceDetails);
+
+book_appointment_form.addEventListener('submit',addToMainList);
+// select_btn.addEventListener('click', showServiceDetails);
+
+Category.addEventListener('change',showServiceDetails);
+Category.dispatchEvent(new Event('change'));
 
 //DOM CONTENT LOAD EVENT
 document.addEventListener('DOMContentLoaded', DomLoad);
@@ -21,7 +25,7 @@ async function DomLoad() {
         // console.log('Dom Loaded');
         changeProfileMenu();
         window.scrollTo(0, 0);
-        // await getClosedPeriod();
+        await getClosedPeriod();
         // await getSpecialists();
     }
     catch (err) {
@@ -32,7 +36,7 @@ async function DomLoad() {
 
 let leaveDates = [];
 let closedPeriodDates =[];
-
+let total_amount=0;
 
 
 //CHANGE PROFILE MENU
@@ -79,15 +83,15 @@ function toggleMenu() {
 
 //SHOW SERVICE DETIALS
 async function showServiceDetails() {
-    const submit_btn = document.getElementById('submit-btn');
+    // const submit_btn = document.getElementById('submit-btn');
     
-    select_btn.hidden = true;
+    // select_btn.hidden = true;
 
-    document.getElementById('service-details').hidden = false;
-    document.getElementById('category').disabled=true;
+    // document.getElementById('service-details').hidden = false;
+    // document.getElementById('category').disabled=true;
     // submit_btn.innerText='BOOK';
    
-    await getClosedPeriod();
+    document.getElementById("date").value='';
     await getServies();
     await getSpecialists();
 
@@ -169,6 +173,8 @@ async function getServies() {
         console.log(result.data);
 
         const services=result.data.services;
+        
+        document.getElementById('service-name').innerHTML='';
 
        for(let s in services){
 
@@ -299,3 +305,64 @@ function handleDateSelection(event) {
         }
     }
 }
+
+
+//ADD TO MAIN LIST
+function addToMainList(e){
+
+    e.preventDefault();
+
+    const service=document.getElementById('service-name');
+
+    console.log(service.value);
+
+    const MainList=document.getElementById('main-service-list');
+
+    MainList.hidden=false;
+    document.getElementById('service-list-msg').hidden=true;
+    // <li class="main-service-list_item">
+    //                 service name <span>Price</span>   <span>Date</span>
+    //             </li>
+    // console.log();
+    const newLi=`<li class="main-service-list_item" id=list-${service.value}>${service.innerText}  <span>${date.value}</span> <span>${price.innerText.substring(7)}</span> <button onclick="removeFromMainList('list-${service.value}')">DEL</button> </li>`;
+
+    MainList.innerHTML+=newLi;
+
+    total_amount+=parseInt(price.innerText.substring(7));
+    document.getElementById('total').innerText=total_amount;
+
+}
+
+//ADD TO MAIN LIST
+function removeFromMainList(id){
+
+    // e.preventDefault();
+
+    const service=document.getElementById(id);
+
+    // console.log(service);
+
+    const priceElement = service.querySelector("span:nth-child(2)");
+
+    // console.log(priceElement);
+    const MainList=document.getElementById('main-service-list');
+
+    // MainList.removeChild(service);
+    service.remove();
+
+    total_amount-=parseInt(priceElement.innerText);
+    // console.log(typeof(total_amount));
+    if(total_amount == 0){
+        
+        document.getElementById('total').innerText=0;
+    }
+    else{
+        document.getElementById('total').innerText=total_amount;
+    }
+
+    if (MainList.childElementCount === 0) {
+        document.getElementById('service-list-msg').hidden=false;
+        MainList.hidden=true;
+    }
+}
+

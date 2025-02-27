@@ -33,16 +33,16 @@
         </ul>
     </div>
 
- 
+    <div class="appointment-container">
     <section class="book-appointment-section">
         <div class="book-appointment-container">
-            <h1>BOOK AN APPOINMENT</h1>
-            <form action="" method="post" class="book-appointment-form" id="book-appointment-form">
-
+            <h1>Select Services</h1>
+            <form action="" method="" class="book-appointment-form" id="book-appointment-form">
+                
                 <!-- Category -->
                 <label>Category:</label>
                 <select name="category" id="category">
-                  <option value="Hair & Styling">Hair & Styling</option>
+                  <option value="Hair & Styling" selected>Hair & Styling</option>
                   <option value="Nails">Nails</option>
                   <option value="Facial">Facial</option>
                   <option value="Massage">Massage</option>
@@ -54,7 +54,7 @@
                   <!-- Add more categories -->
                 </select>
 
-            <div id="service-details" hidden>
+            <!-- <div id="service-details"> -->
 
                 <!-- Service Name -->
                 <!-- <label>Specialist:</label> -->
@@ -63,27 +63,11 @@
                 <select id="service-name" name="service-name" placeholder="e.g., HairCut" required>
                 </select>
 
-                <!-- <label for="service-name">Service Name:</label> -->
-                <!-- <input type="text" id="service-name" name="service-name" placeholder="e.g., HairCut" required> -->
-
-                <!-- Description -->
-                <!-- <label for="description">Description:</label>
-                <input type="text" id="description" name="description" placeholder="Deep Layer U cut" required> -->
-
-                
+              
 
                 <label>Specialist:</label>
                 <select name="specialist" id="specialist" onchange="selectedEmployee()">
-                  <!-- <option value="Hair & Styling">Hair & Styling</option>
-                  <option value="Nails">Nails</option>
-                  <option value="Facial">Facial</option>
-                  <option value="Massage">Massage</option>
-                  <option value="Barbering">Barbering</option>
-                  <option value="Hair Removal">Hair Removal</option>
-                  <option value="Makeup">Makeup</option>
-                  <option value="Eyebrows and Eyelashes">Eyebrows and Eyelashes</option>
-                  <option value="Tattoo and Piercing">Tattoo and Piercing</option> -->
-                  <!-- Add more categories -->
+                 
                 </select>
 
 
@@ -92,17 +76,10 @@
                 <div id="date-msg"></div>
                 <input type="date" id="date" name="date" placeholder="Rs." required>
 
-                <!-- Duration -->
-                <!-- <label for="duration">Duration (in minutes):</label>
-                <input type="number" id="duration" name="duration" placeholder="e.g., 30" required> -->
-
                 <div id="duration">
 
                 </div>
 
-                <!-- Price -->
-                <!-- <label for="price">Price:</label>
-                <input type="number" id="price" name="price" placeholder="Rs." required> -->
 
                 <div id="price">
 
@@ -110,16 +87,37 @@
 
 
                 <!-- Submit Button -->
-                <button type="submit" class="submit-btn" id="submit-btn">BOOK</button>
-            </div>
+                <button type="submit" class="submit-btn" id="submit-btn">ADD</button>
+            <!-- </div> -->
     
-                <button type="button" class="submit-btn" id="select-btn">SELECT</button>
+                <!-- <button type="button" class="submit-btn" id="select-btn">SELECT</button> -->
             </form>
         </div>
     </section>
     
 
-  
+    <section class="service-list-section">
+        <div class="service-list-container">
+            <h1>SERVICES</h1>
+            <p id="service-list-msg">No service is selected</p>
+            <ul id="main-service-list" hidden>
+                <!-- <li>service name -   price </li> -->
+                <!-- <li class="main-service-list_item">
+                    service name <span>Price</span>   <span>Date</span><button>DEL</button>
+                </li> -->
+            </ul>
+            <hr>
+            <div class="main-service-list-total">
+                <span>Total</span>
+                <span id="total">0</span>
+            </div>
+
+            <div class="main-service-list-pay">
+                <button>PAY</button>
+            </div>
+        </div>
+    </section>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
     <script src="main.js"></script>

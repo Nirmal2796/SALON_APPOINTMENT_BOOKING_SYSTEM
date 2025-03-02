@@ -269,3 +269,7 @@ nav ul li {
     background-color: #222121;
 }
 
+.main-service-list-pay button:disabled{
+    cursor: not-allowed;
+    background-color: #777; 
+}

@@ -308,7 +308,7 @@ function handleDateSelection(event) {
 
 
 //ADD TO MAIN LIST
-function addToMainList(e){
+async function addToMainList(e){
 
     e.preventDefault();
 
@@ -330,6 +330,10 @@ function addToMainList(e){
 
     total_amount+=parseInt(price.innerText.substring(7));
     document.getElementById('total').innerText=total_amount;
+
+    book_appointment_form.reset(); 
+    document.getElementById('pay').disabled=false;
+    await getServies();
 
 }
 
@@ -355,6 +359,7 @@ function removeFromMainList(id){
     if(total_amount == 0){
         
         document.getElementById('total').innerText=0;
+        document.getElementById('pay').disabled=true;
     }
     else{
         document.getElementById('total').innerText=total_amount;
@@ -366,3 +371,53 @@ function removeFromMainList(id){
     }
 }
 
+
+//APPOINTMENT PAYMENT
+async function appointmentPayment(e) {
+
+    const amount=document.getElementById('total').innerText;
+
+    const token=localStorage.getItem('token');
+
+    // console.log(amount);
+
+    const res = await axios.get('http://localhost:3000/appointment_payment',amount, { headers: { 'Auth': token } });
+
+    console.log(res.data.order.id);
+
+    var options = {
+        "key": res.data.key_id,
+        "order_id": res.data.order.id,
+        "handler": async function (res) {
+            const result = await axios.post('http://localhost:3000/updateTransactions', {
+                order_id: options.order_id,
+                payment_id: res.razorpay_payment_id,
+                status: 'successful'
+            }, { headers: { 'Auth': token } });
+
+
+            alert('Appointment Booked');
+        },
+        "retry": {
+            enabled: false
+        }
+    };
+
+    var razorpayObject = new Razorpay(options);
+
+    razorpayObject.on('payment.failed', async (res) => {
+        // console.log(res);
+        const result = await axios.post('http://localhost:3000/updateTransactions', {
+            order_id: options.order_id,
+            payment_id: res.razorpay_payment_id,
+            status: 'failed'
+        }, { headers: { 'Auth': token } });
+
+        alert('Payment Failed');
+    });
+
+    // console.log(razorpayObject);
+    razorpayObject.open();
+    e.preventDefault();
+
+}

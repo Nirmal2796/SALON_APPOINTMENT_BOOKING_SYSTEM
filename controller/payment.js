@@ -3,7 +3,7 @@ const Razorpay = require('razorpay');
 const sequelize = require('../util/database');
 
 const Payment = require('../models/payment');
-const JWTServices=require('../services/JWTservices');
+// const JWTServices=require('../services/JWTservices');
 
 exports.appointmentPayment = async (req, res) => {
 
@@ -17,9 +17,12 @@ exports.appointmentPayment = async (req, res) => {
             key_secret: process.env.RAZORPAY_KEY_SECRET
         });
 
-        const amount = req.body.amount;
+        const amount = parseInt(req.body.amount)*100;
+        // const amount=500000;
 
-        rzp.orders.create({ amount, currency: "INR" }, async (err, order) => {
+        // console.log('AMOUNT >>>>>>>>>>>>>>>' , amount );
+
+        rzp.orders.create({ amount:amount, currency: "INR" }, async (err, order) => {
             if (err) {
                 throw new Error(err);
             }
@@ -29,18 +32,19 @@ exports.appointmentPayment = async (req, res) => {
                     status: 'PENDING'
                 };
 
-                console.log(userOrder);
+                // console.log(userOrder);
                 await req.user.createPayment(userOrder,{transaction:t})
                 await t.commit();
 
                 return res.status(201).json({ order, key_id: rzp.key_id });
 
             }
-        })
+        });
+        
     }
     catch (err) {
         await t.rollback();
-        res.status(500).json({ success: false, message: 'Something went wrong' });
+        res.status(500).json({ success: false, message: 'Something went wrong' ,err:err});
 
     }
 }
@@ -54,22 +58,22 @@ exports.updateTransaction = async (req, res) => {
 
         const { order_id, payment_id,status } = req.body;
 
-        console.log(order_id, 'paymentid ',payment_id, 'status',status);
+        // console.log(order_id, 'paymentid ',payment_id, 'status',status);
         const payment =await Payment.findOne({ where: { orderid: order_id } });
-        // console.log(order);
-        let update1 ;
-        let update2 ;
+        // console.log(payment_id);
+
+        // let update1 ;
+
         if(status=='successful'){
-            update1=payment.update({ paymentid: payment_id, status: 'SUCCESSFUL' },{transaction:t});
-            // update2=req.user.update({ ispremiumuser: true },{transaction:t});
-            
+            await payment.update({ paymentid: payment_id, status: 'SUCCESSFUL' },{transaction:t});
+ 
         }
         else{
-            update1 = payment.update({ payment_id: payment_id, status: 'FAILED' },{transaction:t});
-            // update2 = req.user.update({ ispremiumuser: false },{transaction:t});           
+            await payment.update({ paymentid: payment_id, status: 'FAILED' },{transaction:t});
+                 
         }
 
-        await Promise.all([update1, update2]);
+        // await Promise.all([update1]);
 
         await t.commit();
         res.status(202).json({ success: true, message: status});

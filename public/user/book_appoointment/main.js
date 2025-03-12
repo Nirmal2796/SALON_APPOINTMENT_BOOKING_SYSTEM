@@ -7,10 +7,11 @@ const book_appointment_form = document.getElementById('book-appointment-form');
 
 const profile_menu_list = document.getElementById('profile_menu_list');
 
+const pay_btn=document.getElementById('pay');
 
 
 book_appointment_form.addEventListener('submit',addToMainList);
-// select_btn.addEventListener('click', showServiceDetails);
+pay_btn.addEventListener('click', appointmentPayment);
 
 Category.addEventListener('change',showServiceDetails);
 Category.dispatchEvent(new Event('change'));
@@ -314,16 +315,13 @@ async function addToMainList(e){
 
     const service=document.getElementById('service-name');
 
-    console.log(service.value);
+    // console.log(service.value);
 
     const MainList=document.getElementById('main-service-list');
 
     MainList.hidden=false;
     document.getElementById('service-list-msg').hidden=true;
-    // <li class="main-service-list_item">
-    //                 service name <span>Price</span>   <span>Date</span>
-    //             </li>
-    // console.log();
+   
     const newLi=`<li class="main-service-list_item" id=list-${service.value}>${service.innerText}  <span>${date.value}</span> <span>${price.innerText.substring(7)}</span> <button onclick="removeFromMainList('list-${service.value}')">DEL</button> </li>`;
 
     MainList.innerHTML+=newLi;
@@ -379,24 +377,33 @@ async function appointmentPayment(e) {
 
     const token=localStorage.getItem('token');
 
-    // console.log(amount);
+    console.log(amount);
 
-    const res = await axios.get('http://localhost:3000/appointment_payment',amount, { headers: { 'Auth': token } });
+    const res = await axios.post('http://localhost:3000/appointment_payment',{amount}, { headers: { 'Auth': token } });
 
-    console.log(res.data.order.id);
+    console.log('Razorpay Order:', res.data);
 
     var options = {
-        "key": res.data.key_id,
-        "order_id": res.data.order.id,
+        "key":res.data.key_id,
+        "order_id":res.data.order.id,
+        "amount":res.data.order.amount,
+        "currency":"INR",
         "handler": async function (res) {
+
+            try{
+
             const result = await axios.post('http://localhost:3000/updateTransactions', {
                 order_id: options.order_id,
                 payment_id: res.razorpay_payment_id,
                 status: 'successful'
             }, { headers: { 'Auth': token } });
 
-
+            console.log(result);
             alert('Appointment Booked');
+        }
+        catch(err){
+            console.error("Error updating transaction:", err.response?.data || err.message);
+        }
         },
         "retry": {
             enabled: false
@@ -405,19 +412,25 @@ async function appointmentPayment(e) {
 
     var razorpayObject = new Razorpay(options);
 
+    console.log(options);
+    console.log(razorpayObject);
+    // console.log('Opening rzp');
+    
+
+
     razorpayObject.on('payment.failed', async (res) => {
         // console.log(res);
         const result = await axios.post('http://localhost:3000/updateTransactions', {
             order_id: options.order_id,
-            payment_id: res.razorpay_payment_id,
+            payment_id: 'NA',
             status: 'failed'
         }, { headers: { 'Auth': token } });
 
         alert('Payment Failed');
+        razorpayObject.close();
     });
 
-    // console.log(razorpayObject);
+   
     razorpayObject.open();
     e.preventDefault();
-
 }

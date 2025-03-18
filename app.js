@@ -30,6 +30,7 @@ const Employee_Specialization=require('./models/employee_specialization');
 const Leave=require('./models/leave');
 const RegularShift=require('./models/regular_shift');
 const Payment=require('./models/payment');
+const Appointment=require('./models/appointment');
 
 
 const userRouter=require('./routes/user');
@@ -43,6 +44,7 @@ const leaveRouter = require('./routes/leave');
 const userSalonRouter=require('./routes/user_salon');
 const regularShiftRouter=require('./routes/regular_shift');
 const paymentRouter=require('./routes/payment');
+const appointmentRouter=require('./routes/appointment');
 
 const accessLogStream=fs.createWriteStream(path.join(__dirname, 'access.log'),{flags:'a'})
 
@@ -72,6 +74,7 @@ app.use(leaveRouter);
 app.use(userSalonRouter);
 app.use(regularShiftRouter);
 app.use(paymentRouter);
+app.use(appointmentRouter);
 
 // app.use((req,res) => {
     // console.log("URL>>>",req.url);
@@ -110,6 +113,11 @@ Leave.belongsTo(Employee);
 Specialization.hasMany(Service);
 Service.belongsTo(Specialization);
 
+Appointment.belongsTo(User);  // One user can have multiple appointments
+Appointment.belongsTo(Service);  // Each appointment is for one service
+Appointment.belongsTo(Salon);  // Each appointment is at one salon
+Appointment.belongsTo(Employee);
+
 
 
 // Run every day at midnight
@@ -119,7 +127,8 @@ const job = new cron.CronJob('0 0 * * *', async () => {
     try {
         const yesterday = new Date();
         yesterday.setDate(yesterday.getDate() - 1);
-    
+        yesterday.setHours(0, 0, 0, 0); 
+
         await Closed_Period.destroy({
           where: {
             end_date: {

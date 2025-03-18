@@ -220,7 +220,7 @@ nav ul li {
 }
 
  .service-list-section:last-child{
-    flex: 0.4; /* Makes the last section smaller */
+    flex: 0.5; /* Makes the last section smaller */
 }
 
 #main-service-list{

@@ -45,7 +45,7 @@ exports.addWorkingHours=async(req,res)=>{
         res.status(200).json({message:'working hours set successfully', data:data});
     }
     catch (err) {
-        // await t.rollback();
+        await t.rollback();
         console.log(err);
         res.status(500).json({success:false});
     }

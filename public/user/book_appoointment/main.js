@@ -1,9 +1,13 @@
 
 const Category=document.getElementById('category');
 
+const serviceDropdown = document.getElementById('service-name');
+
 const select_btn = document.getElementById('select-btn');
 
 const book_appointment_form = document.getElementById('book-appointment-form');
+
+const MainList=document.getElementById('main-service-list');
 
 const profile_menu_list = document.getElementById('profile_menu_list');
 
@@ -15,6 +19,7 @@ pay_btn.addEventListener('click', appointmentPayment);
 
 Category.addEventListener('change',showServiceDetails);
 Category.dispatchEvent(new Event('change'));
+
 
 //DOM CONTENT LOAD EVENT
 document.addEventListener('DOMContentLoaded', DomLoad);
@@ -40,6 +45,7 @@ let closedPeriodDates =[];
 let total_amount=0;
 
 
+
 //CHANGE PROFILE MENU
 async function changeProfileMenu() {
     try {
@@ -54,7 +60,7 @@ async function changeProfileMenu() {
             profile_menu_list.innerHTML = `
             <li><a href="../edit-profile/edit-profile.html">Edit Profile</a></li>
             <li><a href="#">Prefernces</a></li>
-            <li><a href="#">Appointments</a></li>
+            <li><a href="../appointments/appointments.html">Appointments</a></li>
             `;
         }
         else {
@@ -84,13 +90,6 @@ function toggleMenu() {
 
 //SHOW SERVICE DETIALS
 async function showServiceDetails() {
-    // const submit_btn = document.getElementById('submit-btn');
-    
-    // select_btn.hidden = true;
-
-    // document.getElementById('service-details').hidden = false;
-    // document.getElementById('category').disabled=true;
-    // submit_btn.innerText='BOOK';
    
     document.getElementById("date").value='';
     await getServies();
@@ -149,7 +148,7 @@ async function getSpecialists() {
        }
         
        document.getElementById('specialist').innerHTML+=`
-           <option value="Any" id="" selected>Any</option>`
+           <option value="0" id="0" selected>Any</option>`
 
     //    return res.data.closedPeriod;
         
@@ -174,28 +173,41 @@ async function getServies() {
         console.log(result.data);
 
         const services=result.data.services;
+
+        console.log(services);
+
+        serviceDropdown.innerHTML = '<option value="">Select a Service</option>'; 
+        document.getElementById('duration').innerHTML ='';
+        document.getElementById('price').innerHTML = '';
         
-        document.getElementById('service-name').innerHTML='';
+        const servicesMap = {};
 
-       for(let s in services){
+        // document.getElementById('service-name').innerHTML='';
 
-        document.getElementById('service-name').innerHTML+=`
-           <option value="${services[s].id}" id="${services[s].id}">${services[s].name}</option>`;
+       for(let s of services){
 
-        document.getElementById('duration').innerHTML=`
-                    <p id="duration-p" name="duration">
-                        Duration: ${services[s].duration} Minutes
-                    </p>`;
+        servicesMap[s.id] = s;
 
-        
-                    // console.log(document.getElementById('specialist').value);
-            document.getElementById('price').innerHTML=`
-                        <p id="price-p" name="price">
-                            Price:
-                            ${services[s].price}/-
-                        </p>`;
+        serviceDropdown.innerHTML +=`
+           <option value="${s.id}" id="${s.id}">${s.name}</option>`;
        
        }
+
+       serviceDropdown.addEventListener('change', function () {
+        const selectedService = servicesMap[this.value]; // Get selected service details
+        
+        if (selectedService) {
+            document.getElementById('duration').innerHTML = `
+                <p id="duration-p" name="duration">
+                    Duration: ${selectedService.duration} Minutes
+                </p>`;
+
+            document.getElementById('price').innerHTML = `
+                <p id="price-p" name="price">
+                    Price: ${selectedService.price}/-
+                </p>`;
+        }
+    });
 
         
        
@@ -313,16 +325,16 @@ async function addToMainList(e){
 
     e.preventDefault();
 
-    const service=document.getElementById('service-name');
+    const serviceDropdown = document.getElementById('service-name');
+    const service = serviceDropdown.options[serviceDropdown.selectedIndex];
 
-    // console.log(service.value);
-
-    const MainList=document.getElementById('main-service-list');
-
+    const specialistDropdown = document.getElementById('specialist');
+    const specialist = specialistDropdown.options[specialistDropdown.selectedIndex];
+    
     MainList.hidden=false;
     document.getElementById('service-list-msg').hidden=true;
    
-    const newLi=`<li class="main-service-list_item" id=list-${service.value}>${service.innerText}  <span>${date.value}</span> <span>${price.innerText.substring(7)}</span> <button onclick="removeFromMainList('list-${service.value}')">DEL</button> </li>`;
+    const newLi=`<li class="main-service-list_item" id=list-${service.value} data-specialist-id="${specialist.value}">${service.text} <span>${specialist.text}</span> <span>${date.value}</span> <span>${price.innerText.substring(7)}</span> <button onclick="removeFromMainList('list-${service.value}')">DEL</button> </li>`;
 
     MainList.innerHTML+=newLi;
 
@@ -378,6 +390,9 @@ async function appointmentPayment(e) {
     const token=localStorage.getItem('token');
 
     console.log(amount);
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const salonId = urlParams.get('id');
 
     const res = await axios.post('http://localhost:3000/appointment_payment',{amount}, { headers: { 'Auth': token } });
 
@@ -400,6 +415,20 @@ async function appointmentPayment(e) {
 
             console.log(result);
             alert('Appointment Booked');
+
+            const appointments=getAllListData();
+            console.log(appointments);
+
+             await axios.post('http://localhost:3000/add-apointment', {
+                salonId: salonId,
+                appointments:appointments
+            }, { headers: { 'Auth': token } });
+
+            
+            MainList.hidden=true;
+            document.getElementById('service-list-msg').hidden=false;
+            document.getElementById('total').innerText='0';
+
         }
         catch(err){
             console.error("Error updating transaction:", err.response?.data || err.message);
@@ -434,3 +463,22 @@ async function appointmentPayment(e) {
     razorpayObject.open();
     e.preventDefault();
 }
+
+
+function getAllListData() {
+    const listItems = document.querySelectorAll(".main-service-list_item");
+    const data = [];
+
+    listItems.forEach(li => {
+        const serviceName = li.childNodes[0].textContent.trim(); // Get service name
+        const date = li.children[1].textContent.trim(); // Get date
+        const price = li.children[2].textContent.trim(); // Get price
+        const specialistId = li.getAttribute("data-specialist-id") || "0"; 
+        
+        data.push({ serviceName, date, price ,specialistId});
+    });
+
+    console.log(data); // Output the collected data
+    return data;
+}
+

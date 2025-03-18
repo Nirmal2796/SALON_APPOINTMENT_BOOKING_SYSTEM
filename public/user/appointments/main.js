@@ -1,7 +1,7 @@
 
 
 const profile_menu_list = document.getElementById('profile_menu_list');
-const salon_section=document.querySelector('.salon-section');
+
 
 
 
@@ -13,9 +13,8 @@ document.addEventListener('DOMContentLoaded', DomLoad);
 async function DomLoad() { 
     try{
         // console.log('Dom Loaded');
-         changeProfileMenu();
+        changeProfileMenu();
         window.scrollTo(0, 0);
-        await getSalons();
     }
     catch(err){
         console.log(err);
@@ -39,7 +38,7 @@ async function changeProfileMenu() {
             profile_menu_list.innerHTML=`
             <li><a href="../edit-profile/edit-profile.html">Edit Profile</a></li>
             <li><a href="#">Prefernces</a></li>
-            <li><a href="../appointments/appointments.html">Appointments</a></li>
+            <li><a href="appointments.html">Appointments</a></li>
             `;
         }
         else{
@@ -67,37 +66,3 @@ function toggleMenu() {
 }
 
 
-//GET SALONS
-async function getSalons() {
-
-    const token = localStorage.getItem('token');
-
-    try {
-        const res = await axios.get('http://localhost:3000/get-salons', { headers: { 'Auth': token } });
-
-       console.log(res.data);
-
-       
-       res.data.salons.forEach(salon => {
-        showsalons(salon);
-    });
-
-    }
-    catch (err) {
-        console.log(err);
-    }
-}
-
-
-//SHOW MY salonS
-function showsalons(salon){
-
-    const newsalon=`<div class="salon-card" id=${salon.id}>
-                    <img src="" alt="salon Image">
-                    <h2>${salon.name}</h2>
-                    <p>${salon.email}</p>
-                    <a href="../salon_info/salon_info.html?id=${salon.id}">View salon</a>
-                </div>`;
-    
-    salon_section.innerHTML+=newsalon;
-}

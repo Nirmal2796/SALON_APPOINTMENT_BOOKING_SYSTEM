@@ -15,6 +15,7 @@ async function DomLoad() {
         // console.log('Dom Loaded');
         changeProfileMenu();
         window.scrollTo(0, 0);
+        await getAppointments();
     }
     catch(err){
         console.log(err);
@@ -66,3 +67,18 @@ function toggleMenu() {
 }
 
 
+async function getAppointments() {
+
+    try {
+
+        const token=localStorage.getItem('token');
+
+        const result=await axios.get('http://localhost:3000/get-appointments',{ headers: { 'Auth': token } });
+
+        console.log(result);
+        
+    } catch (error) {
+        console.log(error);
+    }
+    
+}

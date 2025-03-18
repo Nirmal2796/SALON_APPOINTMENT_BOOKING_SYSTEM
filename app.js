@@ -114,9 +114,16 @@ Specialization.hasMany(Service);
 Service.belongsTo(Specialization);
 
 Appointment.belongsTo(User);  // One user can have multiple appointments
+User.hasMany(Appointment);
+
 Appointment.belongsTo(Service);  // Each appointment is for one service
+Service.hasMany(Appointment);
+
 Appointment.belongsTo(Salon);  // Each appointment is at one salon
+Salon.hasMany(Appointment);
+
 Appointment.belongsTo(Employee);
+Employee.hasMany(Appointment);
 
 
 

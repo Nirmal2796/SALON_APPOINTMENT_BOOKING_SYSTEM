@@ -1,55 +1,55 @@
-const path=require('path');
-const fs=require('fs');
+const path = require('path');
+const fs = require('fs');
 
 const express = require('express');
 
-const cors=require('cors');
-const helemt=require('helmet');
-const morgan=require('morgan');
+const cors = require('cors');
+const helemt = require('helmet');
+const morgan = require('morgan');
 
 const cron = require("cron");
 
-require('dotenv').config(); 
+require('dotenv').config();
 
-const app=express();
+const app = express();
 
-const bodyParser=require('body-parser');
+const bodyParser = require('body-parser');
 
-const sequelize=require('./util/database');
-
-
-const User=require('./models/user');
-const ForgotPasswordRequests=require('./models/forgotPasswordRequests');
-const Salon=require('./models/salon');
-const Service=require('./models/service');
-const Working_Hours=require('./models/working_hours');
-const Closed_Period=require('./models/closed_period');
-const Employee=require('./models/employee');
-const Specialization=require('./models/specialization');
-const Employee_Specialization=require('./models/employee_specialization');
-const Leave=require('./models/leave');
-const RegularShift=require('./models/regular_shift');
-const Payment=require('./models/payment');
-const Appointment=require('./models/appointment');
+const sequelize = require('./util/database');
 
 
-const userRouter=require('./routes/user');
-const passwordRouter=require('./routes/password');
-const salonRouter=require('./routes/salon');
-const serviceRouter=require('./routes/service');
-const workingHoursRouter=require('./routes/working-hours');
-const closedPeriodRouter=require('./routes/closed-period');
-const employeeRouter=require('./routes/employee');
+const User = require('./models/user');
+const ForgotPasswordRequests = require('./models/forgotPasswordRequests');
+const Salon = require('./models/salon');
+const Service = require('./models/service');
+const Working_Hours = require('./models/working_hours');
+const Closed_Period = require('./models/closed_period');
+const Employee = require('./models/employee');
+const Specialization = require('./models/specialization');
+const Employee_Specialization = require('./models/employee_specialization');
+const Leave = require('./models/leave');
+const RegularShift = require('./models/regular_shift');
+const Payment = require('./models/payment');
+const Appointment = require('./models/appointment');
+
+
+const userRouter = require('./routes/user');
+const passwordRouter = require('./routes/password');
+const salonRouter = require('./routes/salon');
+const serviceRouter = require('./routes/service');
+const workingHoursRouter = require('./routes/working-hours');
+const closedPeriodRouter = require('./routes/closed-period');
+const employeeRouter = require('./routes/employee');
 const leaveRouter = require('./routes/leave');
-const userSalonRouter=require('./routes/user_salon');
-const regularShiftRouter=require('./routes/regular_shift');
-const paymentRouter=require('./routes/payment');
-const appointmentRouter=require('./routes/appointment');
+const userSalonRouter = require('./routes/user_salon');
+const regularShiftRouter = require('./routes/regular_shift');
+const paymentRouter = require('./routes/payment');
+const appointmentRouter = require('./routes/appointment');
 
-const accessLogStream=fs.createWriteStream(path.join(__dirname, 'access.log'),{flags:'a'})
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
 
 app.use(helemt({ contentSecurityPolicy: false }));
-app.use(morgan('combined',{stream:accessLogStream}));
+app.use(morgan('combined', { stream: accessLogStream }));
 
 
 app.use(cors());
@@ -58,7 +58,7 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //option {extended:false} configures the middleware to use the classic encoding algorithm
-app.use(bodyParser.json({extended:false}));
+app.use(bodyParser.json({ extended: false }));
 
 
 
@@ -77,8 +77,8 @@ app.use(paymentRouter);
 app.use(appointmentRouter);
 
 // app.use((req,res) => {
-    // console.log("URL>>>",req.url);
-    // res.sendFile(path.join(__dirname, `public/${req.url}`));
+// console.log("URL>>>",req.url);
+// res.sendFile(path.join(__dirname, `public/${req.url}`));
 // });
 
 
@@ -104,8 +104,8 @@ RegularShift.belongsTo(Salon);
 Salon.hasMany(Employee);
 Employee.belongsTo(Salon);
 
-Employee.belongsToMany(Specialization,{through:Employee_Specialization});
-Specialization.belongsToMany(Employee,{through:Employee_Specialization});
+Employee.belongsToMany(Specialization, { through: Employee_Specialization });
+Specialization.belongsToMany(Employee, { through: Employee_Specialization });
 
 Employee.hasMany(Leave);
 Leave.belongsTo(Employee);
@@ -130,43 +130,50 @@ Employee.hasMany(Appointment);
 // Run every day at midnight
 const job = new cron.CronJob('0 0 * * *', async () => {
 
-    const t = await sequelize.transaction();
-    try {
-        const yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
-        yesterday.setHours(0, 0, 0, 0); 
+  const t = await sequelize.transaction();
+  try {
+    const todayMidnight = new Date();
+    todayMidnight.setHours(0, 0, 0, 0);
 
-        await Closed_Period.destroy({
-          where: {
-            end_date: {
-              [Op.lte]: yesterday, // Delete records where end_date is yesterday or earlier
-            },
-          },
-          transaction:t
-        });
+    await Closed_Period.destroy({
+      where: {
+        end_date: {
+          [Op.lt]: todayMidnight  // Deletes records before today (does not delete today's records)
+        }
+      },
+      transaction: t
+    });
 
+    await Appointment.destroy({
+      where: {
+        date: {
+          [Op.lt]: todayMidnight  // Deletes records before today (does not delete today's records)
+        }
+      },
+      transaction: t
+    });
 
-        await t.commit();
-    
-        console.log("Expired records deleted successfully.");
-      } catch (error) {
-        await t.rollback();
-        console.error("Error deleting expired records:", error);
-      }
+    await t.commit();
+
+    console.log("Expired records deleted successfully.");
+  } catch (error) {
+    await t.rollback();
+    console.error("Error deleting expired records:", error);
+  }
 },
-null, // This function is executed when the job stops
-true, // Start the job right now
-'Asia/Kolkata' // Time zone of this job.
+  null, // This function is executed when the job stops
+  true, // Start the job right now
+  'Asia/Kolkata' // Time zone of this job.
 );
 
 
 
 
 sequelize
-.sync()
-// .sync({force:true})
-// .sync({alter:true})
-.then(result=>{
+  .sync()
+  // .sync({force:true})
+  // .sync({alter:true})
+  .then(result => {
     app.listen(3000);
-})
-.catch(err=>console.log(err));
+  })
+  .catch(err => console.log(err));

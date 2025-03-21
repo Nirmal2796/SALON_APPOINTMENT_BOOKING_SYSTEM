@@ -3,6 +3,7 @@ const Appointment=require('../models/appointment');
 const Service=require('../models/service');
 const Salon=require('../models/salon');
 const Employee=require('../models/employee');
+const Specialization =require('../models/specialization');
 
 exports.getAppointments=async(req,res)=>{
 
@@ -80,6 +81,54 @@ exports.addAppointment=async(req,res)=>{
 
         // console.log('data',data);
         res.status(200).json({message:'working hours set successfully',booked_appointments:booked_appointments});
+    }
+    catch (err) {
+        await t.rollback();
+        console.log(err);
+        res.status(500).json({success:false});
+    }
+}
+
+exports.getAppointment=async(req,res)=>{
+
+    try{
+
+        const appointment=await Appointment.findByPk(req.params.id);
+
+            const service=await Service.findByPk(appointment.serviceId);
+            const employee=await Employee.findByPk(appointment.employeeId);
+            const specialization=await Specialization.findByPk(service.specializationId);
+
+            appointment.serviceId=service;
+            appointment.employeeId=employee;
+            appointment.serviceId.specializationId=specialization;
+        
+
+        res.status(200).json({appointment:appointment});
+    }
+    catch (err) {
+
+        console.log(err);
+        res.status(500).json({success:false});
+    }
+}
+
+exports.deleteAppointment=async(req,res)=>{
+    const t= await sequelize.transaction();
+
+    try {
+
+        const id = req.params.id;
+
+        const appointment=await Appointment.findByPk(id);
+        console.log(appointment);
+
+        appointment.destroy();
+
+        await t.commit();
+
+        res.status(200).json({message:'appointment deleted successfully', appointment:appointment});
+
     }
     catch (err) {
         await t.rollback();

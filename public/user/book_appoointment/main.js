@@ -1,5 +1,5 @@
 
-const Category=document.getElementById('category');
+const Category = document.getElementById('category');
 
 const serviceDropdown = document.getElementById('service-name');
 
@@ -7,17 +7,17 @@ const select_btn = document.getElementById('select-btn');
 
 const book_appointment_form = document.getElementById('book-appointment-form');
 
-const MainList=document.getElementById('main-service-list');
+const MainList = document.getElementById('main-service-list');
 
 const profile_menu_list = document.getElementById('profile_menu_list');
 
-const pay_btn=document.getElementById('pay');
+const pay_btn = document.getElementById('pay');
 
 
-book_appointment_form.addEventListener('submit',addToMainList);
+book_appointment_form.addEventListener('submit', addToMainList);
 pay_btn.addEventListener('click', appointmentPayment);
 
-Category.addEventListener('change',showServiceDetails);
+Category.addEventListener('change', showServiceDetails);
 Category.dispatchEvent(new Event('change'));
 
 
@@ -33,6 +33,11 @@ async function DomLoad() {
         window.scrollTo(0, 0);
         await getClosedPeriod();
         // await getSpecialists();
+        const urlParams = new URLSearchParams(window.location.search);
+        const edit = urlParams.get('edit');
+        if (edit) {
+            await getAppointmentDetails();
+        }
     }
     catch (err) {
         console.log(err);
@@ -41,8 +46,8 @@ async function DomLoad() {
 
 
 let leaveDates = [];
-let closedPeriodDates =[];
-let total_amount=0;
+let closedPeriodDates = [];
+let total_amount = 0;
 
 
 
@@ -90,8 +95,8 @@ function toggleMenu() {
 
 //SHOW SERVICE DETIALS
 async function showServiceDetails() {
-   
-    document.getElementById("date").value='';
+
+    document.getElementById("date").value = '';
     await getServies();
     await getSpecialists();
 
@@ -109,17 +114,17 @@ async function getClosedPeriod() {
 
         const res = await axios.get(`http://localhost:3000/get-closedPeriod/${id}`, { headers: { 'Auth': token } });
 
-       console.log(res.data.closedPeriod);
+        console.log(res.data.closedPeriod);
 
-    //    disableDates(res.data.closedPeriod);
+        //    disableDates(res.data.closedPeriod);
 
-    closedPeriodDates = res.data.closedPeriod;  
-    disableDates();
-        
+        closedPeriodDates = res.data.closedPeriod;
+        disableDates();
+
     } catch (error) {
         console.log(error);
     }
-    
+
 }
 
 //GET SPECIALISTS
@@ -136,26 +141,26 @@ async function getSpecialists() {
 
         const res = await axios.get(`http://localhost:3000/get-specialits/${id}?specialization=${encodeURIComponent(Category.value)}`, { headers: { 'Auth': token } });
 
-       console.log(res.data.employee);
+        console.log(res.data.employee);
 
-       const employees=res.data.employee;
-       document.getElementById('specialist').innerHTML='';
+        const employees = res.data.employee;
+        document.getElementById('specialist').innerHTML = '';
 
-       for(let e in employees){
+        for (let e in employees) {
 
-           document.getElementById('specialist').innerHTML+=`
+            document.getElementById('specialist').innerHTML += `
            <option value="${employees[e].id}" id="${employees[e].id}">${employees[e].name}</option>`
-       }
-        
-       document.getElementById('specialist').innerHTML+=`
+        }
+
+        document.getElementById('specialist').innerHTML += `
            <option value="0" id="0" selected>Any</option>`
 
-    //    return res.data.closedPeriod;
-        
+        //    return res.data.closedPeriod;
+
     } catch (error) {
         console.log(error);
     }
-    
+
 }
 
 
@@ -172,45 +177,45 @@ async function getServies() {
 
         console.log(result.data);
 
-        const services=result.data.services;
+        const services = result.data.services;
 
         console.log(services);
 
-        serviceDropdown.innerHTML = '<option value="">Select a Service</option>'; 
-        document.getElementById('duration').innerHTML ='';
+        serviceDropdown.innerHTML = '<option value="">Select a Service</option>';
+        document.getElementById('duration').innerHTML = '';
         document.getElementById('price').innerHTML = '';
-        
+
         const servicesMap = {};
 
         // document.getElementById('service-name').innerHTML='';
 
-       for(let s of services){
+        for (let s of services) {
 
-        servicesMap[s.id] = s;
+            servicesMap[s.id] = s;
 
-        serviceDropdown.innerHTML +=`
+            serviceDropdown.innerHTML += `
            <option value="${s.id}" id="${s.id}">${s.name}</option>`;
-       
-       }
 
-       serviceDropdown.addEventListener('change', function () {
-        const selectedService = servicesMap[this.value]; // Get selected service details
-        
-        if (selectedService) {
-            document.getElementById('duration').innerHTML = `
+        }
+
+        serviceDropdown.addEventListener('change', function () {
+            const selectedService = servicesMap[this.value]; // Get selected service details
+
+            if (selectedService) {
+                document.getElementById('duration').innerHTML = `
                 <p id="duration-p" name="duration">
                     Duration: ${selectedService.duration} Minutes
                 </p>`;
 
-            document.getElementById('price').innerHTML = `
+                document.getElementById('price').innerHTML = `
                 <p id="price-p" name="price">
                     Price: ${selectedService.price}/-
                 </p>`;
-        }
-    });
+            }
+        });
 
-        
-       
+
+
     }
     catch (err) {
         console.log(err);
@@ -235,8 +240,8 @@ async function getLeave(id) {
 
         // disableDates(res.data.data);
 
-        leaveDates = res.data.data;  
-        disableDates(); 
+        leaveDates = res.data.data;
+        disableDates();
 
 
     }
@@ -247,53 +252,53 @@ async function getLeave(id) {
 
 
 //DISABLE DATES
-function disableDates(){
+function disableDates() {
     // const disabledDates=await getClosedPeriod();
 
     const dateInput = document.getElementById("date");
     const dateMsg = document.getElementById("date-msg");
 
     dateInput.removeEventListener("input", handleDateSelection);
-    
+
 
     dateInput.addEventListener("input", handleDateSelection);
 
 }
 
 //CHANGE PRICE AND DISABLE DATES AS PER SELECTED SPECIALIST AVAILABILITY
-async function selectedEmployee(){
+async function selectedEmployee() {
 
-    const priceTxt=document.getElementById('price-p').innerText;
+    const priceTxt = document.getElementById('price-p').innerText;
 
     const price = parseInt(priceTxt.match(/\d+/)[0]);
 
-     document.getElementById("date").value='';
+    document.getElementById("date").value = '';
 
-    if(document.getElementById('specialist').value != 'Any'){
+    if (document.getElementById('specialist').value != 'Any') {
 
-        document.getElementById('price').innerHTML=`
+        document.getElementById('price').innerHTML = `
                         <p id="price-p" name="price">
                             Price:
-                            ${price +100}/-
+                            ${price + 100}/-
                         </p>`;
 
-        const eId= document.getElementById('specialist').value;
-     
-        leaveDates = []; 
+        const eId = document.getElementById('specialist').value;
+
+        leaveDates = [];
         await getLeave(eId);
     }
-    else{
-        const priceTxt=document.getElementById('price-p').innerText;
+    else {
+        const priceTxt = document.getElementById('price-p').innerText;
 
         const price = parseInt(priceTxt.match(/\d+/)[0]);
 
-        document.getElementById('price').innerHTML=`
+        document.getElementById('price').innerHTML = `
                         <p id="price-p" name="price">
                             Price:
-                            ${price -100}/-
+                            ${price - 100}/-
                         </p>`;
 
-        leaveDates = [];  
+        leaveDates = [];
         disableDates();
     }
 }
@@ -321,7 +326,7 @@ function handleDateSelection(event) {
 
 
 //ADD TO MAIN LIST
-async function addToMainList(e){
+async function addToMainList(e) {
 
     e.preventDefault();
 
@@ -330,54 +335,54 @@ async function addToMainList(e){
 
     const specialistDropdown = document.getElementById('specialist');
     const specialist = specialistDropdown.options[specialistDropdown.selectedIndex];
-    
-    MainList.hidden=false;
-    document.getElementById('service-list-msg').hidden=true;
-   
-    const newLi=`<li class="main-service-list_item" id=list-${service.value} data-specialist-id="${specialist.value}">${service.text} <span>${specialist.text}</span> <span>${date.value}</span> <span>${price.innerText.substring(7)}</span> <button onclick="removeFromMainList('list-${service.value}')">DEL</button> </li>`;
 
-    MainList.innerHTML+=newLi;
+    MainList.hidden = false;
+    document.getElementById('service-list-msg').hidden = true;
 
-    total_amount+=parseInt(price.innerText.substring(7));
-    document.getElementById('total').innerText=total_amount;
+    const newLi = `<li class="main-service-list_item" id=list-${service.value} data-specialist-id="${specialist.value}">${service.text} <span>${specialist.text}</span> <span>${date.value}</span> <span>${price.innerText.substring(7)}</span> <button onclick="removeFromMainList('list-${service.value}')">DEL</button> </li>`;
 
-    book_appointment_form.reset(); 
-    document.getElementById('pay').disabled=false;
+    MainList.innerHTML += newLi;
+
+    total_amount += parseInt(price.innerText.substring(7));
+    document.getElementById('total').innerText = total_amount;
+
+    book_appointment_form.reset();
+    document.getElementById('pay').disabled = false;
     await getServies();
 
 }
 
 //ADD TO MAIN LIST
-function removeFromMainList(id){
+function removeFromMainList(id) {
 
     // e.preventDefault();
 
-    const service=document.getElementById(id);
+    const service = document.getElementById(id);
 
     // console.log(service);
 
     const priceElement = service.querySelector("span:nth-child(2)");
 
     // console.log(priceElement);
-    const MainList=document.getElementById('main-service-list');
+    const MainList = document.getElementById('main-service-list');
 
     // MainList.removeChild(service);
     service.remove();
 
-    total_amount-=parseInt(priceElement.innerText);
+    total_amount -= parseInt(priceElement.innerText);
     // console.log(typeof(total_amount));
-    if(total_amount == 0){
-        
-        document.getElementById('total').innerText=0;
-        document.getElementById('pay').disabled=true;
+    if (total_amount == 0) {
+
+        document.getElementById('total').innerText = 0;
+        document.getElementById('pay').disabled = true;
     }
-    else{
-        document.getElementById('total').innerText=total_amount;
+    else {
+        document.getElementById('total').innerText = total_amount;
     }
 
     if (MainList.childElementCount === 0) {
-        document.getElementById('service-list-msg').hidden=false;
-        MainList.hidden=true;
+        document.getElementById('service-list-msg').hidden = false;
+        MainList.hidden = true;
     }
 }
 
@@ -385,54 +390,54 @@ function removeFromMainList(id){
 //APPOINTMENT PAYMENT
 async function appointmentPayment(e) {
 
-    const amount=document.getElementById('total').innerText;
+    const amount = document.getElementById('total').innerText;
 
-    const token=localStorage.getItem('token');
+    const token = localStorage.getItem('token');
 
     console.log(amount);
-    
+
     const urlParams = new URLSearchParams(window.location.search);
     const salonId = urlParams.get('id');
 
-    const res = await axios.post('http://localhost:3000/appointment_payment',{amount}, { headers: { 'Auth': token } });
+    const res = await axios.post('http://localhost:3000/appointment_payment', { amount }, { headers: { 'Auth': token } });
 
     console.log('Razorpay Order:', res.data);
 
     var options = {
-        "key":res.data.key_id,
-        "order_id":res.data.order.id,
-        "amount":res.data.order.amount,
-        "currency":"INR",
+        "key": res.data.key_id,
+        "order_id": res.data.order.id,
+        "amount": res.data.order.amount,
+        "currency": "INR",
         "handler": async function (res) {
 
-            try{
+            try {
 
-            const result = await axios.post('http://localhost:3000/updateTransactions', {
-                order_id: options.order_id,
-                payment_id: res.razorpay_payment_id,
-                status: 'successful'
-            }, { headers: { 'Auth': token } });
+                const result = await axios.post('http://localhost:3000/updateTransactions', {
+                    order_id: options.order_id,
+                    payment_id: res.razorpay_payment_id,
+                    status: 'successful'
+                }, { headers: { 'Auth': token } });
 
-            console.log(result);
-            alert('Appointment Booked');
+                console.log(result);
+                alert('Appointment Booked');
 
-            const appointments=getAllListData();
-            console.log(appointments);
+                const appointments = getAllListData();
+                console.log(appointments);
 
-             await axios.post('http://localhost:3000/add-apointment', {
-                salonId: salonId,
-                appointments:appointments
-            }, { headers: { 'Auth': token } });
+                await axios.post('http://localhost:3000/add-apointment', {
+                    salonId: salonId,
+                    appointments: appointments
+                }, { headers: { 'Auth': token } });
 
-            
-            MainList.hidden=true;
-            document.getElementById('service-list-msg').hidden=false;
-            document.getElementById('total').innerText='0';
 
-        }
-        catch(err){
-            console.error("Error updating transaction:", err.response?.data || err.message);
-        }
+                MainList.hidden = true;
+                document.getElementById('service-list-msg').hidden = false;
+                document.getElementById('total').innerText = '0';
+
+            }
+            catch (err) {
+                console.error("Error updating transaction:", err.response?.data || err.message);
+            }
         },
         "retry": {
             enabled: false
@@ -444,7 +449,7 @@ async function appointmentPayment(e) {
     console.log(options);
     console.log(razorpayObject);
     // console.log('Opening rzp');
-    
+
 
 
     razorpayObject.on('payment.failed', async (res) => {
@@ -459,7 +464,7 @@ async function appointmentPayment(e) {
         razorpayObject.close();
     });
 
-   
+
     razorpayObject.open();
     e.preventDefault();
 }
@@ -473,12 +478,70 @@ function getAllListData() {
         const serviceName = li.childNodes[0].textContent.trim(); // Get service name
         const date = li.children[1].textContent.trim(); // Get date
         const price = li.children[2].textContent.trim(); // Get price
-        const specialistId = li.getAttribute("data-specialist-id") || "0"; 
-        
-        data.push({ serviceName, date, price ,specialistId});
+        const specialistId = li.getAttribute("data-specialist-id") || "0";
+
+        data.push({ serviceName, date, price, specialistId });
     });
 
     console.log(data); // Output the collected data
     return data;
 }
 
+async function getAppointmentDetails() {
+    try {
+
+        const token = localStorage.getItem('token');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const appointmentId = urlParams.get('appointmentId');
+
+        const result = await axios.get(`http://localhost:3000/get-appointment/${appointmentId}`, { headers: { 'Auth': token } });
+
+        console.log(result.data);
+        const appointment = result.data.appointment;
+
+        let specialistDropdown = document.getElementById("specialist");
+        let categoryDropdown = document.getElementById("category");
+        let serviceDropdown = document.getElementById('service-name');
+
+        setTimeout(() => {
+            categoryDropdown.value = appointment.serviceId.specializationId.name;
+            categoryDropdown.dispatchEvent(new Event("change"));
+        },100);
+
+
+        setTimeout(() => {
+            serviceDropdown.value = appointment.serviceId.id; // Set selected value
+            serviceDropdown.dispatchEvent(new Event("change")); // Trigger change event
+        },200);
+        
+
+        setTimeout(() => {
+            specialistDropdown.value = appointment.employeeId.id;
+            specialistDropdown.dispatchEvent(new Event("change")); // Trigger change event
+        },300)
+        
+        await deleteAppointment(appointment.id);
+
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//REMOVE Appointment
+async function deleteAppointment(id){
+    try{
+        const token=localStorage.getItem('token');
+
+        const res=await axios.delete(`http://localhost:3000/delete-appointment/${id}`,{headers:{'Auth':token}});
+
+        // document.getElementById(id).remove();
+        // alert(res.data.message);
+
+
+    }
+    catch(err){
+        console.log(err);
+    }
+}

@@ -8,9 +8,9 @@ const Service=require('../models/service');
 exports.generateInvoice = async function(paymentId, user) {
     try {
         const appointments = await Appointment.findAll({ where: { paymentId } });
-        const transaction = await Payment.findOne({ where: { id: paymentId } });
+        const payment = await Payment.findOne({ where: { id: paymentId } });
 
-        if (!appointments || !transaction) {
+        if (!appointments || !payment) {
             throw new Error('Invalid payment ID');
         }
 
@@ -24,8 +24,9 @@ exports.generateInvoice = async function(paymentId, user) {
 
         const now = new Date();
         const dateOnly = `${now.getDate()}-${now.getMonth() + 1}-${now.getFullYear()}`;
+        const timeOnly = `${now.getHours()}-${now.getMinutes()}-${now.getSeconds()}`;
 
-        const filePath = path.join(invoiceDir, `${dateOnly}_invoice.pdf`);
+        const filePath = path.join(invoiceDir, `${dateOnly}_${timeOnly}_invoice.pdf`);
         const writeStream = fs.createWriteStream(filePath);
         doc.pipe(writeStream);
 
@@ -33,24 +34,29 @@ exports.generateInvoice = async function(paymentId, user) {
         doc.fontSize(25).text('Salon Invoice', { align: 'center' });
         doc.moveDown();
 
-        doc.fontSize(14).text(`Payment ID: ${paymentId}`);
+        doc.fontSize(14).text(`Payment ID: ${payment.paymentid}`);
         doc.text(`Customer Name: ${user.name || 'Unknown'}`);
         doc.moveDown();
 
         let totalAmount = 0;
+        let count = 1;
+
+        doc.fontSize(16).text('Services:', { underline: true });
+        doc.moveDown(0.5);
 
         for(const a of appointments){
 
             const service = await Service.findByPk(a.serviceId);
 
-            doc.text(`${service.name} - ₹${service.price}`);
+            doc.fontSize(14).text(`${count}.  ${service.name} - INR ${service.price}`);
             totalAmount += service.price;
+            count++;
         }
         // appointments.forEach(service => {
         // });
 
         doc.moveDown();
-        doc.fontSize(18).text(`Total Amount: ₹${totalAmount}`, { align: 'right' });
+        doc.fontSize(18).text(`Total Amount: INR ${totalAmount}`, { align: 'right' });
 
         doc.end();
 

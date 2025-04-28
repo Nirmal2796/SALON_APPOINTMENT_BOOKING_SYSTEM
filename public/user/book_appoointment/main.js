@@ -426,7 +426,7 @@ async function appointmentPayment(e) {
                 }, { headers: { 'Auth': token } });
 
                 console.log(result);
-                alert('Appointment Booked');
+                
 
                 const appointments = getAllListData();
                 console.log(appointments);
@@ -437,10 +437,13 @@ async function appointmentPayment(e) {
                     paymentId: result.data.payment.id,
                 }, { headers: { 'Auth': token } });
 
+                alert('Appointment Booked');
 
                 MainList.hidden = true;
                 document.getElementById('service-list-msg').hidden = false;
                 document.getElementById('total').innerText = '0';
+
+                window.location.href ="../appointments/appointments.html";
 
             }
             catch (err) {

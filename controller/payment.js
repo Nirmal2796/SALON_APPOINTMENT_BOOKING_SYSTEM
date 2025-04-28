@@ -62,6 +62,7 @@ exports.updateTransaction = async (req, res) => {
         const payment =await Payment.findOne({ where: { orderid: order_id } });
         // console.log(payment_id);
 
+        
         // let update1 ;
 
         if(status=='successful'){
@@ -76,7 +77,7 @@ exports.updateTransaction = async (req, res) => {
         // await Promise.all([update1]);
 
         await t.commit();
-        res.status(202).json({ success: true, message: status});
+        res.status(202).json({ success: true, message: status, payment: payment});
 
     }
     catch (err) {

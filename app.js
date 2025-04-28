@@ -16,6 +16,7 @@ const app = express();
 const bodyParser = require('body-parser');
 
 const sequelize = require('./util/database');
+const { Op } = require('sequelize'); // Importing Sequelize operators like Op.lt (less than), Op.gt (greater than), etc.
 
 
 const User = require('./models/user');
@@ -122,18 +123,25 @@ Service.hasMany(Appointment);
 Appointment.belongsTo(Salon);  // Each appointment is at one salon
 Salon.hasMany(Appointment);
 
-Appointment.belongsTo(Employee);
+Appointment.belongsTo(Employee,  { foreignKey: { allowNull: true } });
 Employee.hasMany(Appointment);
+
+Appointment.belongsTo(Payment);     // many appointments → one payment
+Payment.hasMany(Appointment);
 
 
 
 // Run every day at midnight
 const job = new cron.CronJob('0 0 * * *', async () => {
 
+  
   const t = await sequelize.transaction();
   try {
-    const todayMidnight = new Date();
+
+    let todayMidnight = new Date();
     todayMidnight.setHours(0, 0, 0, 0);
+
+    // todayMidnight=todayMidnight.toISOString().slice(0, 19).replace("T", " ");
 
     await Closed_Period.destroy({
       where: {
@@ -144,18 +152,9 @@ const job = new cron.CronJob('0 0 * * *', async () => {
       transaction: t
     });
 
-    await Appointment.destroy({
-      where: {
-        date: {
-          [Op.lt]: todayMidnight  // Deletes records before today (does not delete today's records)
-        }
-      },
-      transaction: t
-    });
-
     await t.commit();
 
-    console.log("Expired records deleted successfully.");
+    // console.log("Expired records deleted successfully.");
   } catch (error) {
     await t.rollback();
     console.error("Error deleting expired records:", error);

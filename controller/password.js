@@ -25,7 +25,7 @@ exports.forgotPassword = async (req, res) => {
         const apiKey = client.authentications['api-key'];
         apiKey.apiKey = process.env.SENDINBLUE_API_KEY;
 
-        const tranEmailApi = new Sib.TransactionalEmailsApi();
+        const tranEmailApi = new Sib.TransactionalEmailsApi(); // transactional email api when we need to send some confirmation or reset . and another is EmailCampaign is used when we have a newsletter or something like that.
 
         const uid = uuidv4();
 
@@ -50,6 +50,7 @@ exports.forgotPassword = async (req, res) => {
             ]
 
             // console.log(receivers[0]);
+             
 
             const response = await tranEmailApi.sendTransacEmail({
                 sender,

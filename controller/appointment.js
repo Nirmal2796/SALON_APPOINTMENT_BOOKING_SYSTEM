@@ -4,6 +4,7 @@ const Service=require('../models/service');
 const Salon=require('../models/salon');
 const Employee=require('../models/employee');
 const Specialization =require('../models/specialization');
+const { generateInvoice } = require('../util/invoiceGenerator');
 
 exports.getAppointments=async(req,res)=>{
 
@@ -70,7 +71,8 @@ exports.addAppointment=async(req,res)=>{
                 userId:req.user.id,
                 serviceId:service[0].id , //i will have to search the service then attach it here.
                 date:formattedDate,
-                employeeId:employee.id
+                employeeId: employee ? employee.id : null,
+                paymentId:req.body.paymentId
             },{transaction:t}));
 
             
@@ -78,6 +80,8 @@ exports.addAppointment=async(req,res)=>{
         }
         
         await t.commit();
+
+        await generateInvoice(req.body.paymentId, req.user);
 
         // console.log('data',data);
         res.status(200).json({message:'working hours set successfully',booked_appointments:booked_appointments});

@@ -1,6 +1,8 @@
 
 const Category = document.getElementById('category');
 
+const dateInput = document.getElementById("date");
+
 const serviceDropdown = document.getElementById('service-name');
 
 const select_btn = document.getElementById('select-btn');
@@ -31,6 +33,11 @@ async function DomLoad() {
         // console.log('Dom Loaded');
         changeProfileMenu();
         window.scrollTo(0, 0);
+
+        //to disable old dates.
+        const today = new Date().toISOString().split("T")[0];
+        dateInput.min = today;
+
         await getClosedPeriod();
         // await getSpecialists();
         const urlParams = new URLSearchParams(window.location.search);
@@ -255,7 +262,7 @@ async function getLeave(id) {
 function disableDates() {
     // const disabledDates=await getClosedPeriod();
 
-    const dateInput = document.getElementById("date");
+    // const dateInput = document.getElementById("date");
     const dateMsg = document.getElementById("date-msg");
 
     dateInput.removeEventListener("input", handleDateSelection);
@@ -424,9 +431,10 @@ async function appointmentPayment(e) {
                 const appointments = getAllListData();
                 console.log(appointments);
 
-                await axios.post('http://localhost:3000/add-apointment', {
+                const booked_appointments = await axios.post('http://localhost:3000/add-apointment', {
                     salonId: salonId,
-                    appointments: appointments
+                    appointments: appointments,
+                    paymentId: result.data.payment.id,
                 }, { headers: { 'Auth': token } });
 
 
@@ -507,20 +515,20 @@ async function getAppointmentDetails() {
         setTimeout(() => {
             categoryDropdown.value = appointment.serviceId.specializationId.name;
             categoryDropdown.dispatchEvent(new Event("change"));
-        },100);
+        }, 100);
 
 
         setTimeout(() => {
             serviceDropdown.value = appointment.serviceId.id; // Set selected value
             serviceDropdown.dispatchEvent(new Event("change")); // Trigger change event
-        },200);
-        
+        }, 200);
+
 
         setTimeout(() => {
             specialistDropdown.value = appointment.employeeId.id;
             specialistDropdown.dispatchEvent(new Event("change")); // Trigger change event
-        },300)
-        
+        }, 300)
+
         await deleteAppointment(appointment.id);
 
 
@@ -530,18 +538,18 @@ async function getAppointmentDetails() {
 }
 
 //REMOVE Appointment
-async function deleteAppointment(id){
-    try{
-        const token=localStorage.getItem('token');
+async function deleteAppointment(id) {
+    try {
+        const token = localStorage.getItem('token');
 
-        const res=await axios.delete(`http://localhost:3000/delete-appointment/${id}`,{headers:{'Auth':token}});
+        const res = await axios.delete(`http://localhost:3000/delete-appointment/${id}`, { headers: { 'Auth': token } });
 
         // document.getElementById(id).remove();
         // alert(res.data.message);
 
 
     }
-    catch(err){
+    catch (err) {
         console.log(err);
     }
 }

@@ -86,7 +86,7 @@ exports.addAppointment = async (req, res) => {
 
         await t.commit();
 
-        // await generateInvoice(req.body.paymentId, req.user);
+        await generateInvoice(req.body.paymentId, req.user);
 
         // console.log('data',data);
         res.status(200).json({ message: 'working hours set successfully', booked_appointments: booked_appointments });

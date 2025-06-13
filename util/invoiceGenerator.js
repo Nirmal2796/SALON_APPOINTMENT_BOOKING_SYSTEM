@@ -4,6 +4,7 @@ const path = require('path');
 const Appointment = require('../models/appointment');
 const Payment = require('../models/payment');
 const Service=require('../models/service');
+const Employee = require('../models/employee');
 
 exports.generateInvoice = async function(paymentId, user) {
     try {
@@ -47,8 +48,9 @@ exports.generateInvoice = async function(paymentId, user) {
         for(const a of appointments){
 
             const service = await Service.findByPk(a.serviceId);
+            const employee=await Employee.findByPk(a.employeeId);
 
-            doc.fontSize(14).text(`${count}.  ${service.name} - INR ${service.price}`);
+            doc.fontSize(14).text(`${count}.  ${service.name} - INR ${service.price} Time: ${a.start_time} Specialist:${employee.name}`);
             totalAmount += service.price;
             count++;
         }

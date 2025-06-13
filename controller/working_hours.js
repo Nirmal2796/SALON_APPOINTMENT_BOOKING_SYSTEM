@@ -1,4 +1,4 @@
-// const Salon = require('../models/salon');
+const Salon = require('../models/salon');
 const Working_hours=require('../models/working_hours')
 const sequelize=require('../util/database');
 
@@ -55,8 +55,10 @@ exports.getWorkingHours=async(req,res)=>{
 
     // const t=sequelize.transaction();
     try{
+        const userId = req.params.id || req.user.id;
+        const user = await Salon.findByPk(userId);
 
-        const working_hours=await req.user.getWorking_hours();
+        const working_hours=await user.getWorking_hours();
 
         // console.log(working_hours);
 

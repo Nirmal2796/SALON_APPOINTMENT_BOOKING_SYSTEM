@@ -112,10 +112,10 @@ function showAppointments(appointment){
     const newRow=`<tr id=${appointment.id}>
                     <td>${new Date(appointment.date).toLocaleDateString("en-GB")}</</td>
                     <td>${appointment.serviceId.name}</td>
-                    <td>${appointment.employeeId.name}</td>
+                    <td>${appointment.employeeId ? appointment.employeeId.name : '-'}</td>
                     <td>${appointment.salonId.name}</td>
                     <td><a href="../book_appoointment/book_apointment.html?id=${appointment.salonId.id}&edit=${true}&appointmentId=${appointment.id}"><button>Reschedule</button></a></td>
-                    <td><button onclick="deleteService(${appointment.id})>Cancel</button></td>
+                    <td><button onclick="deleteAppointment(${appointment.id})">Cancel</button></td>
                 </tr>`
 
     appointment_table_body.innerHTML+=newRow;

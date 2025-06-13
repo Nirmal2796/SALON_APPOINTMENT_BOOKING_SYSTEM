@@ -3,6 +3,7 @@ const Specialization = require('../models/specialization');
 const Employee_Specialization = require('../models/employee_specialization');
 const Employee = require('../models/employee');
 
+
 exports.addEmployee = async (req, res) => {
     const t = await sequelize.transaction();
 
@@ -240,4 +241,5 @@ exports.editEmployeeSpecilization = async (req, res) => {
         res.status(500).json({ message: 'Something went wrong' });
     }
 }
+
 

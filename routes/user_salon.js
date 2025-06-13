@@ -19,6 +19,6 @@ router.get('/get-services/:id',userAuthentication.authentication,userSalonContro
 
 router.get('/get-leave/:id',userAuthentication.authentication,userSalonController.getServices);
 
-
+router.get('/get-booked-appointments/:id',userAuthentication.authentication,userSalonController.getBookedAppointments);
 
 module.exports=router;

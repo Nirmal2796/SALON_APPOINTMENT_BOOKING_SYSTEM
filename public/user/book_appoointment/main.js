@@ -771,3 +771,59 @@ async function getClosedPeriod() {
     }
 
 }
+
+
+async function getAppointmentDetails() {
+    try {
+
+        const token = localStorage.getItem('token');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const appointmentId = urlParams.get('appointmentId');
+
+        const result = await axios.get(`http://localhost:3000/get-appointment/${appointmentId}`, { headers: { 'Auth': token } });
+
+        console.log(result.data);
+        const appointment = result.data.appointment;
+
+        setTimeout(() => {
+            Category.value = appointment.serviceId.specializationId.id;
+            Category.dispatchEvent(new Event("change"));
+        }, 100);
+
+
+        setTimeout(() => {
+            serviceDropdown.value = appointment.serviceId.id; // Set selected value
+            serviceDropdown.dispatchEvent(new Event("change")); // Trigger change event
+        }, 200);
+
+
+        setTimeout(() => {
+            specialist.value = appointment.employeeId.id;
+            specialist.dispatchEvent(new Event("change")); // Trigger change event
+        }, 300)
+
+        await deleteAppointment(appointment.id);
+
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//REMOVE Appointment
+async function deleteAppointment(id) {
+    try {
+        const token = localStorage.getItem('token');
+
+        const res = await axios.delete(`http://localhost:3000/delete-appointment/${id}`, { headers: { 'Auth': token } });
+
+        // document.getElementById(id).remove();
+        // alert(res.data.message);
+
+
+    }
+    catch (err) {
+        console.log(err);
+    }
+}

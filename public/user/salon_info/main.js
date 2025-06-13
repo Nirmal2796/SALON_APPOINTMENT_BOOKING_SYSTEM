@@ -110,7 +110,7 @@ async function getSalonInfo() {
     }
 
     // console.log(document.getElementById('book-btn'));
-    document.getElementById('book-btn').href=`../book_appoointment/book_apointment.html?id=${id}`;
+    document.getElementById('book-btn').href=`../book_appoointment/book_appointment.html?id=${id}`;
 
     }
     catch (err) {

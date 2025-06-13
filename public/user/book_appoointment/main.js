@@ -53,7 +53,7 @@ async function DomLoad() {
         changeProfileMenu();
         window.scrollTo(0, 0);
 
-        await ContinueOrPay();
+        // await ContinueOrPay();
 
         const urlParams = new URLSearchParams(window.location.search);
         const edit = urlParams.get('edit');
@@ -216,7 +216,7 @@ async function appointmentPayment(e) {
                 document.getElementById('service-list-msg').hidden = false;
                 document.getElementById('total').innerText = '0';
 
-                // window.location.href = "../appointments/appointments.html";
+                window.location.href = "../appointments/appointments.html";
 
             }
             catch (err) {
@@ -517,17 +517,25 @@ async function getBookedAppointments() {
         services.forEach(async (service) => {
 
             //set the employee id for the any professional selection 
-            const match = selectedEmployees.find(semp => semp.specializationId == service.getAttribute('data-specialization-id'));
+            if(selectedEmployees.length!=0){
 
-            console.log(match);
-
-            if (service.getAttribute('data-specialist-id') == 0) {
-                service.setAttribute('data-specialist-id', match.selectedEmployee);
+                const match = selectedEmployees.find(semp => semp.specializationId == service.getAttribute('data-specialization-id'));
+    
+                console.log(match);
+    
+                if (service.getAttribute('data-specialist-id') == 0) {
+                    service.setAttribute('data-specialist-id', match.selectedEmployee);
+                }
+    
+               
+                await getLeave(match.selectedEmployee);
+            }
+            else{
+                await getLeave(service.getAttribute('data-specialist-id'));
             }
 
-            //     //total time
+             //     //total time
             total_time += parseInt(service.querySelector('span:nth-child(2)').textContent);
-            await getLeave(match.selectedEmployee);
 
         })
 

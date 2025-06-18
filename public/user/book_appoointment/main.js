@@ -125,6 +125,7 @@ async function ContinueOrPay() {
 
         document.getElementById('service-div').hidden = true;
         document.getElementById('date-div').hidden = false;
+        
 
         document.querySelectorAll('.main-service-list_item button').forEach(btn => {
             btn.remove();
@@ -140,6 +141,11 @@ async function ContinueOrPay() {
     if (continueStep == 2) {
 
         // getAllListData();
+        
+        if(!dateInput.value && !timeDropDown.value){
+            alert('Please select date and time');
+            return;
+        }
 
 
         document.getElementById('date-div').hidden = true;
@@ -516,25 +522,27 @@ async function getBookedAppointments() {
 
         services.forEach(async (service) => {
 
-            //set the employee id for the any professional selection 
-            if(selectedEmployees.length!=0){
+            if (service.getAttribute('data-specialist-id') == 0) {
+                //set the employee id for the any professional selection 
+
 
                 const match = selectedEmployees.find(semp => semp.specializationId == service.getAttribute('data-specialization-id'));
-    
+
                 console.log(match);
-    
-                if (service.getAttribute('data-specialist-id') == 0) {
-                    service.setAttribute('data-specialist-id', match.selectedEmployee);
-                }
-    
-               
+
+
+                service.setAttribute('data-specialist-id', match.selectedEmployee);
+
+
+
                 await getLeave(match.selectedEmployee);
+
             }
-            else{
+            else {
                 await getLeave(service.getAttribute('data-specialist-id'));
             }
 
-             //     //total time
+            //     //total time
             total_time += parseInt(service.querySelector('span:nth-child(2)').textContent);
 
         })
@@ -734,10 +742,10 @@ async function getLeave(id) {
 
         // disableDates(res.data.data);
 
-        res.data.data.forEach((leaveDate=>{
+        res.data.data.forEach((leaveDate => {
             leaveDates.push(leaveDate);
         }));
-        
+
         disableDates();
 
 

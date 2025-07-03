@@ -5,12 +5,20 @@ const working_hours_list=document.getElementById('working_hours_list');
 
 const profile_menu_list = document.getElementById('profile_menu_list');
 
+const stars = document.querySelectorAll('#star-rating span');
+
+const ratingInput = document.getElementById('rating');
+
+const review_text=document.getElementById('review-text');
+
+const review_form=document.getElementById('review-form');
 
 
 
 //DOM CONTENT LOAD EVENT
 document.addEventListener('DOMContentLoaded', DomLoad);
 
+review_form.addEventListener('submit',addReview);
 
 //DOM CONTENT LOADED
 async function DomLoad() { 
@@ -19,6 +27,8 @@ async function DomLoad() {
          changeProfileMenu();
         window.scrollTo(0, 0);
         await getSalonInfo();
+        setupStarRating('star-rating', 'rating');
+        await getReview();
     }
     catch(err){
         console.log(err);
@@ -138,3 +148,77 @@ function formatTime(timeString) {
     hours = hours % 12 || 12; // Convert 0 or 12-hour format
     return `${hours}:${minutes} ${ampm}`;
   }
+
+
+function setupStarRating(starContainerId, hiddenInputId) {
+    const stars = document.querySelectorAll(`#${starContainerId} span`);
+    const ratingInput = document.getElementById(hiddenInputId);
+
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            let rating = star.getAttribute('data-value');
+            ratingInput.value = rating;
+
+            stars.forEach(s => {
+                s.classList.toggle('selected', s.getAttribute('data-value') <= rating);
+            });
+        });
+
+        star.addEventListener('mouseover', () => {
+            stars.forEach(s => {
+                s.style.color = s.getAttribute('data-value') <= star.getAttribute('data-value') ? 'gold' : '#ccc';
+            });
+        });
+
+        star.addEventListener('mouseout', () => {
+            stars.forEach(s => {
+                s.style.color = s.classList.contains('selected') ? 'gold' : '#ccc';
+            });
+        });
+    });
+}
+
+
+async function addReview(e) {
+    e.preventDefault();
+    const token = localStorage.getItem('token');
+
+    try {
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+
+        const rating={
+            rate:ratingInput.value,
+            feedback:review_text.value
+        };
+
+        const review=await axios.post(`http://localhost:3000/add-review/${id}`,rating, { headers: { 'Auth': token } });
+
+        console.log(review);
+        
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+async function getReview() {
+    
+    const token = localStorage.getItem('token');
+
+    try {
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+
+
+        const review=await axios.get(`http://localhost:3000/get-review/${id}`, { headers: { 'Auth': token } });
+
+        console.log(review);
+        
+    } catch (error) {
+        console.log(error);
+    }
+
+}

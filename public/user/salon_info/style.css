@@ -20,6 +20,7 @@ header {
     align-items: center;
     position: sticky;
     top: 0;
+    z-index: 1000;
     overflow: hidden;
 }
 
@@ -200,6 +201,7 @@ tbody:before {
 .working_hours_div{
     width: 50%;
     margin: 50px 10rem;
+    
 }
 
 
@@ -232,3 +234,89 @@ tbody:before {
     text-align: right;
 }
 
+.star-rating {
+    display: flex;
+    cursor: pointer;
+    font-size: 24px;
+    color: #ccc;
+    margin-bottom: 10px;
+}
+.star-rating span {
+    transition: color 0.3s ease;
+}
+.star-rating span.selected,
+.star-rating span:hover,
+.star-rating span:hover ~ span {
+    color: gold;
+}
+
+.reviews-section {
+    margin: 40px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+}
+.reviews-section h2 {
+    margin-bottom: 15px;
+}
+#review-form {
+    display: flex;
+    flex-direction: column;
+}
+#review-form textarea, #review-form select {
+    margin-bottom: 10px;
+    padding: 8px;
+}
+.review-item {
+    border-top: 1px solid #ccc;
+    padding: 10px 0;
+}
+.review-rating {
+    color: #f0ad4e;
+}
+.owner-reply {
+    background: #eee;
+    padding: 8px;
+    margin-top: 5px;
+    border-left: 4px solid #007bff;
+}
+
+.ratings-summary {
+    margin: 20px 0;
+    padding: 15px;
+    background: #ffeecb;
+    border-left: 4px solid gold;
+    border-radius: 8px;
+}
+
+.ratings-summary h3,p{
+    margin-left: 40px;
+    margin-bottom: 10px;
+}
+
+.reviews-container {
+    margin-top: 20px;
+}
+
+.reviews-container h3{
+    margin-left: 60px;
+    margin-bottom: 10px;
+}
+
+.scrollable-reviews {
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background: #fefefe;
+}
+
+.review-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.review-rating {
+    color: gold;
+    font-size: 18px;
+}

@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Salon</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+
 </head>
+
 <body>
     <header>
         <div class="container">
@@ -19,7 +21,8 @@
                     <!-- <li><a href="../salons/recipes.html">Recipes</a></li> -->
                     <li>About Us</li>
                     <li>Contact Us</li>
-                    <li><i class="fa fa-user-circle" id="profile_icon" onclick="toggleProfileMenu()" style="font-size: 24px; cursor: pointer;"></i></li>
+                    <li><i class="fa fa-user-circle" id="profile_icon" onclick="toggleProfileMenu()"
+                            style="font-size: 24px; cursor: pointer;"></i></li>
                 </ul>
             </nav>
         </div>
@@ -28,15 +31,15 @@
     <!-- Profile Menu -->
     <div class="profile-menu" id="profile_menu">
         <ul id="profile_menu_list">
-            
-            
+
+
         </ul>
     </div>
 
- 
+
     <div class="top-div">
         <h2>Services</h2>
-        <a  id="book-btn"><button>Book an Appoiontment</button></a>
+        <a id="book-btn"><button>Book an Appoiontment</button></a>
     </div>
 
     <div class="service-table-div">
@@ -58,12 +61,12 @@
                     <td><button>Edit</button></td>
                     <td><button>Delete</button></td>
                 </tr> -->
-                
+
             </tbody>
         </table>
-        
+
     </div>
- 
+
 
     <div class="working_hours_div">
         <h2>Working Hours</h2>
@@ -74,11 +77,49 @@
         </ul>
 
     </div>
+    <div class="reviews-section">
+        <h2>Customer Reviews</h2>
+
+        <!-- Form to submit a review -->
+        <form id="review-form">
+            <label>Rating:</label>
+            <div class="star-rating" id="star-rating">
+                <span data-value="1">&#9733;</span>
+                <span data-value="2">&#9733;</span>
+                <span data-value="3">&#9733;</span>
+                <span data-value="4">&#9733;</span>
+                <span data-value="5">&#9733;</span>
+            </div>
+            <input type="hidden" id="rating" required>
+
+            <label for="review-text">Feedback:</label>
+            <textarea id="review-text" rows="3"  placeholder="Share your experience..."></textarea>
+
+            <button type="submit">Submit Review</button>
+        </form>
+
+        <!-- Reviews list -->
+        <div id="reviews-list">
+            <!-- Reviews will be appended here by JavaScript -->
+        </div>
+    </div>
+
+    <div class="ratings-summary">
+        <h3>Overall Rating: <span id="average-rating">0.0</span> / 5</h3>
+        <p>Total Reviews: <span id="total-reviews">0</span></p>
+    </div>
+
+    <div class="reviews-container">
+        <h3>What Customers Say</h3>
+        <div id="reviews-list" class="scrollable-reviews">
+            <!-- Reviews will appear here -->
+        </div>
+    </div>
 
 
-  
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
     <script src="main.js"></script>
 </body>
+
 </html>

@@ -1,7 +1,7 @@
 
-const service_table_body=document.getElementById('service-table-body');
+const service_table_body = document.getElementById('service-table-body');
 
-const working_hours_list=document.getElementById('working_hours_list');
+const working_hours_list = document.getElementById('working_hours_list');
 
 const profile_menu_list = document.getElementById('profile_menu_list');
 
@@ -9,58 +9,60 @@ const stars = document.querySelectorAll('#star-rating span');
 
 const ratingInput = document.getElementById('rating');
 
-const review_text=document.getElementById('review-text');
+const review_text = document.getElementById('review-text');
 
-const review_form=document.getElementById('review-form');
+const review_form = document.getElementById('review-form');
+
 
 
 
 //DOM CONTENT LOAD EVENT
 document.addEventListener('DOMContentLoaded', DomLoad);
 
-review_form.addEventListener('submit',addReview);
+review_form.addEventListener('submit', addReview);
 
 //DOM CONTENT LOADED
-async function DomLoad() { 
-    try{
+async function DomLoad() {
+    try {
         // console.log('Dom Loaded');
-         changeProfileMenu();
+        changeProfileMenu();
         window.scrollTo(0, 0);
         await getSalonInfo();
         setupStarRating('star-rating', 'rating');
         await getReview();
     }
-    catch(err){
+    catch (err) {
         console.log(err);
-    } 
+    }
 }
 
+const reviews = [];
 
 
 
 //CHANGE PROFILE MENU
 async function changeProfileMenu() {
-    try{
-        const token=localStorage.getItem('token');
+    try {
+        const token = localStorage.getItem('token');
 
-        const res=await axios.get('http://localhost:3000/validate-token',{ headers: { 'Auth': token } });
+        const res = await axios.get('http://localhost:3000/validate-token', { headers: { 'Auth': token } });
 
         // const status='false';
         // console.log(profile_menu_list);
 
-        if(res.data.status==='success'){
-            profile_menu_list.innerHTML=`
+        if (res.data.status === 'success') {
+            profile_menu_list.innerHTML = `
             <li><a href="../edit-profile/edit-profile.html">Edit Profile</a></li>
             <li><a href="#">Prefernces</a></li>
             <li><a href="../appointments/appointments.html">Appointments</a></li>
             `;
         }
-        else{
-            profile_menu_list.innerHTML=`
+        else {
+            profile_menu_list.innerHTML = `
             <li><a href="../login/login.html">Login</a></li>`;
         }
     }
-    catch(err){
+    catch (err) {
         console.log(err);
     }
 }
@@ -82,8 +84,8 @@ function toggleMenu() {
 
 
 //SHOW SERVICES
-function showServices(service){
-    const newRow=`<tr id=${service.service.id}>
+function showServices(service) {
+    const newRow = `<tr id=${service.service.id}>
                     <td>${service.service.name}</td>
                     <td>${service.service.description}</td>
                     <td>${service.specialization.name}</td>
@@ -94,7 +96,7 @@ function showServices(service){
 
     // console.log(service);
 
-    service_table_body.innerHTML+=newRow;
+    service_table_body.innerHTML += newRow;
 }
 
 //GET SALONS
@@ -109,18 +111,18 @@ async function getSalonInfo() {
 
         const res = await axios.get(`http://localhost:3000/get-salon/${id}`, { headers: { 'Auth': token } });
 
-       console.log(res.data.salon.services);
+        console.log(res.data.salon.services);
 
-       for(service in res.data.salon.services){
-        showServices(res.data.salon.services[service]);
-    }
+        for (service in res.data.salon.services) {
+            showServices(res.data.salon.services[service]);
+        }
 
-    for(working_hour in res.data.salon.working_hours){
-        showWorkingHours(res.data.salon.working_hours[working_hour]);
-    }
+        for (working_hour in res.data.salon.working_hours) {
+            showWorkingHours(res.data.salon.working_hours[working_hour]);
+        }
 
-    // console.log(document.getElementById('book-btn'));
-    document.getElementById('book-btn').href=`../book_appoointment/book_appointment.html?id=${id}`;
+        // console.log(document.getElementById('book-btn'));
+        document.getElementById('book-btn').href = `../book_appoointment/book_appointment.html?id=${id}`;
 
     }
     catch (err) {
@@ -130,15 +132,15 @@ async function getSalonInfo() {
 
 
 //SHOW WORKING HOURS
-function showWorkingHours(working_hour){
+function showWorkingHours(working_hour) {
 
     // console.log(formatTime(working_hour.start_time));
-    const newRow=`<li class="working_hours_list_item">
+    const newRow = `<li class="working_hours_list_item">
                 ${working_hour.day} <span>${formatTime(working_hour.start_time)}  --  ${formatTime(working_hour.end_time)}</span>
             </li>
     `
 
-    working_hours_list.innerHTML+=newRow;
+    working_hours_list.innerHTML += newRow;
 }
 
 //FORMAT TIME
@@ -147,7 +149,7 @@ function formatTime(timeString) {
     let ampm = hours >= 12 ? "PM" : "AM";
     hours = hours % 12 || 12; // Convert 0 or 12-hour format
     return `${hours}:${minutes} ${ampm}`;
-  }
+}
 
 
 function setupStarRating(starContainerId, hiddenInputId) {
@@ -188,15 +190,15 @@ async function addReview(e) {
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get('id');
 
-        const rating={
-            rate:ratingInput.value,
-            feedback:review_text.value
+        const rating = {
+            rate: ratingInput.value,
+            feedback: review_text.value
         };
 
-        const review=await axios.post(`http://localhost:3000/add-review/${id}`,rating, { headers: { 'Auth': token } });
+        const review = await axios.post(`http://localhost:3000/add-review/${id}`, rating, { headers: { 'Auth': token } });
 
         console.log(review);
-        
+
     } catch (error) {
         console.log(error);
     }
@@ -204,7 +206,7 @@ async function addReview(e) {
 }
 
 async function getReview() {
-    
+
     const token = localStorage.getItem('token');
 
     try {
@@ -213,12 +215,88 @@ async function getReview() {
         const id = urlParams.get('id');
 
 
-        const review=await axios.get(`http://localhost:3000/get-review/${id}`, { headers: { 'Auth': token } });
+        const result = await axios.get(`http://localhost:3000/get-review/${id}`, { headers: { 'Auth': token } });
 
-        console.log(review);
-        
+        console.log(result);
+        const reviewArray = result.data.reviews;
+
+        reviewArray.forEach(review => {
+            // console.log(review);
+            displayReviews(review);
+        });
+
+
     } catch (error) {
         console.log(error);
     }
 
 }
+
+function displayReviews(review) {
+
+    const isOwner = localStorage.getItem('isOwner') === "true";
+    reviews.push(review);
+
+    updateRatingSummary();
+
+    console.log(typeof (isOwner));
+
+    const reviewEl = document.createElement("div");
+    reviewEl.className = "review-item";
+
+
+    reviewEl.innerHTML = `
+    <div class="review-rating">${"★".repeat(review.rate)}${"☆".repeat(5 - review.rate)}</div>
+    <p>${review.feedback}</p>
+    ${review.reply ? `<a href="#" class="reply-link">Reply</a>` : ''}
+    ${isOwner ?
+            `<div class="reply-input" style="display:none;">
+        <textarea rows="2" placeholder="Write a reply..."></textarea>
+        <button class="submit-reply">Submit</button>
+    </div>`  : ''}
+    <div class="owner-reply" style="display:none;"></div>
+`;
+
+    document.getElementById("reviews-list").prepend(reviewEl);
+
+    const replyLink = reviewEl.querySelector('.reply-link');
+    const replyBox = reviewEl.querySelector('.reply-input');
+
+
+    replyLink ?
+        replyLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            replyBox.style.display = replyBox.style.display === 'none' ? 'block' : 'none';
+        }) : '';
+
+
+    if (isOwner) {
+
+        const replyTextArea = replyBox.querySelector('textarea');
+        const submitBtn = replyBox.querySelector('.submit-reply');
+        const replyDisplay = reviewEl.querySelector('.owner-reply');
+
+        submitBtn.addEventListener('click', () => {
+            const replyText = replyTextArea.value.trim();
+            if (replyText) {
+                replyDisplay.innerHTML = `<strong>Owner:</strong> ${replyText}`;
+                replyDisplay.style.display = 'block';
+                replyBox.style.display = 'none';
+                replyTextArea.value = '';
+            }
+        });
+    }
+
+
+}
+
+
+function updateRatingSummary() {
+    const total = reviews.length;
+    const avg = reviews.reduce((sum, r) => sum + Number(r.rate), 0) / total;
+
+    document.getElementById("average-rating").textContent = avg.toFixed(1);
+    document.getElementById("total-reviews").textContent = total;
+}
+
+

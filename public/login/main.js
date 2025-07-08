@@ -125,11 +125,13 @@ async function onLogin(e) {
              if(role =='user'){
 
                   result = await axios.post(`http://localhost:3000/login`, User);
+                  localStorage.setItem('isOwner',false);
                   window.location.href = '../user/home/home.html';
              }
              else{
                 console.log(role);
                  result = await axios.post(`http://localhost:3000/bussiness-login`, User);
+                 localStorage.setItem('isOwner',true);
                  window.location.href = '../salon/dashboard/dashboard.html';
 
              }

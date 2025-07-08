@@ -181,20 +181,24 @@ tbody:before {
     display:block;
 }
 
-.service-table-body button{
-    /* width: auto;
-    height: auto; */
+.service-table-body button, #review-form button ,.submit-reply{
+  
     background: #333;
     color: #fff;
     border-radius: 20px;
     font-size: small;
     padding: 12px 15px;
-    /* margin: 10px; */
     font-weight: bold;
     cursor: pointer;
 }
 
-.service-table-body button:hover{
+#review-form button{
+    font-size: large;
+    padding: 10px 10px;
+    margin: 0 350px;
+}
+
+.service-table-body button:hover ,#review-form button:hover , .submit-reply{
     background: #202020;
 }
 
@@ -262,14 +266,17 @@ tbody:before {
 #review-form {
     display: flex;
     flex-direction: column;
+    font-size: large;
 }
 #review-form textarea, #review-form select {
     margin-bottom: 10px;
     padding: 8px;
+    font-size: large;
 }
 .review-item {
     border-top: 1px solid #ccc;
     padding: 10px 0;
+    font-size: large;
 }
 .review-rating {
     color: #f0ad4e;
@@ -315,8 +322,20 @@ tbody:before {
 .review-item {
     padding: 10px;
     border-bottom: 1px solid #ccc;
+    margin-left: 60px;
 }
 .review-rating {
     color: gold;
     font-size: 18px;
+}
+
+.reply-input textarea {
+    width: 100%;
+    padding: 5px;
+    margin: 5px 0;
+}
+.reply-link {
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: underline;
 }

@@ -29,6 +29,7 @@ Category.dispatchEvent(new Event('change'));
 
 dateInput.addEventListener('change', showTimeSlots);
 
+specialist.addEventListener('change',selectedEmployee);
 
 
 
@@ -41,6 +42,8 @@ let total_time = 0;
 let booked_appointments;
 let service_duration;
 let employees = [];
+let editAppointment;
+let edit=false;
 
 //DOM CONTENT LOAD EVENT
 document.addEventListener('DOMContentLoaded', DomLoad);
@@ -56,7 +59,7 @@ async function DomLoad() {
         // await ContinueOrPay();
 
         const urlParams = new URLSearchParams(window.location.search);
-        const edit = urlParams.get('edit');
+        edit = urlParams.get('edit');
         if (edit) {
             await getAppointmentDetails();
         }
@@ -125,7 +128,7 @@ async function ContinueOrPay() {
 
         document.getElementById('service-div').hidden = true;
         document.getElementById('date-div').hidden = false;
-        
+
 
         document.querySelectorAll('.main-service-list_item button').forEach(btn => {
             btn.remove();
@@ -141,8 +144,8 @@ async function ContinueOrPay() {
     if (continueStep == 2) {
 
         // getAllListData();
-        
-        if(!dateInput.value && !timeDropDown.value){
+
+        if (!dateInput.value && !timeDropDown.value) {
             alert('Please select date and time');
             return;
         }
@@ -221,6 +224,10 @@ async function appointmentPayment(e) {
                 MainList.hidden = true;
                 document.getElementById('service-list-msg').hidden = false;
                 document.getElementById('total').innerText = '0';
+
+                if (edit && editAppointment!=null) {
+                    await deleteAppointment(editAppointment.id);
+                }
 
                 window.location.href = "../appointments/appointments.html";
 
@@ -492,6 +499,46 @@ async function getSpecialists() {
         console.log(error);
     }
 
+}
+
+//CHANGE PRICE AND DISABLE DATES AS PER SELECTED SPECIALIST AVAILABILITY
+async function selectedEmployee() {
+
+    const priceTxt = document.getElementById('price-p').innerText;
+
+    const price = parseInt(priceTxt.match(/\d+/)[0]);
+
+    document.getElementById("date").value = '';
+
+    if (document.getElementById('specialist').value != '0') {
+
+        document.getElementById('price').innerHTML = `
+                        <p id="price-p" name="price">
+                            Price:
+                            ${price + 100}/-
+                        </p>`;
+
+        const eId = document.getElementById('specialist').value;
+
+        leaveDates = [];
+        await getLeave(eId);
+
+       
+    }
+    else {
+        const priceTxt = document.getElementById('price-p').innerText;
+
+        const price = parseInt(priceTxt.match(/\d+/)[0]);
+
+        document.getElementById('price').innerHTML = `
+                        <p id="price-p" name="price">
+                            Price:
+                            ${price - 100}/-
+                        </p>`;
+
+        leaveDates = [];
+        disableDates();
+    }
 }
 
 //
@@ -791,7 +838,7 @@ async function getAppointmentDetails() {
 
         const result = await axios.get(`http://localhost:3000/get-appointment/${appointmentId}`, { headers: { 'Auth': token } });
 
-        console.log(result.data);
+        // console.log(result.data);
         const appointment = result.data.appointment;
 
         setTimeout(() => {
@@ -807,11 +854,12 @@ async function getAppointmentDetails() {
 
 
         setTimeout(() => {
-            specialist.value = appointment.employeeId.id;
             specialist.dispatchEvent(new Event("change")); // Trigger change event
+            specialist.value = appointment.employeeId.id;
         }, 300)
 
-        await deleteAppointment(appointment.id);
+        // await deleteAppointment(appointment.id);
+        editAppointment=appointment;
 
 
     } catch (error) {

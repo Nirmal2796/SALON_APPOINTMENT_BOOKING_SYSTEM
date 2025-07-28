@@ -112,7 +112,7 @@ function toggleMenu() {
     Menu.classList.toggle("show");
 }
 
-
+//TO CONTINUE OR TO PAY
 async function ContinueOrPay() {
     // console.log(continueStep);
 
@@ -541,7 +541,7 @@ async function selectedEmployee() {
     }
 }
 
-//
+//GET BOOKED APPOINTMENTS
 async function getBookedAppointments() {
 
     const token = localStorage.getItem('token');
@@ -619,7 +619,7 @@ function disableDates() {
 
 }
 
-
+//CONVERT HOURS AND MINUTES
 function convertToHoursAndMinutes(totalMinutes) {
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
@@ -630,7 +630,7 @@ function convertToHoursAndMinutes(totalMinutes) {
     return `${hours}h ${minutes}m`;
 }
 
-
+//SHOW TIMESLOTS AFTER DATE SELECTION
 function showTimeSlots() {
 
     // console.log(total_time);
@@ -708,6 +708,7 @@ function showTimeSlots() {
     }
 }
 
+//SHOW SERVICES AFTER SELECTION
 function showService() {
     document.getElementById('service-div').hidden = false;
 
@@ -721,6 +722,7 @@ function showService() {
     continueStep--;
 }
 
+//SHOW DATE TIME AFTER SELECTION
 function showDateTime() {
     document.getElementById('date-div').hidden = false;
     document.getElementById('summary-div').hidden = true;
@@ -732,7 +734,7 @@ function showDateTime() {
     continueStep--;
 }
 
-
+//IS DATE IN BETWEEN NOT AVAILABLE DATES
 function isDateInRange(date, range) {
     // console.log(range);
     const d = new Date(date);
@@ -741,7 +743,7 @@ function isDateInRange(date, range) {
     return d >= from && d <= to;
 }
 
-
+//IS DATE AVAILABLE
 function isDateBlocked(date) {
 
     // console.log(closedPeriodDates);
@@ -827,7 +829,7 @@ async function getClosedPeriod() {
 
 }
 
-
+//GET EDITED APPOINTMENT DETIALS
 async function getAppointmentDetails() {
     try {
 

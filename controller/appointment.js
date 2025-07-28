@@ -4,7 +4,10 @@ const Service = require('../models/service');
 const Salon = require('../models/salon');
 const Employee = require('../models/employee');
 const Specialization = require('../models/specialization');
+const User = require('../models/user');
 const { generateInvoice } = require('../util/invoiceGenerator');
+const Sib = require('sib-api-v3-sdk');
+const fs = require('fs');
 
 exports.getAppointments = async (req, res) => {
 
@@ -45,30 +48,22 @@ exports.addAppointment = async (req, res) => {
 
         const appointments = req.body.appointments;
 
-        // console.log(appointments);
-        // let services=[];
-
         let booked_appointments = [];
 
-        for (const a of appointments) {
 
-            // console.log(a);
+        for (const a of appointments) {
 
             const formattedDate = new Date(a.date);
 
             const service = await Service.findByPk(a.serviceId);
 
-            // console.log(service);
-
-
-
             const employee = await Employee.findByPk(a.specialistId);
 
-
             const [h, m, s] = a.start_time.split(":").map(Number);
-            
+
             const dateObj = new Date();
             dateObj.setHours(h, m + parseInt(service.duration), s || 0); // Add duration to minutes
+
 
             booked_appointments.push(await Appointment.create({
                 salonId: salonId,
@@ -80,13 +75,27 @@ exports.addAppointment = async (req, res) => {
                 start_time: a.start_time,
                 end_time: dateObj.toTimeString().split(" ")[0]
             }, { transaction: t }));
-
-
+            
         }
 
         await t.commit();
 
-        await generateInvoice(req.body.paymentId, req.user);
+
+        //SEND EMAIL WITH INVOICE OF CONFIRMATION OF APPOINTMENT.
+        const invoicePath = await generateInvoice(req.body.paymentId, req.user);
+
+        console.log(invoicePath);
+
+        const user = await User.findByPk(req.user.id, {
+            attributes: ['email']
+        });
+
+        const salon=await Salon.findByPk(salonId,{
+            attributes:['uname']
+        });
+
+        await sendConfirmationEmail(user,salon,invoicePath);
+
 
         // console.log('data',data);
         res.status(200).json({ message: 'working hours set successfully', booked_appointments: booked_appointments });
@@ -143,5 +152,54 @@ exports.deleteAppointment = async (req, res) => {
         await t.rollback();
         console.log(err);
         res.status(500).json({ success: false });
+    }
+}
+
+exports.sendAppointmentReminder = async (req, res) => {
+    try {
+
+    } catch (error) {
+
+    }
+}
+
+
+// SEND CONFIRMATION AND INVOICE IN EMAIL.
+async function sendConfirmationEmail(user,salon,invoicePath) {
+    try {
+        const client = Sib.ApiClient.instance;
+        const apiKey = client.authentications['api-key'];
+        apiKey.apiKey = process.env.SENDINBLUE_API_KEY;
+
+        const tranEmailApi = new Sib.TransactionalEmailsApi(); // transactional email api when we need to send some confirmation or reset . and another is EmailCampaign is used when we have a newsletter or something like that.
+
+        const sender = {
+            email: 'nirmalgadekar2796@gmail.com',
+            name: 'SALON APPOINTMENT'
+        }
+
+        const receiver = [
+            {
+                email: user.email
+            }
+        ]
+
+        const response = await tranEmailApi.sendTransacEmail({
+            sender,
+            to: receiver,
+            subject: 'Appointment Confirmation - Invoice Attached',
+            htmlContent: `<p>Hi <strong>Client Name</strong>,</p>
+                            <p>Your appointment has been successfully confirmed.</p>
+                            <p>Please find the attached invoice for your reference.</p>
+                            <p>Thank you,<br>${salon.uname}</p>`,
+            attachment: [{
+                content: fs.readFileSync(invoicePath, { encoding: 'base64' }),
+                name: 'Invoice.pdf'
+            }]
+        });
+
+    } 
+    catch (error) {
+        console.log(error);
     }
 }

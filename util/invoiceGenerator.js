@@ -63,9 +63,10 @@ exports.generateInvoice = async function(paymentId, user) {
         doc.end();
 
         // Return promise after stream finishes
-        await new Promise(resolve => writeStream.on('finish', () => resolve(filePath)));
-
         console.log('Invoice generated successfully for Payment ID:', paymentId);
+
+        return await new Promise(resolve => writeStream.on('finish', () => resolve(filePath)));
+
 
     } catch (error) {
         console.error('Failed to generate invoice:', error.message);

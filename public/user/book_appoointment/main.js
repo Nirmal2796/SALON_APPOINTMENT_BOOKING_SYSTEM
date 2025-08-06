@@ -280,6 +280,7 @@ async function addToMainList(e) {
     const specialist = specialistDropdown.options[specialistDropdown.selectedIndex];
     // const timeDropDown =document.getElementById('time');
 
+    // total_time=0;
 
     MainList.hidden = false;
     document.getElementById('service-list-msg').hidden = true;
@@ -553,6 +554,8 @@ async function getBookedAppointments() {
 
         console.log('Employees>>', employees);
 
+        total_time=0;
+
         //JSON.stringify(employees) converts the employees array to a JSON string.
 
         // encodeURIComponent ensures that the string is safely included in the URL. 
@@ -641,7 +644,7 @@ function showTimeSlots() {
 
     day = day === 0 ? 7 : day;  // shift Sunday from 0 to 7
 
-    let day_working_hours;
+    let day_working_hours=null;
 
     for (let w in working_hours) {
 
@@ -662,7 +665,6 @@ function showTimeSlots() {
     const endTime = new Date(`${today}T${day_working_hours.end_time}`);
 
     timeDropDown.disabled = false;
-    let hasAvailableSlot = false;
     timeDropDown.innerHTML = '';
 
     while (time < endTime) {
@@ -680,13 +682,16 @@ function showTimeSlots() {
         });
 
 
-        if (date.toISOString().split('T')[0] == new Date().toISOString().split('T')[0]) {
+        if (date.toDateString() === new Date().toDateString()) {
 
             //if its today.
 
             if (!isOverlapping && timeStr24 > new Date().toTimeString().split(' ')[0]) {
                 timeDropDown.innerHTML += `
                <option value="${timeStr24}" id="${timeStr24}">${timeStr12}</option>`;
+            }
+            else{
+                timeDropDown.innerHTML+='';
             }
         }
         else {
@@ -700,6 +705,7 @@ function showTimeSlots() {
 
 
         time.setMinutes(time.getMinutes() + total_time);
+        // console.log(time);
 
     }
 
@@ -714,6 +720,10 @@ function showService() {
 
     document.getElementById('date-div').hidden = true;
 
+    dateInput.value='';
+    timeDropDown.value='';
+    timeDropDown.disabled=true;
+
     document.querySelectorAll('.main-service-list_item').forEach(item => {
         item.innerHTML += `<button onclick="removeFromMainList('${item.id}')">DEL</button> </li>`;
     });
@@ -727,6 +737,10 @@ function showDateTime() {
     document.getElementById('date-div').hidden = false;
     document.getElementById('summary-div').hidden = true;
     book_appointment_form.hidden = false;
+
+    dateInput.innerHTML='';
+    timeDropDown.disabled=false;
+    timeDropDown.innerHTML='';
 
     title.textContent = 'Select Date & Time';
     continue_pay_btn.innerText = 'Continue';

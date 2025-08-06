@@ -6,7 +6,7 @@ const Employee = require('../models/employee');
 const Specialization = require('../models/specialization');
 const User = require('../models/user');
 const { generateInvoice } = require('../util/invoiceGenerator');
-const Sib = require('sib-api-v3-sdk');
+const SibApiV3Sdk  = require('sib-api-v3-sdk');
 const fs = require('fs');
 
 exports.getAppointments = async (req, res) => {
@@ -82,19 +82,19 @@ exports.addAppointment = async (req, res) => {
 
 
         //SEND EMAIL WITH INVOICE OF CONFIRMATION OF APPOINTMENT.
-        const invoicePath = await generateInvoice(req.body.paymentId, req.user);
+        try {
+            const invoicePath = await generateInvoice(req.body.paymentId, req.user);
+            const user = await User.findByPk(req.user.id, { attributes: ['email'] });
+            const salon = await Salon.findByPk(req.body.salonId, { attributes: ['name'] });
 
-        console.log(invoicePath);
+            await sendConfirmationEmail(user, salon, invoicePath);
 
-        const user = await User.findByPk(req.user.id, {
-            attributes: ['email']
-        });
+        } catch (err) {
+            console.error('Post-processing failed:', err);
+            // You could log it or alert admin etc.
+        }
 
-        const salon=await Salon.findByPk(salonId,{
-            attributes:['uname']
-        });
-
-        await sendConfirmationEmail(user,salon,invoicePath);
+        // await sendConfirmationEmail(user,salon,invoicePath);
 
 
         // console.log('data',data);
@@ -167,7 +167,7 @@ exports.sendAppointmentReminder = async (req, res) => {
 // SEND CONFIRMATION AND INVOICE IN EMAIL.
 async function sendConfirmationEmail(user,salon,invoicePath) {
     try {
-        const client = Sib.ApiClient.instance;
+        const client = SibApiV3Sdk.ApiClient.instance;
         const apiKey = client.authentications['api-key'];
         apiKey.apiKey = process.env.SENDINBLUE_API_KEY;
 
@@ -191,12 +191,13 @@ async function sendConfirmationEmail(user,salon,invoicePath) {
             htmlContent: `<p>Hi <strong>Client Name</strong>,</p>
                             <p>Your appointment has been successfully confirmed.</p>
                             <p>Please find the attached invoice for your reference.</p>
-                            <p>Thank you,<br>${salon.uname}</p>`,
+                            <p>Thank you,<br>${salon.name}</p>`,
             attachment: [{
                 content: fs.readFileSync(invoicePath, { encoding: 'base64' }),
                 name: 'Invoice.pdf'
             }]
         });
+        console.log('done');
 
     } 
     catch (error) {

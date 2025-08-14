@@ -48,6 +48,14 @@ const paymentRouter = require('./routes/payment');
 const appointmentRouter = require('./routes/appointment');
 const reviewRouter=require('./routes/review');
 
+
+//import appointment reminder cron job and start it.
+require('./jobs/appointmentReminderCron');
+
+//import delete closedperiod cron job and start it.
+require('./jobs/deleteExpiredClosedPeriodsCron');
+
+
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
 
 app.use(helemt({ contentSecurityPolicy: false }));
@@ -133,43 +141,6 @@ Employee.hasMany(Appointment);
 
 Appointment.belongsTo(Payment);     // many appointments → one payment
 Payment.hasMany(Appointment);
-
-
-
-// Run every day at midnight
-const job = new cron.CronJob('0 0 * * *', async () => {
-
-  
-  const t = await sequelize.transaction();
-  try {
-
-    let todayMidnight = new Date();
-    todayMidnight.setHours(0, 0, 0, 0);
-
-    // todayMidnight=todayMidnight.toISOString().slice(0, 19).replace("T", " ");
-
-    await Closed_Period.destroy({
-      where: {
-        end_date: {
-          [Op.lt]: todayMidnight  // Deletes records before today (does not delete today's records)
-        }
-      },
-      transaction: t
-    });
-
-    await t.commit();
-
-    // console.log("Expired records deleted successfully.");
-  } catch (error) {
-    await t.rollback();
-    console.error("Error deleting expired records:", error);
-  }
-},
-  null, // This function is executed when the job stops
-  true, // Start the job right now
-  'Asia/Kolkata' // Time zone of this job.
-);
-
 
 
 

@@ -6,14 +6,24 @@ const Employee = require('../models/employee');
 const Specialization = require('../models/specialization');
 const User = require('../models/user');
 const { generateInvoice } = require('../util/invoiceGenerator');
-const SibApiV3Sdk  = require('sib-api-v3-sdk');
+const SibApiV3Sdk = require('sib-api-v3-sdk');
 const fs = require('fs');
+const { Op } = require('sequelize');
+
 
 exports.getAppointments = async (req, res) => {
 
     try {
 
-        const appointments = await req.user.getAppointments();
+        const today = new Date();
+        
+        const appointments = await req.user.getAppointments({
+            where: {
+                date: {
+                    [Op.gte]: today // greater than or equal to today
+                }
+            }
+        });
 
         // let appointmentsDetails=[];
 
@@ -75,7 +85,7 @@ exports.addAppointment = async (req, res) => {
                 start_time: a.start_time,
                 end_time: dateObj.toTimeString().split(" ")[0]
             }, { transaction: t }));
-            
+
         }
 
         await t.commit();
@@ -165,7 +175,7 @@ exports.sendAppointmentReminder = async (req, res) => {
 
 
 // SEND CONFIRMATION AND INVOICE IN EMAIL.
-async function sendConfirmationEmail(user,salon,invoicePath) {
+async function sendConfirmationEmail(user, salon, invoicePath) {
     try {
         const client = SibApiV3Sdk.ApiClient.instance;
         const apiKey = client.authentications['api-key'];
@@ -199,7 +209,7 @@ async function sendConfirmationEmail(user,salon,invoicePath) {
         });
         console.log('done');
 
-    } 
+    }
     catch (error) {
         console.log(error);
     }

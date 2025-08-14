@@ -1,6 +1,6 @@
 const cron = require('cron');
 const { Op } = require('sequelize');
-const sequelize = require('./util/database');
+const sequelize = require('../util/database');
 const Closed_Period=require('../models/closed_period');
 
 // Run every day at midnight

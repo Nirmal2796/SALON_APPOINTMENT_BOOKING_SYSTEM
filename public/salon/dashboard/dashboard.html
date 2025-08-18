@@ -17,7 +17,7 @@
                 <ul class="nav-list">
                     <li><a href="../services/services.html">Services</a></li>
                     <!-- <li><a href="../recipes/recipes.html">Recipes</a></li> -->
-                    <li><a href="">Appointments</a></li>
+                    <li><a href="../appointments/appointments.html">Appointments</a></li>
                     <li><a href="">Reviews</a></li>
                     <li><a href="../set-working-hours/set-working-hours.html">Time</a></li>
                     <li><a href="../team/team.html">Team</a></li>
@@ -37,12 +37,35 @@
 
 
     <div class="dashboard">
-        <h2>Today's Appointments</h2>
+        <h2>Appointments</h2>
         <div class="appointments-card">
-            <div>
+            <!-- <div class="appointments-div"> -->
+                <div class="appointment-table-div" id="appointment-table-div">
+        <table id="appointment-table" class="appointment-table">
+            <thead id="appointment-table-head" class="appointment-table-head">
+                <tr>
+                    <th>Date</th>
+                    <th>Service</th>
+                    <th>Specialist</th>
+                </tr>
+            </thead>
+            <tbody id="appointment-table-body" class="appointment-table-body">
+                <!-- <tr>
+                    <td>Date</td>
+                    <td>Service</td>
+                    <td>Specialist</td>
+                    
+                </tr> -->
+                
+                
+            </tbody>
+        </table>
+    </div>
+    <div id="appointment-message-div" hidden>
+    </div>
 
-            </div>
-            <a href="">View More</a>
+            <!-- </div> -->
+            <a href="../appointments/appointments.html">View More</a>
         </div>
     
         <h2>Services</h2>

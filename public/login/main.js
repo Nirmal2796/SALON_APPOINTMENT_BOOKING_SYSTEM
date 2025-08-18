@@ -128,18 +128,18 @@ async function onLogin(e) {
                 localStorage.setItem('isOwner', false);
                 window.location.href = '../user/home/home.html';
             }
-            else if (r =='bussiness'){
+            else if (role =='bussiness'){
                 // console.log(role);
                 result = await axios.post(`http://localhost:3000/bussiness-login`, User);
                 localStorage.setItem('isOwner', true);
                 window.location.href = '../salon/dashboard/dashboard.html';
 
             }
-            else{
-                result = await axios.post(`http://localhost:3000/admin-login`, User);
-                localStorage.setItem('isOwner', true);
-                // window.location.href = '../salon/dashboard/dashboard.html';
-            }
+            // else{
+            //     result = await axios.post(`http://localhost:3000/admin-login`, User);
+            //     localStorage.setItem('isOwner', true);
+            //     // window.location.href = '../salon/dashboard/dashboard.html';
+            // }
 
 
             localStorage.setItem('token', result.data.token);
@@ -224,17 +224,18 @@ function login_As(r) {
     login_form.reset();
 
     if (r == 'user') {
-
+        role='user';
         document.getElementById('user-section').hidden = true;
         document.getElementById('bussiness-section').hidden = false;
     }
     else if (r =='bussiness'){
+        role='bussiness';
         document.getElementById('user-section').hidden = false;
         document.getElementById('bussiness-section').hidden = true;
     }
-    else{
+    // else{
 
-    }
+    // }
 
     role = r;
 

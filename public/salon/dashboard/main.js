@@ -2,7 +2,7 @@
 
 const profile_menu_list = document.getElementById('profile_menu_list');
 
-
+const appointment_table_body=document.getElementById('appointment-table-body');
 
 
 //DOM CONTENT LOAD EVENT
@@ -15,6 +15,8 @@ async function DomLoad() {
         // console.log('Dom Loaded');
         changeProfileMenu();
         window.scrollTo(0, 0);
+
+        await showAppointments();
     }
     catch(err){
         console.log(err);
@@ -61,4 +63,55 @@ function toggleProfileMenu() {
 function toggleMenu() {
     var Menu = document.getElementById("nav-list");
     Menu.classList.toggle("show");
+}
+
+async function showAppointments() {
+    try {
+
+         const token=localStorage.getItem('token');
+
+        const result=await axios.get('http://localhost:3000/get-appointments',{ headers: { 'Auth': token } });
+        
+    } catch (error) {
+        
+    }
+}
+
+async function showAppointments() {
+    try {
+
+         const token=localStorage.getItem('token');
+
+        const result=await axios.get('http://localhost:3000/get-some-appointments',{ headers: { 'Auth': token } });
+
+        console.log(result);
+        
+        const appointments=result.data.appointments
+
+        appointments.forEach(appointment => {
+            const newRow=`<tr id=${appointment.id}>
+                    <td>${new Date(appointment.date).toLocaleDateString("en-GB")}</</td>
+                    <td>${appointment.serviceId.name}</td>
+                    <td>${appointment.employeeId ? appointment.employeeId.name : '-'}</td>
+                </tr>`
+
+    appointment_table_body.innerHTML+=newRow;
+        });
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+async function showServices() {
+    try {
+
+         const token=localStorage.getItem('token');
+
+        const result=await axios.get('http://localhost:3000/get-services',{ headers: { 'Auth': token } });
+
+        
+    } catch (error) {
+         console.log(error);
+    }
 }

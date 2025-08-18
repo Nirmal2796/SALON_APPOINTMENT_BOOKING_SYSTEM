@@ -18,4 +18,8 @@ router.post('/bussiness-login',salonController.postLoginUser);
 
 router.get('/salon-validate-token',salonAuthentication.authentication,salonController.validateToken);
 
+router.get('/get-some-appointments',salonAuthentication.authentication,salonController.getSomeAppointments);
+
+router.get('/get-appointments',salonAuthentication.authentication,salonController.getAppointments);
+
 module.exports=router;

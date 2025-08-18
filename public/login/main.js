@@ -27,7 +27,7 @@ sign_up_form.addEventListener('submit', onSignUp);
 login_form.addEventListener('submit', onLogin);
 forgot_form.addEventListener('submit', forgotPassword);
 
-let role='user';
+let role = 'user';
 
 function ShowSignup() {
     document.getElementById('sign_up_div').hidden = false;
@@ -51,7 +51,7 @@ async function onSignUp(e) {
 
     e.preventDefault();
 
-    if (sign_up_user_name.value == '' || sign_up_user_email.value == '' ||  sign_up_user_password == '') {
+    if (sign_up_user_name.value == '' || sign_up_user_email.value == '' || sign_up_user_password == '') {
         sign_up_msg.innerHTML = '<b>Please enter all fields</b>';
 
         setTimeout(() => {
@@ -69,19 +69,19 @@ async function onSignUp(e) {
             };
 
             let result;
-            
-            if(role=='user'){
 
-                 result = await axios.post("http://localhost:3000/signup", User);
-                
+            if (role == 'user') {
+
+                result = await axios.post("http://localhost:3000/signup", User);
+
             }
-            else{
-                 result = await axios.post("http://localhost:3000/bussiness-signup", User);
-                
+            else {
+                result = await axios.post("http://localhost:3000/bussiness-signup", User);
+
             }
 
 
-            alert(result.data.message);            
+            alert(result.data.message);
 
             sign_up_form.reset();
         }
@@ -122,19 +122,24 @@ async function onLogin(e) {
 
             let result;
 
-             if(role =='user'){
+            if (role == 'user') {
 
-                  result = await axios.post(`http://localhost:3000/login`, User);
-                  localStorage.setItem('isOwner',false);
-                  window.location.href = '../user/home/home.html';
-             }
-             else{
-                console.log(role);
-                 result = await axios.post(`http://localhost:3000/bussiness-login`, User);
-                 localStorage.setItem('isOwner',true);
-                 window.location.href = '../salon/dashboard/dashboard.html';
+                result = await axios.post(`http://localhost:3000/login`, User);
+                localStorage.setItem('isOwner', false);
+                window.location.href = '../user/home/home.html';
+            }
+            else if (r =='bussiness'){
+                // console.log(role);
+                result = await axios.post(`http://localhost:3000/bussiness-login`, User);
+                localStorage.setItem('isOwner', true);
+                window.location.href = '../salon/dashboard/dashboard.html';
 
-             }
+            }
+            else{
+                result = await axios.post(`http://localhost:3000/admin-login`, User);
+                localStorage.setItem('isOwner', true);
+                // window.location.href = '../salon/dashboard/dashboard.html';
+            }
 
 
             localStorage.setItem('token', result.data.token);
@@ -211,20 +216,26 @@ async function forgotPassword(e) {
 }
 
 //role assign
-function login_As(r){
+function login_As(r) {
 
     // console.log(r);
-    
-    if(r =='user'){
 
-        document.getElementById('user-section').hidden=true;
-        document.getElementById('bussiness-section').hidden=false;
+    sign_up_form.reset();
+    login_form.reset();
+
+    if (r == 'user') {
+
+        document.getElementById('user-section').hidden = true;
+        document.getElementById('bussiness-section').hidden = false;
+    }
+    else if (r =='bussiness'){
+        document.getElementById('user-section').hidden = false;
+        document.getElementById('bussiness-section').hidden = true;
     }
     else{
-        document.getElementById('user-section').hidden=false;
-        document.getElementById('bussiness-section').hidden=true;
+
     }
 
-    role=r;
+    role = r;
 
 }

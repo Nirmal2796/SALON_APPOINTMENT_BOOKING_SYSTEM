@@ -121,7 +121,7 @@ form #login_msg, #sign_up_msg{
 }
 
 
-.bussiness-section h3, .user-section h3{
+.bussiness-section h3, .user-section h3 ,.admin-section h3{
     margin-top: 5px;
     color: #333;
     width: 100%;
@@ -129,12 +129,12 @@ form #login_msg, #sign_up_msg{
     font-size: 14px;
 }
 
-.bussiness-section h3 a , .user-section h3 a{
+.bussiness-section h3 a , .user-section h3 a ,.admin-section h3 a{
     color: rgb(78, 78, 211);
     text-decoration: none;
 }
 
-.bussiness-section h3 a:hover , .user-sectionh3 a:hover{
+.bussiness-section h3 a:hover , .user-sectionh3 a:hover , .admin-section a:hover{
     text-decoration: underline;
     font-size: 15px;
     color: rgb(21, 21, 83);

@@ -328,14 +328,3 @@ tbody:before {
     color: gold;
     font-size: 18px;
 }
-
-.reply-input textarea {
-    width: 100%;
-    padding: 5px;
-    margin: 5px 0;
-}
-.reply-link {
-    color: #007bff;
-    cursor: pointer;
-    text-decoration: underline;
-}

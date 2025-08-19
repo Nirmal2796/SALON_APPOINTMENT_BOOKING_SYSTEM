@@ -247,45 +247,9 @@ function displayReviews(review) {
 
     reviewEl.innerHTML = `
     <div class="review-rating">${"★".repeat(review.rate)}${"☆".repeat(5 - review.rate)}</div>
-    <p>${review.feedback}</p>
-    ${review.reply ? `<a href="#" class="reply-link">Reply</a>` : ''}
-    ${isOwner ?
-            `<div class="reply-input" style="display:none;">
-        <textarea rows="2" placeholder="Write a reply..."></textarea>
-        <button class="submit-reply">Submit</button>
-    </div>`  : ''}
-    <div class="owner-reply" style="display:none;"></div>
-`;
+    <p>${review.feedback}</p>`;
 
     document.getElementById("reviews-list").prepend(reviewEl);
-
-    const replyLink = reviewEl.querySelector('.reply-link');
-    const replyBox = reviewEl.querySelector('.reply-input');
-
-
-    replyLink ?
-        replyLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            replyBox.style.display = replyBox.style.display === 'none' ? 'block' : 'none';
-        }) : '';
-
-
-    if (isOwner) {
-
-        const replyTextArea = replyBox.querySelector('textarea');
-        const submitBtn = replyBox.querySelector('.submit-reply');
-        const replyDisplay = reviewEl.querySelector('.owner-reply');
-
-        submitBtn.addEventListener('click', () => {
-            const replyText = replyTextArea.value.trim();
-            if (replyText) {
-                replyDisplay.innerHTML = `<strong>Owner:</strong> ${replyText}`;
-                replyDisplay.style.display = 'block';
-                replyBox.style.display = 'none';
-                replyTextArea.value = '';
-            }
-        });
-    }
 
 
 }

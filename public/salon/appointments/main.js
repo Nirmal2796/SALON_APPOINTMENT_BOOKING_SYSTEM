@@ -66,15 +66,12 @@ function toggleMenu() {
 }
 
 
-
 async function showAppointments() {
     try {
 
          const token=localStorage.getItem('token');
 
-         console.log('in show appointments');
-
-        const result=await axios.get('http://localhost:3000/get-some-appointments',{ headers: { 'Auth': token } });
+        const result=await axios.get('http://localhost:3000/get-salon-appointments',{ headers: { 'Auth': token } });
 
         console.log(result);
         
@@ -95,15 +92,3 @@ async function showAppointments() {
     }
 }
 
-async function showServices() {
-    try {
-
-         const token=localStorage.getItem('token');
-
-        const result=await axios.get('http://localhost:3000/get-services',{ headers: { 'Auth': token } });
-
-        
-    } catch (error) {
-         console.log(error);
-    }
-}

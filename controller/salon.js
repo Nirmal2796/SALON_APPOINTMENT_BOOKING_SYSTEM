@@ -100,6 +100,8 @@ const getSomeAppointments = async (req, res) => {
 
         const today = new Date();
 
+        // console.log(req.user);
+
         const appointments = await req.user.getAppointments({
             limit: 5,                          // only 3 records
             order: [['date', 'DESC']]      // latest first
@@ -118,6 +120,8 @@ const getSomeAppointments = async (req, res) => {
             appointment.employeeId = employee;
 
         }
+
+        console.log(appointments);
 
         res.status(200).json({ appointments: appointments });
     }

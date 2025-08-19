@@ -20,6 +20,6 @@ router.get('/salon-validate-token',salonAuthentication.authentication,salonContr
 
 router.get('/get-some-appointments',salonAuthentication.authentication,salonController.getSomeAppointments);
 
-router.get('/get-appointments',salonAuthentication.authentication,salonController.getAppointments);
+router.get('/get-salon-appointments',salonAuthentication.authentication,salonController.getAppointments);
 
 module.exports=router;

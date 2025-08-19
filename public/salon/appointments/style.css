@@ -21,7 +21,6 @@ header {
     position: sticky;
     top: 0;
     overflow: hidden;
-    z-index: 1000;
 }
 
 .container {
@@ -32,7 +31,7 @@ header {
     justify-content: space-between;
 }
 
-.nav-list {
+.nav-list{
     display: none;
 }
 
@@ -51,8 +50,7 @@ nav ul li {
 .profile-menu {
     display: none;
     position: fixed;
-    top: 60px;
-    /* Position it just below the header */
+    top: 60px; /* Position it just below the header */
     right: 10px;
     background: #fff;
     border: 1px solid #ccc;
@@ -84,7 +82,7 @@ nav ul li {
 }
 
 
-.menu-icon {
+.menu-icon{
     font-size: 24px;
     padding: 20px;
     text-align: center;
@@ -92,43 +90,14 @@ nav ul li {
     display: block;
 }
 
-.dashboard {
-    width: 90%;
-    margin: 3em auto;
-    /* background: #9b9494; */
-    padding: 5px;
-}
-
-.appointments-card,
-.services-card,
-.reviews-card {
-    width: 70%;
-    margin: 2em auto;
-    background: #a3a0a0;
-    position: relative;
-    height: 310px; /* Ensure height is defined */
-    border-radius: 20px;
-}
-
-.appointments-card a ,.services-card a,.reviews-card a{
-    position: absolute;
-    bottom: 10px;
-    right: 20px;
-}
-
-.appointments-card a:hover ,.services-card a:hover,.reviews-card a:hover{
-    color: #ccc;
-    font-size: large;
-}
-
 
 /* ...........  Media Queries ............... */
-@media only screen and (min-width: 768px) {
-    .menu-icon {
+@media only screen and (min-width: 768px){
+    .menu-icon{
         display: none;
     }
 
-    .nav-list {
+    .nav-list{
         display: block;
     }
 
@@ -142,3 +111,109 @@ nav ul li {
 
 }
 
+
+
+.appointment-table-div{
+    background: #f9f9f9;
+    margin: 50px 10rem;
+    padding: 20px;
+    /* border-radius: 10px; */
+}
+
+.appointment-table{
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    border-collapse: collapse;
+    /* overflow: scroll; */
+}
+
+td,th {padding: .5em 1em;}
+
+.appointment-table thead th {
+  position: sticky;
+  top: 0;
+  background: #fff;   /* keeps header visible */
+  z-index: 2;
+  /* box-shadow: 0 4px 8px rgba(0,0,0,0.5); */
+}
+
+.appointment-table thead th:first-child {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;   /* curve left corner */
+}
+
+
+.appointment-table thead th:last-child {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;  /* curve right corner */
+}
+
+.appointment-table-body {
+  display: block;
+  max-height: 300px; /* adjust height as needed */
+  overflow-y: auto;
+  width: 100%;
+}
+
+.appointment-table-body tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.appointment-table thead,
+.appointment-table-body tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.appointment-table thead tr {
+    border-bottom: 5px solid #333;
+    color: #333;
+    font-size: larger;
+    box-shadow: 0 1px 10px #000000; 
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+ 
+
+.appointment-table-body td {
+    padding: 10px 15px;
+    font-size: large;
+    text-align: center;
+}
+
+tbody:before {
+    line-height:1em;
+    content:".";
+    color:white; 
+    display:block;
+}
+
+.appointment-table-body button{
+    /* width: auto;
+    height: auto; */
+    background: #333;
+    color: #fff;
+    border-radius: 20px;
+    font-size: small;
+    padding: 12px 15px;
+    /* margin: 10px; */
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.appointment-table-body button:hover{
+    background: #202020;
+}
+
+#appointment-message-div p{
+    background: #f9f9f9;
+    margin: 50px 10rem;
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+}

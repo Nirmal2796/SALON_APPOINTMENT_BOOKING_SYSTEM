@@ -11,6 +11,8 @@ const salonAuthentication=require('../middleware/salonAuthentication');
 
 router.get('/get-salon-services',salonAuthentication.authentication,serviceController.getServices);
 
+router.get('/get-some-services',salonAuthentication.authentication,serviceController.getSomeServices);
+
 router.post('/add-service',salonAuthentication.authentication,serviceController.addService);
 
 router.get('/get-service-details/:id',salonAuthentication.authentication,serviceController.getServiceDetails);

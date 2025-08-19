@@ -143,7 +143,7 @@ nav ul li {
 }
 
 
-.appointment-table{
+.appointment-table ,.service-table{
     width: 100%;
     padding: 20px;
     border-collapse: separate;
@@ -154,7 +154,7 @@ nav ul li {
 
 td,th {padding: .5em 1em;}
 
-.appointment-table thead th {
+.appointment-table thead th , .service-table thead th {
     background: #f9f9f9; 
     border-bottom: 5px solid #333;
     color: #333;
@@ -163,18 +163,18 @@ td,th {padding: .5em 1em;}
     overflow: hidden; 
 }
 
-.appointment-table thead th:first-child {
+.appointment-table thead th:first-child , .service-table thead th:first-child{
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;   /* curve left corner */
 }
 
-.appointment-table thead th:last-child {
+.appointment-table thead th:last-child , .service-table thead th:last-child{
     border-top-right-radius: 20px;
      border-bottom-right-radius: 20px;  /* curve right corner */
 }
  
 
-.appointment-table-body td {
+.appointment-table-body td ,.service-table-body td{
     padding: 10px 15px;
     font-size: large;
     text-align: center;
@@ -188,7 +188,7 @@ tbody:before {
 }
 
 
-#appointment-message-div p{
+#appointment-message-div p , #service-message-div p{
     background: #f9f9f9;
     margin: 50px 10rem;
     padding: 20px;

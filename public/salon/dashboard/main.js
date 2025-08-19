@@ -4,6 +4,8 @@ const profile_menu_list = document.getElementById('profile_menu_list');
 
 const appointment_table_body=document.getElementById('appointment-table-body');
 
+const service_table_body=document.getElementById('service-table-body');
+
 
 //DOM CONTENT LOAD EVENT
 document.addEventListener('DOMContentLoaded', DomLoad);
@@ -17,6 +19,7 @@ async function DomLoad() {
         window.scrollTo(0, 0);
 
         await showAppointments();
+        await showServices();
     }
     catch(err){
         console.log(err);
@@ -100,7 +103,23 @@ async function showServices() {
 
          const token=localStorage.getItem('token');
 
-        const result=await axios.get('http://localhost:3000/get-services',{ headers: { 'Auth': token } });
+        const result=await axios.get('http://localhost:3000/get-some-services',{ headers: { 'Auth': token } });
+
+        console.log(result);
+        
+        const services=result.data.services
+
+        services.forEach(s => {
+            const newRow=`<tr id=${s.id}>
+                    <td>${s.service.name}</td>
+                    <td>${s.service.description}</td>
+                    <td>${s.specialization.name}</td>
+                    <td>${s.service.duration}</td>
+                    <td>${s.service.price}</td>
+                </tr>`
+
+    service_table_body.innerHTML+=newRow;
+        });
 
         
     } catch (error) {

@@ -27,6 +27,31 @@ exports.getServices=async(req,res)=>{
     }
 }
 
+exports.getSomeServices=async(req,res)=>{
+    try{
+            const services=await req.user.getServices({
+                limit:4
+            });
+
+            for(let s in services){
+
+                const specialization = await Specialization.findByPk(services[s].specializationId);
+
+                const service=services[s];
+
+                services[s]={service , specialization};
+
+            }
+
+            res.status(200).json({ services: services });
+
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).json({ success: false, message: 'Something went wrong' });
+    }
+}
+
 
 exports.addService=async(req,res)=>{
 

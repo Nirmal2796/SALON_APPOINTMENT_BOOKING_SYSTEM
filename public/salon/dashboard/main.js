@@ -18,8 +18,9 @@ async function DomLoad() {
         changeProfileMenu();
         window.scrollTo(0, 0);
 
-        await showAppointments();
-        await showServices();
+         showAppointments();
+         showServices();
+         showReviews();
     }
     catch(err){
         console.log(err);
@@ -126,3 +127,39 @@ async function showServices() {
          console.log(error);
     }
 }
+
+async function showReviews() {
+    try {
+
+         const token=localStorage.getItem('token');
+
+        const result=await axios.get('http://localhost:3000/get-total-reviews',{ headers: { 'Auth': token } });
+
+        console.log(result);
+        
+        const total=result.data.total;
+        const avg=result.data.avg;
+
+        document.getElementById("average-rating").textContent = avg.toFixed(1);
+        document.getElementById("stars").innerHTML = getStars(avg);
+        document.getElementById("total-reviews").textContent = total;
+
+                
+    } catch (error) {
+         console.log(error);
+    }
+}
+
+function getStars(rating, maxStars = 5) {
+    let starsHTML = "";
+    for (let i = 1; i <= maxStars; i++) {
+      if (i <= Math.floor(rating)) {
+        starsHTML += `<i class="fas fa-star" style="color: gold;"></i>`;  // full
+      } else if (i === Math.floor(rating) + 1 && rating % 1 !== 0) {
+        starsHTML += `<i class="fas fa-star-half-alt" style="color: gold;"></i>`; // half
+      } else {
+        starsHTML += `<i class="far fa-star" style="color: gold;"></i>`;  // empty
+      }
+    }
+    return starsHTML;
+  }

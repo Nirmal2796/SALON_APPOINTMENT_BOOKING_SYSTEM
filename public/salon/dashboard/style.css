@@ -100,14 +100,19 @@ nav ul li {
 }
 
 .appointments-card,
-.services-card,
-.reviews-card {
+.services-card {
     width: 70%;
     margin: 2em auto;
     background: #a3a0a0;
     position: relative;
     height: 310px; /* Ensure height is defined */
     border-radius: 20px;
+}
+.reviews-card{
+    width: 70%;
+    margin: 1em auto;
+    position: relative;
+    border-radius: 30px;
 }
 
 .appointments-card a ,.services-card a,.reviews-card a{
@@ -195,4 +200,17 @@ tbody:before {
     text-align: center;
     font-weight: bold;
     font-size: larger;
+}
+
+.ratings-summary {
+    margin: 20px 0;
+    padding: 20px;
+    background: #ffeecb;
+    border-left: 4px solid gold;
+    border-radius: 8px;
+}
+
+.ratings-summary h3,p{
+    margin-left: 40px;
+    margin: 10px 0;
 }

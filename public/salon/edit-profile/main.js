@@ -40,7 +40,6 @@ async function changeProfileMenu() {
         if(res.data.status==='success'){
             profile_menu_list.innerHTML=`
             <li><a href="../edit-profile/edit-profile.html">Edit Profile</a></li>
-            <li><a href="#">Prefernces</a></li>
             `;
         }
         else{
@@ -75,7 +74,7 @@ async function editProfile(e) {
             password: password.value
         };
 
-        const res = await axios.post('http://localhost:3000/edit-profile', user, { headers: { 'Auth': token } });
+        const res = await axios.post('http://localhost:3000/edit-salon-profile', user, { headers: { 'Auth': token } });
     }
     catch (err) {
         console.log(err);
@@ -88,10 +87,10 @@ async function getUserDetails() {
     const token = localStorage.getItem('token');
 
     try {
-        const res = await axios.get('http://localhost:3000/get-user', { headers: { 'Auth': token } });
+        const res = await axios.get('http://localhost:3000/get-salon', { headers: { 'Auth': token } });
 
-        username.value=res.data.user.name;
-        email.value=res.data.user.email;
+        username.value=res.data.salon.name;
+        email.value=res.data.salon.email;
 
     }
     catch (err) {

@@ -234,12 +234,12 @@ async function getReview() {
 
 function displayReviews(review) {
 
-    const isOwner = localStorage.getItem('isOwner') === "true";
+    // const isOwner = localStorage.getItem('isOwner') === "true";
     reviews.push(review);
 
     updateRatingSummary();
 
-    console.log(typeof (isOwner));
+    // console.log(typeof (isOwner));
 
     const reviewEl = document.createElement("div");
     reviewEl.className = "review-item";

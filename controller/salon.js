@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 
-
+const Appointment=require('../models/appointment');
 const Salon = require('../models/salon');
 const Service = require('../models/service');
 const Employee = require('../models/employee');
@@ -138,7 +138,9 @@ const getAppointments = async (req, res) => {
 
         const today = new Date();
 
-        const appointments = await req.user.getAppointments();
+        const appointments = await req.user.getAppointments({
+            order: [['date', 'DESC']]   
+        });
 
         // let appointmentsDetails=[];
 
@@ -163,5 +165,67 @@ const getAppointments = async (req, res) => {
     }
 }
 
+const editProfile = async (req, res) => {
 
-module.exports = { postLoginUser, postSignupUser, validateToken , getSomeAppointments , getAppointments};
+    const t=await sequelize.transaction();
+
+    try{
+
+        const userId=req.user.id;
+        const email = req.body.email;
+        const uname = req.body.username;
+        const password = req.body.password;
+
+        const user = await Salon.findByPk(userId);
+
+        if(user){
+            bcrypt.hash(password, 10, async (err, hash) => {
+
+                if (!err) {
+                    user.email=email;
+                    user.name=uname;
+                    user.password=hash;
+    
+                    await user.save({transaction:t});
+    
+                    await t.commit();
+    
+                    res.status(200).json({ message: 'Salon Profile Updated Successfully' });
+                }
+                else {
+                    throw new Error('Something went wrong');
+                }
+            })
+        }
+        else{
+            res.status(404).json({ message: 'User not found'});
+        }
+       
+    }
+    catch (err) {
+        res.status(500).json({ success: false, message: err });
+    }
+};
+
+
+const getSalon=async (req, res) => {
+
+
+    try{
+
+        const user = await Salon.findByPk(req.user.id);
+
+        if(user){
+            res.status(200).json({salon:user});
+        }
+        else{
+            res.status(404).json({ message: 'User not found'});
+        }
+       
+    }
+    catch (err) {
+        res.status(500).json({ success: false, message: err });
+    }
+};
+
+module.exports = { postLoginUser, postSignupUser, validateToken , getSomeAppointments , getAppointments ,getSalon ,editProfile};

@@ -12,9 +12,9 @@ router.post('/bussiness-signup',salonController.postSignupUser);
 
 router.post('/bussiness-login',salonController.postLoginUser);
 
-// router.get('/get-user',salonAuthentication.authentication,userController.getUser);
+router.get('/get-salon',salonAuthentication.authentication,salonController.getSalon);
 
-// router.post('/edit-profile',salonAuthentication.authentication,userController.editProfile);
+router.post('/edit-salon-profile',salonAuthentication.authentication,salonController.editProfile);
 
 router.get('/salon-validate-token',salonAuthentication.authentication,salonController.validateToken);
 

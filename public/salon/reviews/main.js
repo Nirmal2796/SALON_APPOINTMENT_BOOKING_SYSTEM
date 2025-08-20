@@ -206,7 +206,7 @@ function showReply(reply, reviewId) {
 
     const replyEl = document.createElement("p");
     replyEl.classList.add("reply");
-    replyEl.textContent = "Admin Reply: " + reply;
+    replyEl.textContent = "Admin Reply: " + reply ? reply : '-';
     repliesContainer.appendChild(replyEl);
     }    
 

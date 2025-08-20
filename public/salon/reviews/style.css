@@ -121,7 +121,7 @@ nav ul li {
     border-radius: 8px;
 }
 
-.ratings-summary h3,p{
+.ratings-summary h3,p , #stars{
     margin-left: 40px;
     margin-bottom: 10px;
 }
@@ -153,4 +153,21 @@ nav ul li {
 .review-rating {
     color: gold;
     font-size: 18px;
+}
+
+
+.review-item {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+.reply {
+  margin: 5px 0 0 15px;
+  color: darkblue;
+  font-size: 14px;
+}
+.reply-link {
+  display: inline-block;
+  margin-top: 5px;
+  color: blue;
+  cursor: pointer;
 }

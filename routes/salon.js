@@ -22,4 +22,10 @@ router.get('/get-some-appointments',salonAuthentication.authentication,salonCont
 
 router.get('/get-salon-appointments',salonAuthentication.authentication,salonController.getAppointments);
 
+router.get('/get-reviews',salonAuthentication.authentication,salonController.getReview);
+
+router.get('/get-total-reviews',salonAuthentication.authentication,salonController.getTotalReview);
+
+router.post('/add-reply/:id',salonAuthentication.authentication,salonController.addReply);
+
 module.exports=router;

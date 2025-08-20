@@ -4,11 +4,12 @@ const Appointment=require('../models/appointment');
 const Salon = require('../models/salon');
 const Service = require('../models/service');
 const Employee = require('../models/employee');
+const Review=require('../models/review');
 const JWTServices = require('../services/JWTservices');
 const sequelize = require('../util/database');
 
 
-const postSignupUser = async (req, res) => {
+exports.postSignupUser = async (req, res) => {
 
     const t = await sequelize.transaction();
 
@@ -54,7 +55,7 @@ const postSignupUser = async (req, res) => {
 }
 
 
-const postLoginUser = async (req, res) => {
+exports.postLoginUser = async (req, res) => {
 
     try {
         const email = req.body.email;
@@ -89,12 +90,12 @@ const postLoginUser = async (req, res) => {
 
 };
 
-const validateToken = async (req, res) => {
+exports.validateToken = async (req, res) => {
     res.status(200).json({ status: 'success' });
 }
 
 
-const getSomeAppointments = async (req, res) => {
+exports.getSomeAppointments = async (req, res) => {
 
     try {
 
@@ -132,7 +133,7 @@ const getSomeAppointments = async (req, res) => {
     }
 }
 
-const getAppointments = async (req, res) => {
+exports.getAppointments = async (req, res) => {
 
     try {
 
@@ -165,7 +166,7 @@ const getAppointments = async (req, res) => {
     }
 }
 
-const editProfile = async (req, res) => {
+exports.editProfile = async (req, res) => {
 
     const t=await sequelize.transaction();
 
@@ -208,7 +209,7 @@ const editProfile = async (req, res) => {
 };
 
 
-const getSalon=async (req, res) => {
+exports.getSalon=async (req, res) => {
 
 
     try{
@@ -228,4 +229,67 @@ const getSalon=async (req, res) => {
     }
 };
 
-module.exports = { postLoginUser, postSignupUser, validateToken , getSomeAppointments , getAppointments ,getSalon ,editProfile};
+exports.getReview = async (req, res) => {
+    try {
+
+        
+        const reviews = await Review.findAll({ where: {salonId:req.user.id} });
+
+
+        console.log(req.user.id);
+
+        res.status(200).json({ message: 'successful', reviews: reviews });
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false });
+    }
+}
+
+exports.getTotalReview = async (req, res) => {
+    try {
+
+        const salonId = req.user.id;
+        const reviews = await Review.findAll({ where: {salonId} });
+
+        const total = reviews.length;
+        const avg = reviews.reduce((sum, r) => sum + Number(r.rate), 0) / total;
+        
+
+        res.status(200).json({ message: 'successful', total:total , avg:avg  });
+
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ success: false });
+    }
+}
+
+exports.addReply =async (req, res) => {
+
+    const t = await sequelize.transaction();
+
+    try {
+        
+        const reply = req.body.replyText;
+        const reviewId=req.params.id;
+
+        const review=await Review.findByPk(reviewId);
+
+        console.log(reply);
+        await review.update({reply:reply});
+        
+
+        await t.commit();
+
+        res.status(200).json({ message: 'successful', review: review });
+
+    } catch (error) {
+
+        await t.rollback();
+        console.log(error);
+        res.status(500).json({ success: false });
+    }
+}
+// module.exports = { postLoginUser, postSignupUser, validateToken , getSomeAppointments , getAppointments ,getSalon ,editProfile};

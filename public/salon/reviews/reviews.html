@@ -6,6 +6,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
 </head>
 <body>
@@ -36,6 +37,7 @@
 
     <!-- Rating and Review -->
     <div class="ratings-summary">
+        <div id="stars"></div>
         <h3>Overall Rating: <span id="average-rating">0.0</span> / 5</h3>
         <p>Total Reviews: <span id="total-reviews">0</span></p>
     </div>
@@ -44,7 +46,30 @@
         <h3>What Customers Say</h3>
         <div id="reviews-list" class="scrollable-reviews">
             <!-- Reviews will appear here -->
-             
+             <div class="review-item">
+                <!-- <div class="review-rating">
+                    <i class="fas fa-star" style="color: gold;"></i>
+                    <i class="fas fa-star" style="color: gold;"></i>
+                    <i class="fas fa-star" style="color: gold;"></i>
+                    <i class="fas fa-star" style="color: gold;"></i>
+                    <i class="fas fa-star" style="color: gold;"></i>
+                </div>
+                <p>good satisfactory</p> -->
+                <!-- Reply link -->
+      <!-- <a href="#" class="reply-link">Reply</a> -->
+
+      <!-- Hidden reply form -->
+      <!-- <form class="reply-form" style="display:none; margin-top:8px;">
+        <textarea placeholder="Write your reply..." rows="2" style="width:100%;"></textarea><br>
+        <button type="submit">Submit</button>
+      </form> -->
+
+      <!-- Replies container (old + new replies will show here) -->
+      <div class="replies">
+        <!-- Example old reply (loaded from backend) -->
+        <!-- <p class="reply">Admin Reply: Thank you for your feedback!</p> -->
+      </div>
+             </div>
         </div>
     </div>
    

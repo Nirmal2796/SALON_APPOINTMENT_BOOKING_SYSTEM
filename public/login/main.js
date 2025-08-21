@@ -137,7 +137,7 @@ async function onLogin(e) {
             }
             else{
                 console.log('in admin');
-                // result = await axios.post(`http://localhost:3000/admin-login`, User);
+                result = await axios.post(`http://localhost:3000/admin-login`, User);
                 window.location.href = '../admin/admin.html';
             }
 

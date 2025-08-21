@@ -33,6 +33,7 @@ const RegularShift = require('./models/regular_shift');
 const Payment = require('./models/payment');
 const Appointment = require('./models/appointment');
 const Review=require('./models/review');
+const Admin=require('./models/admin');
 
 const userRouter = require('./routes/user');
 const passwordRouter = require('./routes/password');
@@ -47,6 +48,7 @@ const regularShiftRouter = require('./routes/regular_shift');
 const paymentRouter = require('./routes/payment');
 const appointmentRouter = require('./routes/appointment');
 const reviewRouter=require('./routes/review');
+const adminRouter=require('./routes/admin');
 
 
 //import appointment reminder cron job and start it.
@@ -86,6 +88,7 @@ app.use(regularShiftRouter);
 app.use(paymentRouter);
 app.use(appointmentRouter);
 app.use(reviewRouter);
+app.use(adminRouter);
 
 // app.use((req,res) => {
 // console.log("URL>>>",req.url);

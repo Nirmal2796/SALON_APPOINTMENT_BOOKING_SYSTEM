@@ -9,7 +9,7 @@ const adminAuthentication=require('../middleware/adminAuthentication');
 
 
 
-router.post('/login',adminController.postLoginAdmin);
+router.post('/admin-login',adminController.postLoginAdmin);
 
 
 module.exports=router;

@@ -13,6 +13,8 @@ exports.postLoginAdmin = async (req, res) => {
         const password = req.body.password;
     
         const admin = await Admin.findAll({where:{email}});
+
+        console.log(email,password,admin);
     
         if (admin.length>0) {
 

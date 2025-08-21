@@ -22,6 +22,8 @@ const Admin=sequelize.define('admin',{
         type:Sequelize.STRING,
         allowNull:false
     }
+},{
+    timestamps:false
 });
 
 module.exports=Admin;

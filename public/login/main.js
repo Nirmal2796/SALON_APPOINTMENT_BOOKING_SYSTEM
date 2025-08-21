@@ -135,11 +135,11 @@ async function onLogin(e) {
                 window.location.href = '../salon/dashboard/dashboard.html';
 
             }
-            // else{
-            //     result = await axios.post(`http://localhost:3000/admin-login`, User);
-            //     localStorage.setItem('isOwner', true);
-            //     // window.location.href = '../salon/dashboard/dashboard.html';
-            // }
+            else{
+                console.log('in admin');
+                // result = await axios.post(`http://localhost:3000/admin-login`, User);
+                window.location.href = '../admin/admin.html';
+            }
 
 
             localStorage.setItem('token', result.data.token);
@@ -151,7 +151,7 @@ async function onLogin(e) {
         catch (err) {
 
             login_form.reset();
-
+            // console.log(err);
             login_msg.innerHTML = `${err.response.data.message}`;
             setTimeout(() => {
                 login_msg.removeChild(login_msg.firstChild);
@@ -227,15 +227,26 @@ function login_As(r) {
         role='user';
         document.getElementById('user-section').hidden = true;
         document.getElementById('bussiness-section').hidden = false;
+        document.getElementById('admin-section').hidden = false;
+        document.getElementById('sign_up_text').hidden=false;
+        document.getElementById('forgot_password_text').hidden=false;
     }
     else if (r =='bussiness'){
         role='bussiness';
         document.getElementById('user-section').hidden = false;
         document.getElementById('bussiness-section').hidden = true;
+        document.getElementById('admin-section').hidden = false;
+        document.getElementById('sign_up_text').hidden=false;
+        document.getElementById('forgot_password_text').hidden=false;
     }
-    // else{
-
-    // }
+    else{
+        role='admin';
+        document.getElementById('admin-section').hidden = true;
+        document.getElementById('user-section').hidden = false;
+        document.getElementById('bussiness-section').hidden = false;
+        document.getElementById('sign_up_text').hidden=true;
+        document.getElementById('forgot_password_text').hidden=true;
+    }
 
     role = r;
 

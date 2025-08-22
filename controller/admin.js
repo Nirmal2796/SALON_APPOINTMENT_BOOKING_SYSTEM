@@ -2,6 +2,12 @@ const bcrypt = require('bcrypt');
 
 
 const Admin = require('../models/admin');
+const User = require('../models/user');
+const Appointment = require('../models/appointment');
+const Service = require('../models/service');
+const Salon = require('../models/salon');
+const Employee = require('../models/employee');
+const Specialization = require('../models/specialization');
 const JWTServices=require('../services/JWTservices');
 const sequelize = require('../util/database');
 
@@ -43,4 +49,202 @@ exports.postLoginAdmin = async (req, res) => {
 
 };
 
+exports.getAllUsers=async (req, res) => {
 
+
+    try{
+
+        const users = await User.findAll();
+
+        
+        res.status(200).json({users:users});
+        
+       
+    }
+    catch (err) {
+        res.status(500).json({ success: false, message: err });
+    }
+};
+
+exports.getUser=async (req, res) => {
+
+
+    try{
+
+        const user = await User.findByPk(req.params.id);
+
+        if(user){
+            res.status(200).json({user:user});
+        }
+        else{
+            res.status(404).json({ message: 'User not found'});
+        }
+       
+    }
+    catch (err) {
+        res.status(500).json({ success: false, message: err });
+    }
+};
+
+exports.deleteUser = async (req, res) => {
+    const t = await sequelize.transaction();
+
+    try {
+
+        const id = req.params.id;
+
+        const user = await User.findByPk(id);
+        console.log(user);
+
+        user.destroy();
+
+        await t.commit();
+
+        res.status(200).json({ message: 'user deleted successfully', user: user });
+
+    }
+    catch (err) {
+        await t.rollback();
+        console.log(err);
+        res.status(500).json({ success: false });
+    }
+}
+
+
+exports.editProfile = async (req, res) => {
+
+    const t=await sequelize.transaction();
+
+    try{
+
+        const userId=req.body.id;
+        const email = req.body.email;
+        const uname = req.body.username;
+        const password = req.body.password;
+
+        const user = await User.findByPk(userId);
+
+        if(user){
+            bcrypt.hash(password, 10, async (err, hash) => {
+
+                if (!err) {
+                    user.email=email;
+                    user.name=uname;
+                    user.password=hash;
+    
+                    await user.save({transaction:t});
+    
+                    await t.commit();
+    
+                    res.status(200).json({ message: 'User Profile Updated Successfully' });
+                }
+                else {
+                    throw new Error('Something went wrong');
+                }
+            })
+        }
+        else{
+            res.status(404).json({ message: 'User not found'});
+        }
+       
+    }
+    catch (err) {
+        res.status(500).json({ success: false, message: err });
+    }
+};
+
+exports.getAllAppointments = async (req, res) => {
+
+    try {
+
+        const today = new Date();
+        
+        const appointments = await Appointment.findAll();
+
+        // let appointmentsDetails=[];
+
+        for (let appointment of appointments) {
+
+            const user=await User.findByPk(appointment.userId);
+            const salon = await Salon.findByPk(appointment.salonId);
+            const service = await Service.findByPk(appointment.serviceId);
+            const employee = await Employee.findByPk(appointment.employeeId);
+
+            appointment.userId=user;
+            appointment.salonId = salon;
+            appointment.serviceId = service;
+            appointment.employeeId = employee;
+
+        }
+
+        res.status(200).json({ appointments: appointments });
+    }
+    catch (err) {
+
+        console.log(err);
+        res.status(500).json({ success: false });
+    }
+}
+
+exports.getAppointment = async (req, res) => {
+
+    try {
+
+        const appointment = await Appointment.findByPk(req.params.id);
+
+        const service = await Service.findByPk(appointment.serviceId);
+        const employee = await Employee.findByPk(appointment.employeeId);
+        const specialization = await Specialization.findByPk(service.specializationId);
+
+        appointment.serviceId = service;
+        appointment.employeeId = employee;
+        appointment.serviceId.specializationId = specialization;
+
+
+        res.status(200).json({ appointment: appointment });
+    }
+    catch (err) {
+
+        console.log(err);
+        res.status(500).json({ success: false });
+    }
+}
+
+exports.deleteAppointment = async (req, res) => {
+    const t = await sequelize.transaction();
+
+    try {
+
+        const id = req.params.id;
+
+        const appointment = await Appointment.findByPk(id);
+        console.log(appointment);
+
+        appointment.destroy();
+
+        await t.commit();
+
+        res.status(200).json({ message: 'appointment deleted successfully', appointment: appointment });
+
+    }
+    catch (err) {
+        await t.rollback();
+        console.log(err);
+        res.status(500).json({ success: false });
+    }
+}
+
+exports.editAppointment = async (req, res) => {
+
+    const t=await sequelize.transaction();
+
+    try{
+
+        
+
+        
+    }
+    catch (err) {
+        res.status(500).json({ success: false, message: err });
+    }
+};

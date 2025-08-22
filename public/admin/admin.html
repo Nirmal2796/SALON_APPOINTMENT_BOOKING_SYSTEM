@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+                <ul class="nav-list">
+                    <li><a href="#" onclick="openTab(event, 'users')">Users</a></li>
+        <li><a href="#" onclick="openTab(event, 'appointments')">Appointments</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <!-- Profile Menu -->
+    <div class="profile-menu" id="profile_menu">
+        <ul id="profile_menu_list">
+            
+        </ul>
+    </div>
+
+    <div id="users" class="tab-content">
+  <h2>Users</h2>
+   <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="user-table-body">
+        <!-- <tr>
+          <td>John Doe</td>
+          <td>john@example.com</td>
+          <td>
+            <button class="edit-btn">Edit</button>
+            <button class="delete-btn">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Jane Smith</td>
+          <td>jane@example.com</td>
+          <td>
+            <button class="edit-btn" id="edit-btn">Edit</button>
+            <button class="delete-btn" id="delete-btn">Delete</button>
+          </td>
+        </tr> -->
+        <!-- Add more rows here -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div id="appointments" class="tab-content" style="display:none;">
+  <h2>Appointments</h2>
+   <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Email</th>
+          <th>Salon Name</th>
+          <th>Salon Email</th>
+          <th>Category</th>
+          <th>Service</th>
+          <th>Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="appointment-table-body">
+        <!-- <tr>
+          <td>John Doe</td>
+          <td>john@example.com</td>
+          <td>Glow Salon</td>
+          <td>glow@salon.com</td>
+          <td>Hair</td>
+          <td>Haircut</td>
+          <td>2025-08-22</td>
+          <td>
+            <button class="edit-btn">Edit</button>
+            <button class="delete-btn">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Jane Smith</td>
+          <td>jane@example.com</td>
+          <td>Relax Spa</td>
+          <td>relax@spa.com</td>
+          <td>Spa</td>
+          <td>Facial</td>
+          <td>2025-08-23</td>
+          <td>
+            <button class="edit-btn">Edit</button>
+            <button class="delete-btn">Delete</button>
+          </td>
+        </tr> -->
+        <!-- Add more rows as needed -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+    
+
+
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+    <script src="main.js"></script>
+
+   
+
+</body>
+</html>

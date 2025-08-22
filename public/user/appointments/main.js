@@ -41,7 +41,7 @@ async function changeProfileMenu() {
         if(res.data.status==='success'){
             profile_menu_list.innerHTML=`
             <li><a href="../edit-profile/edit-profile.html">Edit Profile</a></li>
-            <li><a href="#">Prefernces</a></li>
+            
             <li><a href="appointments.html">Appointments</a></li>
             `;
         }

@@ -23,5 +23,8 @@ router.get('/get-all-appointments',adminAuthentication.authentication,adminContr
 
 router.post('/reschedule-admin-appointment/:id',adminAuthentication.authentication,adminController.rescheduleAppointment);
 
+router.delete('/delete-admin-appointment/:id',adminAuthentication.authentication,adminController.deleteAppointment);
+
+router.delete('/delete-admin-user/:id',adminAuthentication.authentication,adminController.deleteUser);
 
 module.exports=router;

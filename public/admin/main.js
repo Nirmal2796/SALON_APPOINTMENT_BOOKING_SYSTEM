@@ -66,8 +66,8 @@ async function DomLoad() {
           <td>${appointment.employeeId ? appointment.employeeId.name : '-'}</td>
           <td>${new Date(appointment.date).toLocaleDateString("en-GB")}</td>
           <td>
-            <button class="edit-btn"><a href="../user/reschedule/rechedule.html?id=${appointment.salonId.id}&edit=${true}&appointmentId=${appointment.id}&admin=${true}">Edit</button>
-            <button class="delete-btn">Delete</button>
+            <button class="edit-btn"><a href="../user/reschedule/rechedule.html?id=${appointment.salonId.id}&edit=${true}&appointmentId=${appointment.id}&admin=${true}">Reschedule</a></button>
+            <button class="delete-btn" onclick="deleteAppointment(this)">Delete</button>
           </td>
         </tr>`
 
@@ -98,8 +98,8 @@ async function DomLoad() {
           <td>${user.name}</td>
           <td>${user.email}</td>
           <td>
-            <button class="edit-btn"><a href="../user/edit-profile/edit-profile.html?id=${user.id}&edit=${true}&admin=${true}">Edit</button>
-            <button class="delete-btn">Delete</button>
+            <button class="edit-btn"><a href="../user/edit-profile/edit-profile.html?id=${user.id}&edit=${true}&admin=${true}">Edit</a></button>
+            <button class="delete-btn" onclick="deleteUser(this)>Delete</button>
           </td>
         </tr>`
 
@@ -111,3 +111,42 @@ async function DomLoad() {
         console.log(error);
     }
   }
+
+
+  //REMOVE Appointment
+async function deleteAppointment(){
+    try{
+        const token=localStorage.getItem('token');
+
+        const row = btn.closest("tr");      // find the row
+        const id = row.id; 
+
+        const res=await axios.delete(`http://localhost:3000/delete-admin-appointment/${id}`,{headers:{'Auth':token}});
+
+        row.remove(); 
+        alert(res.data.message);
+
+    }
+    catch(err){
+        console.log(err);
+    }
+}
+
+  //REMOVE User
+async function deleteUser(){
+    try{
+        const token=localStorage.getItem('token');
+
+        const row = btn.closest("tr");      // find the row
+        const id = row.id; 
+
+        const res=await axios.delete(`http://localhost:3000/delete-admin-user/${id}`,{headers:{'Auth':token}});
+
+        row.remove(); 
+        alert(res.data.message);
+
+    }
+    catch(err){
+        console.log(err);
+    }
+}

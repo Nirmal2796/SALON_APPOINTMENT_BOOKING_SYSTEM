@@ -2,20 +2,20 @@ const express=require('express');
 
 const router=express.Router();
 
-const appointment=require('../controller/appointment');
+const appointmentContorller=require('../controller/appointment');
 
 const userAuthentication=require('../middleware/userAuthentication');
 
 
-router.get('/get-appointments',userAuthentication.authentication,appointment.getAppointments);
+router.get('/get-appointments',userAuthentication.authentication,appointmentContorller.getAppointments);
 
-router.post('/add-apointment',userAuthentication.authentication,appointment.addAppointment);
+router.post('/add-apointment',userAuthentication.authentication,appointmentContorller.addAppointment);
 
-router.post('/reschedule-appointment/:id',userAuthentication.authentication,appointment.rescheduleAppointment);
+router.post('/reschedule-appointment/:id',userAuthentication.authentication,appointmentContorller.rescheduleAppointment);
 
-router.get('/get-appointment/:id',userAuthentication.authentication,appointment.getAppointment);
+router.get('/get-appointment/:id',userAuthentication.authentication,appointmentContorller.getAppointment);
 
-router.delete('/delete-appointment/:id',userAuthentication.authentication,appointment.deleteAppointment);
+router.delete('/delete-appointment/:id',userAuthentication.authentication,appointmentContorller.deleteAppointment);
 
 
 

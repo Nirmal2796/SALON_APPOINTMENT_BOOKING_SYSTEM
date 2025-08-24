@@ -11,6 +11,8 @@ router.get('/get-appointments',userAuthentication.authentication,appointment.get
 
 router.post('/add-apointment',userAuthentication.authentication,appointment.addAppointment);
 
+router.post('/reschedule-appointment/:id',userAuthentication.authentication,appointment.rescheduleAppointment);
+
 router.get('/get-appointment/:id',userAuthentication.authentication,appointment.getAppointment);
 
 router.delete('/delete-appointment/:id',userAuthentication.authentication,appointment.deleteAppointment);

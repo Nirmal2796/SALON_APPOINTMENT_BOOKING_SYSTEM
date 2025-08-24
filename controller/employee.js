@@ -2,6 +2,8 @@ const sequelize = require('../util/database');
 const Specialization = require('../models/specialization');
 const Employee_Specialization = require('../models/employee_specialization');
 const Employee = require('../models/employee');
+const Appointment=require('../models/appointment');
+const Service = require('../models/service');
 
 
 exports.addEmployee = async (req, res) => {
@@ -237,6 +239,33 @@ exports.editEmployeeSpecilization = async (req, res) => {
 
     } catch (error) {
         await t.rollback();
+        console.log(error);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+}
+
+exports.getAppointments = async (req, res) => {
+    // const t=await sequelize.transaction();
+
+    try {
+
+        const id = req.query.employee;
+        const salonId=req.params.id;
+
+        console.log(id, salonId);
+        
+        const appointments=await Appointment.findAll({
+            where:{
+                employeeId:id,
+                salonId:salonId
+            }
+        });
+
+       
+        res.status(200).json({ appointments:appointments });
+
+    } catch (error) {
+        // await t.rollback();
         console.log(error);
         res.status(500).json({ message: 'Something went wrong' });
     }

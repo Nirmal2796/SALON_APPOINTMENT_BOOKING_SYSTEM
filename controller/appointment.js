@@ -16,7 +16,7 @@ exports.getAppointments = async (req, res) => {
     try {
 
         const today = new Date();
-        
+
         const appointments = await req.user.getAppointments({
             where: {
                 date: {
@@ -172,6 +172,45 @@ exports.sendAppointmentReminder = async (req, res) => {
 
     }
 }
+
+
+exports.rescheduleAppointment = async (req, res) => {
+
+    const t = await sequelize.transaction();
+
+    try {
+
+        const { date, time } = req.body;
+
+        // console.log(date, time);
+
+        const appointment = await Appointment.findByPk(req.params.id);
+
+        const service = await Service.findByPk(appointment.serviceId);
+
+        const [h, m, s] = time.split(":").map(Number);
+
+        const dateObj = new Date();
+        dateObj.setHours(h, m + parseInt(service.duration), s || 0);
+
+        const result = await appointment.update({ date: date, start_time: time ,end_time: dateObj.toTimeString().split(" ")[0] }, { transaction: t });
+
+        console.log(res);
+
+        await t.commit();
+
+        res.status(202).json({ success: true, appointment: result });
+
+    }
+    catch (err) {
+        await t.rollback();
+        console.log(err);
+        res.status(500).json({ success: false, message: 'Something went wrong' });
+
+    }
+
+}
+
 
 
 // SEND CONFIRMATION AND INVOICE IN EMAIL.

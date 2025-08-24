@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salon</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">Salon</h1>
+            <nav>
+                <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+                <ul class="nav-list">
+                    <li><a href="../home/home.html">Home</a></li>
+                    <!-- <li><a href="../salons/recipes.html">Recipes</a></li> -->
+                    <li>About Us</li>
+                    <li>Contact Us</li>
+                    <li><i class="fa fa-user-circle" id="profile_icon" onclick="toggleProfileMenu()"
+                            style="font-size: 24px; cursor: pointer;"></i></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Profile Menu -->
+    <div class="profile-menu" id="profile_menu">
+        <ul id="profile_menu_list">
+
+
+        </ul>
+    </div>
+
+    <div class="appointment-container">
+        <section class="book-appointment-section">
+            <div class="book-appointment-container">
+                <h1>Select Date and Time</h1>
+                <form action="" method="" class="book-appointment-form" id="book-appointment-form">
+
+                   
+                    <!-- Date -->
+                    <div id="date-div" >
+            
+                        <label for="date">Date:</label>
+                        <div id="date-msg"></div>
+                        <input type="date" id="date" name="date" placeholder="Rs." required>
+
+                        <label for="time">Time:</label>
+                        <select name="time" id="time" disabled required></select>
+                        <!-- Submit Button -->
+                        <button type="submit" class="submit-btn" id="submit-btn">NEXT</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="summary-div" hidden>
+                <button type="button" class="back-button" id="back-to-time" onclick="showDateTime()">Back</button>
+                <!-- <h3>Payment</h3> -->
+                <p id="summary-details">
+                    
+                </p>
+            </div>
+        </section>
+
+
+        
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+
+    <script src="main.js"></script>
+   
+</body>
+
+</html>

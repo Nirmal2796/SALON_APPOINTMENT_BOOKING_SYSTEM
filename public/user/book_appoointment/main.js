@@ -42,7 +42,7 @@ let total_time = 0;
 let booked_appointments;
 let service_duration;
 let employees = [];
-let editAppointment;
+// let editAppointment;
 let edit=false;
 
 //DOM CONTENT LOAD EVENT
@@ -58,11 +58,11 @@ async function DomLoad() {
 
         // await ContinueOrPay();
 
-        const urlParams = new URLSearchParams(window.location.search);
-        edit = urlParams.get('edit');
-        if (edit) {
-            await getAppointmentDetails();
-        }
+        // const urlParams = new URLSearchParams(window.location.search);
+        // edit = urlParams.get('edit');
+        // if (edit) {
+        //     await getAppointmentDetails();
+        // }
     }
     catch (err) {
         console.log(err);
@@ -225,9 +225,9 @@ async function appointmentPayment(e) {
                 document.getElementById('service-list-msg').hidden = false;
                 document.getElementById('total').innerText = '0';
 
-                if (edit && editAppointment!=null) {
-                    await deleteAppointment(editAppointment.id);
-                }
+                // if (edit && editAppointment!=null) {
+                //     await deleteAppointment(editAppointment.id);
+                // }
 
                 window.location.href = "../appointments/appointments.html";
 
@@ -656,6 +656,18 @@ function showTimeSlots() {
             };
             break;
         }
+        else if(day==7){
+        
+        e.target.value=''; 
+        timeDropDown.disabled = true;
+        timeDropDown.innerHTML = '';
+
+        document.getElementById("date-msg").innerHTML = '<b>Not Available</b>';
+        
+        setTimeout(() => {
+            document.getElementById("date-msg").innerHTML = '';
+        }, 2000);
+        }
     }
 
 
@@ -844,58 +856,58 @@ async function getClosedPeriod() {
 }
 
 //GET EDITED APPOINTMENT DETIALS
-async function getAppointmentDetails() {
-    try {
+// async function getAppointmentDetails() {
+//     try {
 
-        const token = localStorage.getItem('token');
+//         const token = localStorage.getItem('token');
 
-        const urlParams = new URLSearchParams(window.location.search);
-        const appointmentId = urlParams.get('appointmentId');
+//         const urlParams = new URLSearchParams(window.location.search);
+//         const appointmentId = urlParams.get('appointmentId');
 
-        const result = await axios.get(`http://localhost:3000/get-appointment/${appointmentId}`, { headers: { 'Auth': token } });
+//         const result = await axios.get(`http://localhost:3000/get-appointment/${appointmentId}`, { headers: { 'Auth': token } });
 
-        // console.log(result.data);
-        const appointment = result.data.appointment;
+//         // console.log(result.data);
+//         const appointment = result.data.appointment;
 
-        setTimeout(() => {
-            Category.value = appointment.serviceId.specializationId.id;
-            Category.dispatchEvent(new Event("change"));
-        }, 100);
-
-
-        setTimeout(() => {
-            serviceDropdown.value = appointment.serviceId.id; // Set selected value
-            serviceDropdown.dispatchEvent(new Event("change")); // Trigger change event
-        }, 200);
+//         setTimeout(() => {
+//             Category.value = appointment.serviceId.specializationId.id;
+//             Category.dispatchEvent(new Event("change"));
+//         }, 100);
 
 
-        setTimeout(() => {
-            specialist.dispatchEvent(new Event("change")); // Trigger change event
-            specialist.value = appointment.employeeId.id;
-        }, 300)
-
-        // await deleteAppointment(appointment.id);
-        editAppointment=appointment;
+//         setTimeout(() => {
+//             serviceDropdown.value = appointment.serviceId.id; // Set selected value
+//             serviceDropdown.dispatchEvent(new Event("change")); // Trigger change event
+//         }, 200);
 
 
-    } catch (error) {
-        console.log(error);
-    }
-}
+//         setTimeout(() => {
+//             specialist.dispatchEvent(new Event("change")); // Trigger change event
+//             specialist.value = appointment.employeeId.id;
+//         }, 300)
+
+//         // await deleteAppointment(appointment.id);
+//         editAppointment=appointment;
+
+
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
 
 //REMOVE Appointment
-async function deleteAppointment(id) {
-    try {
-        const token = localStorage.getItem('token');
+// async function deleteAppointment(id) {
+//     try {
+//         const token = localStorage.getItem('token');
 
-        const res = await axios.delete(`http://localhost:3000/delete-appointment/${id}`, { headers: { 'Auth': token } });
+//         const res = await axios.delete(`http://localhost:3000/delete-appointment/${id}`, { headers: { 'Auth': token } });
 
-        // document.getElementById(id).remove();
-        // alert(res.data.message);
+//         document.getElementById(id).remove();
+//         // alert(res.data.message);
 
 
-    }
-    catch (err) {
-        console.log(err);
-    }
-}
+//     }
+//     catch (err) {
+//         console.log(err);
+//     }
+// }

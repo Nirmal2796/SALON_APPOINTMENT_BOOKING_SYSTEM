@@ -58,6 +58,7 @@ exports.getWorkingHours=async(req,res)=>{
         const userId = req.params.id || req.user.id;
         const user = await Salon.findByPk(userId);
 
+        console.log(user)
         const working_hours=await user.getWorking_hours();
 
         // console.log(working_hours);

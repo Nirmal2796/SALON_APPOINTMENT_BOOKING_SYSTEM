@@ -13,6 +13,8 @@ router.get('/get-employees',salonAuthentication.authentication,SpecializationCon
 
 router.get('/get-employee/:id',salonAuthentication.authentication,SpecializationController.getEmployee);
 
+router.get('/get-employee-appintments/:id',salonAuthentication.authentication,SpecializationController.getAppointments);
+
 router.post('/edit-employee/:id',salonAuthentication.authentication,SpecializationController.editEmployee);
 
 router.post('/edit-employee-specializations/:id',salonAuthentication.authentication,SpecializationController.editEmployeeSpecilization);

@@ -114,7 +114,7 @@ function showAppointments(appointment){
                     <td>${appointment.serviceId.name}</td>
                     <td>${appointment.employeeId ? appointment.employeeId.name : '-'}</td>
                     <td>${appointment.salonId.name}</td>
-                    <td><a href="../book_appoointment/book_appointment.html?id=${appointment.salonId.id}&edit=${true}&appointmentId=${appointment.id}"><button>Reschedule</button></a></td>
+                    <td><a href="../reschedule/rechedule.html?id=${appointment.salonId.id}&edit=${true}&appointmentId=${appointment.id}"><button>Reschedule</button></a></td>
                     <td><button onclick="deleteAppointment(${appointment.id})">Cancel</button></td>
                 </tr>`
 

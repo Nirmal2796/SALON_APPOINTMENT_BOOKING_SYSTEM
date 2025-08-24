@@ -99,7 +99,7 @@ async function DomLoad() {
           <td>${user.email}</td>
           <td>
             <button class="edit-btn"><a href="../user/edit-profile/edit-profile.html?id=${user.id}&edit=${true}&admin=${true}">Edit</a></button>
-            <button class="delete-btn" onclick="deleteUser(this)>Delete</button>
+            <button class="delete-btn" onclick="deleteUser(this)">Delete</button>
           </td>
         </tr>`
 
@@ -114,7 +114,7 @@ async function DomLoad() {
 
 
   //REMOVE Appointment
-async function deleteAppointment(){
+async function deleteAppointment(btn){
     try{
         const token=localStorage.getItem('token');
 
@@ -133,7 +133,7 @@ async function deleteAppointment(){
 }
 
   //REMOVE User
-async function deleteUser(){
+async function deleteUser(btn){
     try{
         const token=localStorage.getItem('token');
 

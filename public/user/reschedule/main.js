@@ -15,7 +15,7 @@ dateInput.addEventListener('change', showTimeSlots);
 
 
 
-let duration=0;
+let duration = 0;
 let leaveDates = [];
 let closedPeriodDates = [];
 let booked_appointments;
@@ -111,8 +111,8 @@ async function getAppointmentDetails() {
 
         console.log(result.data);
         // const appointment = result.data.appointment;
-        employee=result.data.appointment.employeeId;
-        duration=result.data.appointment.serviceId.duration;
+        employee = result.data.appointment.employeeId;
+        duration = result.data.appointment.serviceId.duration;
 
     } catch (error) {
         console.log(error);
@@ -260,10 +260,10 @@ function showTimeSlots(e) {
 
     day = day === 0 ? 7 : day;  // shift Sunday from 0 to 7
 
-    let day_working_hours=null;
+    let day_working_hours = null;
 
     for (let w in working_hours) {
-        
+
         if (day == working_hours[w].id) {
             // console.log(working_hours[w].start_time, working_hours[w].end_time);
 
@@ -273,83 +273,83 @@ function showTimeSlots(e) {
             };
             break;
         }
-        else if(day==7){
-        // console.log('in else', day == working_hours[w].id) 
-        e.target.value=''; 
-        day_working_hours=null;
-        timeDropDown.disabled = true;
+        else if (day == 7) {
+            // console.log('in else', day == working_hours[w].id) 
+            e.target.value = '';
+            day_working_hours = null;
+            timeDropDown.disabled = true;
+            timeDropDown.innerHTML = '';
+
+            document.getElementById("date-msg").innerHTML = '<b>Not Available</b>';
+
+            setTimeout(() => {
+                document.getElementById("date-msg").innerHTML = '';
+            }, 2000);
+
+        }
+    }
+
+
+    if (day_working_hours != null) {
+
+        const today = new Date().toISOString().split('T')[0];
+
+        let time = new Date(`${today}T${day_working_hours.start_time}`);
+        const endTime = new Date(`${today}T${day_working_hours.end_time}`);
+
+        timeDropDown.disabled = false;
         timeDropDown.innerHTML = '';
 
-        document.getElementById("date-msg").innerHTML = '<b>Not Available</b>';
-        
-        setTimeout(() => {
-            document.getElementById("date-msg").innerHTML = '';
-        }, 2000);
+        // console.log(day_working_hours , time, endTime);
 
-        }
-    }
+        while (time < endTime) {
 
-   
-    if(day_working_hours!=null){
+            // console.log('in while');
 
-    const today = new Date().toISOString().split('T')[0];
-
-    let time = new Date(`${today}T${day_working_hours.start_time}`);
-    const endTime = new Date(`${today}T${day_working_hours.end_time}`);
-
-    timeDropDown.disabled = false;
-    timeDropDown.innerHTML = '';
-
-    // console.log(day_working_hours , time, endTime);
-
-    while (time < endTime) {
-
-        // console.log('in while');
-
-        const timeStr24 = time.toTimeString().split(' ')[0]; // value
-        const timeStr12 = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }); // display
+            const timeStr24 = time.toTimeString().split(' ')[0]; // value
+            const timeStr12 = time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }); // display
 
 
 
-        // if( date == new Date().toISOString().split('T')[0]){
-        // }
+            // if( date == new Date().toISOString().split('T')[0]){
+            // }
 
-        const isOverlapping = booked_appointments.some(app => {
-            return timeStr24 >= app.start_time && timeStr24 < app.end_time;
-        });
+            const isOverlapping = booked_appointments.some(app => {
+                return timeStr24 >= app.start_time && timeStr24 < app.end_time;
+            });
 
 
-        if (date.toDateString() === new Date().toDateString()) {
+            if (date.toDateString() === new Date().toDateString()) {
 
-            //if its today.
+                //if its today.
 
-            if (!isOverlapping && timeStr24 > new Date().toTimeString().split(' ')[0]) {
-                timeDropDown.innerHTML += `
+                if (!isOverlapping && timeStr24 > new Date().toTimeString().split(' ')[0]) {
+                    timeDropDown.innerHTML += `
                <option value="${timeStr24}" id="${timeStr24}">${timeStr12}</option>`;
+                }
+                else {
+                    timeDropDown.innerHTML += '';
+                }
             }
-            else{
-                timeDropDown.innerHTML+='';
-            }
-        }
-        else {
+            else {
 
-            if (!isOverlapping) {
-                timeDropDown.innerHTML += `
+                if (!isOverlapping) {
+                    timeDropDown.innerHTML += `
                <option value="${timeStr24}" id="${timeStr24}">${timeStr12}</option>`;
+                }
             }
+
+
+
+            time.setMinutes(time.getMinutes() + duration);
+            // console.log(time);
+
         }
 
+        if (timeDropDown.options.length === 0) {
+            timeDropDown.innerHTML = `<option disabled selected>No slots available</option>`;
+        }
 
-
-        time.setMinutes(time.getMinutes() + duration);
-        // console.log(time);
-
-    }
-
-    if (timeDropDown.options.length === 0) {
-        timeDropDown.innerHTML = `<option disabled selected>No slots available</option>`;
-    }
-    
     }
 }
 
@@ -365,7 +365,7 @@ async function getBookedAppointments(id) {
 
         // console.log('Employees>>', employee);
 
-        
+
         const result = await axios.get(`http://localhost:3000/get-employee-appintments/${id}?employee=${employee}`, { headers: { 'Auth': token } });
 
         console.log(result);
@@ -381,23 +381,31 @@ async function rescheduleAppointment(e) {
     try {
         e.preventDefault();
 
-        const token=localStorage.getItem('token');
+        const token = localStorage.getItem('token');
 
         const urlParams = new URLSearchParams(window.location.search);
         id = urlParams.get('appointmentId');
+        admin = urlParams.get('appointmentId');
 
-        date={
-            date:dateInput.value,
+        date = {
+            date: dateInput.value,
             time: timeDropDown.options[timeDropDown.selectedIndex].value
         }
 
         console.log(id);
 
-        const result = await axios.post(`http://localhost:3000/reschedule-appointment/${id}`, date, { headers: { 'Auth': token } });
-        
-        console.log(result);
+        if (admin) {
+            const result = await axios.post(`http://localhost:3000/reschedule-appointment/${id}`, date, { headers: { 'Auth': token } });
+            window.location.href = "../../admin/admin.html";
+        }
+        else {
 
-        window.location.href = "../appointments/appointments.html";
+            const result = await axios.post(`http://localhost:3000/reschedule-appointment/${id}`, date, { headers: { 'Auth': token } });
+            console.log(result);
+            window.location.href = "../appointments/appointments.html";
+        }
+
+
     } catch (error) {
         console.log(error);
     }

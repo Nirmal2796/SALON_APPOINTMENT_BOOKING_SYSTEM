@@ -21,7 +21,7 @@ router.get('/get-appointment',adminAuthentication.authentication,adminController
 
 router.get('/get-all-appointments',adminAuthentication.authentication,adminController.getAllAppointments);
 
-router.post('/edit-appointment',adminAuthentication.authentication,adminController.editAppointment);
+router.post('/reschedule-admin-appointment/:id',adminAuthentication.authentication,adminController.rescheduleAppointment);
 
 
 module.exports=router;

@@ -66,7 +66,7 @@ async function DomLoad() {
           <td>${appointment.employeeId ? appointment.employeeId.name : '-'}</td>
           <td>${new Date(appointment.date).toLocaleDateString("en-GB")}</td>
           <td>
-            <button class="edit-btn">Edit</button>
+            <button class="edit-btn"><a href="../user/reschedule/rechedule.html?id=${appointment.salonId.id}&edit=${true}&appointmentId=${appointment.id}&admin=${true}">Edit</button>
             <button class="delete-btn">Delete</button>
           </td>
         </tr>`

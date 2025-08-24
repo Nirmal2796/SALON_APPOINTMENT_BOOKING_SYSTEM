@@ -11,11 +11,11 @@ const adminAuthentication=require('../middleware/adminAuthentication');
 
 router.post('/admin-login',adminController.postLoginAdmin);
 
-router.get('/get-user',adminAuthentication.authentication,adminController.getUser);
+router.get('/get-admin-user/:id',adminAuthentication.authentication,adminController.getUser);
 
 router.get('/get-all-users',adminAuthentication.authentication,adminController.getAllUsers);
 
-router.post('/edit-user-profile',adminAuthentication.authentication,adminController.editProfile);
+router.post('/edit-admin-user-profile/:id',adminAuthentication.authentication,adminController.editProfile);
 
 router.get('/get-appointment',adminAuthentication.authentication,adminController.getAppointment);
 

@@ -110,49 +110,6 @@ exports.deleteUser = async (req, res) => {
     }
 }
 
-
-exports.editProfile = async (req, res) => {
-
-    const t=await sequelize.transaction();
-
-    try{
-
-        const userId=req.body.id;
-        const email = req.body.email;
-        const uname = req.body.username;
-        const password = req.body.password;
-
-        const user = await User.findByPk(userId);
-
-        if(user){
-            bcrypt.hash(password, 10, async (err, hash) => {
-
-                if (!err) {
-                    user.email=email;
-                    user.name=uname;
-                    user.password=hash;
-    
-                    await user.save({transaction:t});
-    
-                    await t.commit();
-    
-                    res.status(200).json({ message: 'User Profile Updated Successfully' });
-                }
-                else {
-                    throw new Error('Something went wrong');
-                }
-            })
-        }
-        else{
-            res.status(404).json({ message: 'User not found'});
-        }
-       
-    }
-    catch (err) {
-        res.status(500).json({ success: false, message: err });
-    }
-};
-
 exports.getAllAppointments = async (req, res) => {
 
     try {
@@ -270,3 +227,35 @@ exports.rescheduleAppointment = async (req, res) => {
     }
 
 }
+
+
+exports.editProfile = async (req, res) => {
+
+    const t=await sequelize.transaction();
+
+    try{
+
+        const userId=req.params.id;
+        const email = req.body.email;
+        const uname = req.body.username;
+        // const password = req.body.password;
+
+        const user = await User.findByPk(userId);
+
+        if(user){
+            const result = await user.update({ name: uname, email: email }, { transaction: t });
+    
+                    await t.commit();
+    
+                    res.status(200).json({ message: 'User Profile Updated Successfully' });
+                          
+        }
+        else{
+            res.status(404).json({ message: 'User not found'});
+        }
+       
+    }
+    catch (err) {
+        res.status(500).json({ success: false, message: err });
+    }
+};

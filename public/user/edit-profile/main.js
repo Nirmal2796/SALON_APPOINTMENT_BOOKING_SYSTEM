@@ -15,10 +15,21 @@ document.addEventListener('DOMContentLoaded', DomLoad);
 async function DomLoad() {
     try {
         // console.log('Dom Loaded');
-         changeProfileMenu();
+        changeProfileMenu();
         window.scrollTo(0, 0);
 
-         await getUserDetails();
+        const urlParams = new URLSearchParams(window.location.search);
+        edit = urlParams.get('edit');
+        id = urlParams.get('id');
+        admin = urlParams.get('id');
+
+        if (admin) {
+            // console.log(document.getElementById('header-container'));
+            document.getElementById('header-container').style.display = "none";
+
+        }
+
+        await getUserDetails(admin, id);
 
     }
     catch (err) {
@@ -29,27 +40,27 @@ async function DomLoad() {
 
 //CHANGE PROFILE MENU
 async function changeProfileMenu() {
-    try{
-        const token=localStorage.getItem('token');
+    try {
+        const token = localStorage.getItem('token');
 
-        const res=await axios.get('http://localhost:3000/validate-token',{ headers: { 'Auth': token } });
+        const res = await axios.get('http://localhost:3000/validate-token', { headers: { 'Auth': token } });
 
         // const status='false';
         // console.log(profile_menu_list);
 
-        if(res.data.status==='success'){
-            profile_menu_list.innerHTML=`
+        if (res.data.status === 'success') {
+            profile_menu_list.innerHTML = `
             <li><a href="../edit-profile/edit-profile.html">Edit Profile</a></li>
             
             <li><a href="../appointments/appointments.html">Appointments</a></li>
             `;
         }
-        else{
-            profile_menu_list.innerHTML=`
+        else {
+            profile_menu_list.innerHTML = `
             <li><a href="../login/login.html">Login</a></li>`;
         }
     }
-    catch(err){
+    catch (err) {
         console.log(err);
     }
 }
@@ -70,13 +81,24 @@ async function editProfile(e) {
     const token = localStorage.getItem('token');
     try {
 
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        id = urlParams.get('id');
+        admin = urlParams.get('id');
+
         user = {
             username: username.value,
             email: email.value,
-            password: password.value
         };
 
-        const res = await axios.post('http://localhost:3000/edit-profile', user, { headers: { 'Auth': token } });
+        if(admin){
+            const res = await axios.post(`http://localhost:3000/edit-admin-user-profile/${id}`, user, { headers: { 'Auth': token } });
+            window.location.href = "../../admin/admin.html";
+        }
+        else{
+            const res = await axios.post('http://localhost:3000/edit-profile', user, { headers: { 'Auth': token } });
+            window.location.href = "../home/home.html";
+        }
     }
     catch (err) {
         console.log(err);
@@ -84,15 +106,24 @@ async function editProfile(e) {
 }
 
 
-async function getUserDetails() {
+async function getUserDetails(admin, id) {
 
     const token = localStorage.getItem('token');
 
     try {
-        const res = await axios.get('http://localhost:3000/get-user', { headers: { 'Auth': token } });
 
-        username.value=res.data.user.name;
-        email.value=res.data.user.email;
+        if (admin) {
+            const res = await axios.get(`http://localhost:3000/get-admin-user/${id}`, { headers: { 'Auth': token } });
+            username.value = res.data.user.name;
+            email.value = res.data.user.email;
+        }
+        else {
+
+            const res = await axios.get('http://localhost:3000/get-user', { headers: { 'Auth': token } });
+
+            username.value = res.data.user.name;
+            email.value = res.data.user.email;
+        }
 
     }
     catch (err) {

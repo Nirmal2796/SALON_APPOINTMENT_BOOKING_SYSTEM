@@ -98,7 +98,7 @@ async function DomLoad() {
           <td>${user.name}</td>
           <td>${user.email}</td>
           <td>
-            <button class="edit-btn">Edit</button>
+            <button class="edit-btn"><a href="../user/edit-profile/edit-profile.html?id=${user.id}&edit=${true}&admin=${true}">Edit</button>
             <button class="delete-btn">Delete</button>
           </td>
         </tr>`

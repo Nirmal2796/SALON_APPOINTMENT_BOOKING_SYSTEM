@@ -42,6 +42,12 @@ async function DomLoad() {
         const urlParams = new URLSearchParams(window.location.search);
         edit = urlParams.get('edit');
         id = urlParams.get('id');
+        admin=urlParams.get('id');
+        if(admin){
+            console.log(document.getElementById('header-container'));
+            document.getElementById('header-container').style.display = "none";
+
+        }
         if (edit) {
             await getAppointmentDetails();
             await getWorkingHours(id);

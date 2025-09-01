@@ -9,7 +9,7 @@ const morgan = require('morgan');
 
 const cron = require("cron");
 
-require('dotenv').config();
+require('dotenv').config({ path: __dirname + '/.env' });
 
 const app = express();
 

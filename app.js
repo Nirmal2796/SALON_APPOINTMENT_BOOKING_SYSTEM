@@ -152,6 +152,9 @@ sequelize
   // .sync({force:true})
   // .sync({alter:true})
   .then(result => {
-    app.listen(3000);
+    // app.listen(3000);
+    app.listen(3000, "0.0.0.0", () => {
+  console.log("Server running on port 3000");
+});
   })
   .catch(err => console.log(err));

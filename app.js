@@ -58,7 +58,7 @@ require('./jobs/appointmentReminderCron');
 require('./jobs/deleteExpiredClosedPeriodsCron');
 
 
-const accessLogStream = fs.createWriteStream(path.join('/home/ec2-user/salon-logs/access.log', 'access.log'), { flags: 'a' })
+const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
 
 app.use(helemt({ contentSecurityPolicy: false }));
 app.use(morgan('combined', { stream: accessLogStream }));

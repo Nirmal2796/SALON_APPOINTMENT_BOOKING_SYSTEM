@@ -32,7 +32,7 @@ async function changeProfileMenu() {
     try{
         const token=localStorage.getItem('token');
 
-        const res=await axios.get('http://localhost:3000/salon-validate-token',{ headers: { 'Auth': token } });
+        const res=await axios.get('http://52.54.180.45:3000/salon-validate-token',{ headers: { 'Auth': token } });
 
         // const status='false';
         // console.log(profile_menu_list);
@@ -74,7 +74,7 @@ async function editProfile(e) {
             password: password.value
         };
 
-        const res = await axios.post('http://localhost:3000/edit-salon-profile', user, { headers: { 'Auth': token } });
+        const res = await axios.post('http://52.54.180.45:3000/edit-salon-profile', user, { headers: { 'Auth': token } });
     }
     catch (err) {
         console.log(err);
@@ -87,7 +87,7 @@ async function getUserDetails() {
     const token = localStorage.getItem('token');
 
     try {
-        const res = await axios.get('http://localhost:3000/get-salon', { headers: { 'Auth': token } });
+        const res = await axios.get('http://52.54.180.45:3000/get-salon', { headers: { 'Auth': token } });
 
         username.value=res.data.salon.name;
         email.value=res.data.salon.email;

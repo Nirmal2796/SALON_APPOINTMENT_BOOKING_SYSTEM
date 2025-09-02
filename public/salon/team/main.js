@@ -43,7 +43,7 @@ async function changeProfileMenu() {
     try {
         const token = localStorage.getItem('token');
 
-        const res = await axios.get('http://localhost:3000/salon-validate-token', { headers: { 'Auth': token } });
+        const res = await axios.get('http://52.54.180.45:3000/salon-validate-token', { headers: { 'Auth': token } });
 
         // const status='false';
         // console.log(profile_menu_list);
@@ -168,7 +168,7 @@ async function setRegularShift(e) {
   console.log(data);
 
 
-  const res=await axios.post('http://localhost:3000/set-regular_shift',data, {headers : {'Auth': token}});
+  const res=await axios.post('http://52.54.180.45:3000/set-regular_shift',data, {headers : {'Auth': token}});
 
   console.log(res);
 //   set_working_hours_form.reset();
@@ -198,7 +198,7 @@ async function addEmployee(e) {
             start_date:employee_start_date.value,
         };
 
-        const res=await axios.post('http://localhost:3000/add-employee',employee, {headers : {'Auth': token}});
+        const res=await axios.post('http://52.54.180.45:3000/add-employee',employee, {headers : {'Auth': token}});
 
         console.log(res.data.employee);
 
@@ -228,7 +228,7 @@ async function getRegularShift() {
     
 
 
-  const res=await axios.get('http://localhost:3000/get-regular-shift',{headers : {'Auth': token}});
+  const res=await axios.get('http://52.54.180.45:3000/get-regular-shift',{headers : {'Auth': token}});
 
   console.log(res);
 //   set_working_hours_form.reset();
@@ -266,7 +266,7 @@ async function getEmployees() {
 
         const token=localStorage.getItem('token');
         
-        const res=await axios.get('http://localhost:3000/get-employees',{headers:{'Auth':token}});
+        const res=await axios.get('http://52.54.180.45:3000/get-employees',{headers:{'Auth':token}});
 
         console.log(res.data.employees);
 

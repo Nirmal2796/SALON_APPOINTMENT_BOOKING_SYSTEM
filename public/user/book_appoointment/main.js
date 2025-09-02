@@ -77,7 +77,7 @@ async function changeProfileMenu() {
     try {
         const token = localStorage.getItem('token');
 
-        const res = await axios.get('http://localhost:3000/validate-token', { headers: { 'Auth': token } });
+        const res = await axios.get('http://52.54.180.45:3000/validate-token', { headers: { 'Auth': token } });
 
         // const status='false';
         // console.log(profile_menu_list);
@@ -188,7 +188,7 @@ async function appointmentPayment(e) {
     const urlParams = new URLSearchParams(window.location.search);
     const salonId = urlParams.get('id');
 
-    const res = await axios.post('http://localhost:3000/appointment_payment', { amount }, { headers: { 'Auth': token } });
+    const res = await axios.post('http://52.54.180.45:3000/appointment_payment', { amount }, { headers: { 'Auth': token } });
 
     console.log('Razorpay Order:', res.data);
 
@@ -201,7 +201,7 @@ async function appointmentPayment(e) {
 
             try {
 
-                const result = await axios.post('http://localhost:3000/updateTransactions', {
+                const result = await axios.post('http://52.54.180.45:3000/updateTransactions', {
                     order_id: options.order_id,
                     payment_id: res.razorpay_payment_id,
                     status: 'successful'
@@ -213,7 +213,7 @@ async function appointmentPayment(e) {
                 const appointments = getAllListData();
                 // console.log(appointments);
 
-                const booked_appointments = await axios.post('http://localhost:3000/add-apointment', {
+                const booked_appointments = await axios.post('http://52.54.180.45:3000/add-apointment', {
                     salonId: salonId,
                     appointments: appointments,
                     paymentId: result.data.payment.id,
@@ -251,7 +251,7 @@ async function appointmentPayment(e) {
 
     razorpayObject.on('payment.failed', async (res) => {
         // console.log(res);
-        const result = await axios.post('http://localhost:3000/updateTransactions', {
+        const result = await axios.post('http://52.54.180.45:3000/updateTransactions', {
             order_id: options.order_id,
             payment_id: 'NA',
             status: 'failed'
@@ -404,7 +404,7 @@ async function getServies() {
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get('id');
 
-        const result = await axios.get(`http://localhost:3000/get-services/${id}?specialization=${Category.value}`, { headers: { 'Auth': token } });
+        const result = await axios.get(`http://52.54.180.45:3000/get-services/${id}?specialization=${Category.value}`, { headers: { 'Auth': token } });
 
         // console.log(result.data);
 
@@ -476,7 +476,7 @@ async function getSpecialists() {
 
         console.log('Category value >>>>', Category.value);
 
-        const res = await axios.get(`http://localhost:3000/get-specialits/${id}?specialization=${Category.value}`, { headers: { 'Auth': token } });
+        const res = await axios.get(`http://52.54.180.45:3000/get-specialits/${id}?specialization=${Category.value}`, { headers: { 'Auth': token } });
 
         console.log(res.data.employee);
 
@@ -561,7 +561,7 @@ async function getBookedAppointments() {
         // encodeURIComponent ensures that the string is safely included in the URL. 
         //encodeURIComponent because URLs have some restrictions on special characters (like {, }, [, ], and spaces).
 
-        const result = await axios.get(`http://localhost:3000/get-booked-appointments/${id}?employees=${encodeURIComponent(JSON.stringify(employees))}`, { headers: { 'Auth': token } });
+        const result = await axios.get(`http://52.54.180.45:3000/get-booked-appointments/${id}?employees=${encodeURIComponent(JSON.stringify(employees))}`, { headers: { 'Auth': token } });
 
         // console.log(result);
 
@@ -809,7 +809,7 @@ async function getLeave(id) {
         // id = urlParams.get('id');
 
         console.log('in get leaves');
-        const res = await axios.get(`http://localhost:3000/get-leave/${id}`, { headers: { 'Auth': token } });
+        const res = await axios.get(`http://52.54.180.45:3000/get-leave/${id}`, { headers: { 'Auth': token } });
 
         console.log(res.data.data);
 
@@ -840,7 +840,7 @@ async function getClosedPeriod() {
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get('id');
 
-        const res = await axios.get(`http://localhost:3000/get-closedPeriod/${id}`, { headers: { 'Auth': token } });
+        const res = await axios.get(`http://52.54.180.45:3000/get-closedPeriod/${id}`, { headers: { 'Auth': token } });
 
         console.log(res.data.closedPeriod);
 
@@ -864,7 +864,7 @@ async function getClosedPeriod() {
 //         const urlParams = new URLSearchParams(window.location.search);
 //         const appointmentId = urlParams.get('appointmentId');
 
-//         const result = await axios.get(`http://localhost:3000/get-appointment/${appointmentId}`, { headers: { 'Auth': token } });
+//         const result = await axios.get(`http://52.54.180.45:3000/get-appointment/${appointmentId}`, { headers: { 'Auth': token } });
 
 //         // console.log(result.data);
 //         const appointment = result.data.appointment;
@@ -900,7 +900,7 @@ async function getClosedPeriod() {
 //     try {
 //         const token = localStorage.getItem('token');
 
-//         const res = await axios.delete(`http://localhost:3000/delete-appointment/${id}`, { headers: { 'Auth': token } });
+//         const res = await axios.delete(`http://52.54.180.45:3000/delete-appointment/${id}`, { headers: { 'Auth': token } });
 
 //         document.getElementById(id).remove();
 //         // alert(res.data.message);

@@ -50,7 +50,7 @@ async function DomLoad() {
 
          console.log('in show appointments');
 
-        const result=await axios.get('http://localhost:3000/get-all-appointments',{ headers: { 'Auth': token } });
+        const result=await axios.get('http://52.54.180.45:3000/get-all-appointments',{ headers: { 'Auth': token } });
 
         console.log(result);
         
@@ -87,7 +87,7 @@ async function DomLoad() {
 
          console.log('in show users');
 
-        const result=await axios.get('http://localhost:3000/get-all-users',{ headers: { 'Auth': token } });
+        const result=await axios.get('http://52.54.180.45:3000/get-all-users',{ headers: { 'Auth': token } });
 
         console.log(result);
         
@@ -121,7 +121,7 @@ async function deleteAppointment(btn){
         const row = btn.closest("tr");      // find the row
         const id = row.id; 
 
-        const res=await axios.delete(`http://localhost:3000/delete-admin-appointment/${id}`,{headers:{'Auth':token}});
+        const res=await axios.delete(`http://52.54.180.45:3000/delete-admin-appointment/${id}`,{headers:{'Auth':token}});
 
         row.remove(); 
         alert(res.data.message);
@@ -140,7 +140,7 @@ async function deleteUser(btn){
         const row = btn.closest("tr");      // find the row
         const id = row.id; 
 
-        const res=await axios.delete(`http://localhost:3000/delete-admin-user/${id}`,{headers:{'Auth':token}});
+        const res=await axios.delete(`http://52.54.180.45:3000/delete-admin-user/${id}`,{headers:{'Auth':token}});
 
         row.remove(); 
         alert(res.data.message);

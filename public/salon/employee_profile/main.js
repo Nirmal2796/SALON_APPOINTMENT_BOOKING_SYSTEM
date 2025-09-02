@@ -48,7 +48,7 @@ async function changeProfileMenu() {
     try {
         const token = localStorage.getItem('token');
 
-        const res = await axios.get('http://52.54.180.45:3000/salon-validate-token', { headers: { 'Auth': token } });
+        const res = await axios.get('http://54.162.57.159:3000/salon-validate-token', { headers: { 'Auth': token } });
 
         // const status='false';
         // console.log(profile_menu_list);
@@ -155,7 +155,7 @@ async function getEmployeeDetails() {
         const urlParams = new URLSearchParams(window.location.search);
         id = urlParams.get('id');
 
-        const res = await axios.get(`http://52.54.180.45:3000/get-employee/${id}`, { headers: { 'Auth': token } });
+        const res = await axios.get(`http://54.162.57.159:3000/get-employee/${id}`, { headers: { 'Auth': token } });
 
         console.log(res.data);
 
@@ -218,7 +218,7 @@ async function enableEditAndEdit(e) {
 
             console.log(user);
 
-            const res = await axios.post(`http://52.54.180.45:3000/edit-employee/${id}`, user, { headers: { 'Auth': token } });
+            const res = await axios.post(`http://54.162.57.159:3000/edit-employee/${id}`, user, { headers: { 'Auth': token } });
 
             console.log(res.data);
 
@@ -291,7 +291,7 @@ async function enableSpecializationEditAndEdit(e) {
                 specialization:getSpecilization(),
             };
 
-            const res = await axios.post(`http://52.54.180.45:3000/edit-employee-specializations/${id}`, employee, { headers: { 'Auth': token } });
+            const res = await axios.post(`http://54.162.57.159:3000/edit-employee-specializations/${id}`, employee, { headers: { 'Auth': token } });
 
             console.log(res.data);
 
@@ -333,7 +333,7 @@ async function addLeave(e) {
             description: leave_description.value
         };
 
-        const res = await axios.post(`http://52.54.180.45:3000/set-leave/${id}`, leave, { headers: { 'Auth': token } });
+        const res = await axios.post(`http://54.162.57.159:3000/set-leave/${id}`, leave, { headers: { 'Auth': token } });
 
         console.log(res.data.leave);
 
@@ -360,7 +360,7 @@ async function getLeave() {
         const urlParams = new URLSearchParams(window.location.search);
         id = urlParams.get('id');
 
-        const res = await axios.get(`http://52.54.180.45:3000/get-leave/${id}`, { headers: { 'Auth': token } });
+        const res = await axios.get(`http://54.162.57.159:3000/get-leave/${id}`, { headers: { 'Auth': token } });
 
         console.log(res.data.data);
 
@@ -416,7 +416,7 @@ async function deleteLeave(id){
     try{
         const token=localStorage.getItem('token');
 
-        const res=await axios.delete(`http://52.54.180.45:3000/delete-leave/${id}`,{headers:{'Auth':token}});
+        const res=await axios.delete(`http://54.162.57.159:3000/delete-leave/${id}`,{headers:{'Auth':token}});
 
         document.getElementById(id).remove();
         alert(res.data.message);

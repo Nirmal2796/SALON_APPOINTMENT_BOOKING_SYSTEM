@@ -40,7 +40,7 @@ async function changeProfileMenu() {
     try {
         const token = localStorage.getItem('token');
 
-        const res = await axios.get('http://52.54.180.45:3000/salon-validate-token', { headers: { 'Auth': token } });
+        const res = await axios.get('http://54.162.57.159:3000/salon-validate-token', { headers: { 'Auth': token } });
 
         // const status='false';
         // console.log(profile_menu_list);
@@ -91,7 +91,7 @@ async function editService(e) {
         const urlParams = new URLSearchParams(window.location.search);
         id = urlParams.get('id');
 
-        const res = await axios.post(`http://52.54.180.45:3000/edit-service/${id}`, service, { headers: { 'Auth': token } });
+        const res = await axios.post(`http://54.162.57.159:3000/edit-service/${id}`, service, { headers: { 'Auth': token } });
 
         console.log(res);
 
@@ -120,7 +120,7 @@ async function getServiceDetails() {
         id = urlParams.get('id');
 
 
-        const res = await axios.get(`http://52.54.180.45:3000/get-service-details/${id}`, { headers: { 'Auth': token } });
+        const res = await axios.get(`http://54.162.57.159:3000/get-service-details/${id}`, { headers: { 'Auth': token } });
 
         console.log(res.data);
 

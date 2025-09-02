@@ -72,11 +72,11 @@ async function onSignUp(e) {
 
             if (role == 'user') {
 
-                result = await axios.post("http://52.54.180.45:3000/signup", User);
+                result = await axios.post("http://54.162.57.159:3000/signup", User);
 
             }
             else {
-                result = await axios.post("http://52.54.180.45:3000/bussiness-signup", User);
+                result = await axios.post("http://54.162.57.159:3000/bussiness-signup", User);
 
             }
 
@@ -124,20 +124,20 @@ async function onLogin(e) {
 
             if (role == 'user') {
 
-                result = await axios.post(`http://52.54.180.45:3000/login`, User);
+                result = await axios.post(`http://54.162.57.159:3000/login`, User);
                 localStorage.setItem('isOwner', false);
                 window.location.href = '../user/home/home.html';
             }
             else if (role =='bussiness'){
                 // console.log(role);
-                result = await axios.post(`http://52.54.180.45:3000/bussiness-login`, User);
+                result = await axios.post(`http://54.162.57.159:3000/bussiness-login`, User);
                 localStorage.setItem('isOwner', true);
                 window.location.href = '../salon/dashboard/dashboard.html';
 
             }
             else{
                 console.log('in admin');
-                result = await axios.post(`http://52.54.180.45:3000/admin-login`, User);
+                result = await axios.post(`http://54.162.57.159:3000/admin-login`, User);
                 window.location.href = '../admin/admin.html';
             }
 
@@ -190,7 +190,7 @@ async function forgotPassword(e) {
 
             // console.log(Email);
 
-            const result = await axios.post("http://52.54.180.45:3000/forgotpassword", Email);
+            const result = await axios.post("http://54.162.57.159:3000/forgotpassword", Email);
 
             forgot_form.reset();
 

@@ -45,7 +45,7 @@ async function changeProfileMenu() {
     try {
         const token = localStorage.getItem('token');
 
-        const res = await axios.get('http://52.54.180.45:3000/validate-token', { headers: { 'Auth': token } });
+        const res = await axios.get('http://54.162.57.159:3000/validate-token', { headers: { 'Auth': token } });
 
         // const status='false';
         // console.log(profile_menu_list);
@@ -109,7 +109,7 @@ async function getSalonInfo() {
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get('id');
 
-        const res = await axios.get(`http://52.54.180.45:3000/get-salon/${id}`, { headers: { 'Auth': token } });
+        const res = await axios.get(`http://54.162.57.159:3000/get-salon/${id}`, { headers: { 'Auth': token } });
 
         console.log(res.data.salon.services);
 
@@ -195,7 +195,7 @@ async function addReview(e) {
             feedback: review_text.value
         };
 
-        const review = await axios.post(`http://52.54.180.45:3000/add-review/${id}`, rating, { headers: { 'Auth': token } });
+        const review = await axios.post(`http://54.162.57.159:3000/add-review/${id}`, rating, { headers: { 'Auth': token } });
 
         console.log(review);
 
@@ -215,7 +215,7 @@ async function getReview() {
         const id = urlParams.get('id');
 
 
-        const result = await axios.get(`http://52.54.180.45:3000/get-review/${id}`, { headers: { 'Auth': token } });
+        const result = await axios.get(`http://54.162.57.159:3000/get-review/${id}`, { headers: { 'Auth': token } });
 
         console.log(result);
         const reviewArray = result.data.reviews;

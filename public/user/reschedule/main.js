@@ -117,8 +117,8 @@ async function getAppointmentDetails() {
 
         console.log(result.data);
         // const appointment = result.data.appointment;
-        employee = result.data.appointment.employeeId;
-        duration = result.data.appointment.serviceId.duration;
+        employee = result.data.appointment.employee;
+        duration = result.data.appointment.service.duration;
 
     } catch (error) {
         console.log(error);

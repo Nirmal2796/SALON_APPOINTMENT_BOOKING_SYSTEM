@@ -20,24 +20,16 @@ exports.getAppointments = async (req, res) => {
         const appointments = await req.user.getAppointments({
             where: {
                 date: {
-                    [Op.gte]: today // greater than or equal to today
+                    [Op.gte]: today
                 }
-            }
+            },
+            include: [
+                { model: Salon },     
+                { model: Service },   
+                { model: Employee }   
+            ]
         });
 
-        // let appointmentsDetails=[];
-
-        for (let appointment of appointments) {
-
-            const salon = await Salon.findByPk(appointment.salonId);
-            const service = await Service.findByPk(appointment.serviceId);
-            const employee = await Employee.findByPk(appointment.employeeId);
-
-            appointment.salonId = salon;
-            appointment.serviceId = service;
-            appointment.employeeId = employee;
-
-        }
 
         res.status(200).json({ appointments: appointments });
     }
@@ -121,15 +113,13 @@ exports.getAppointment = async (req, res) => {
 
     try {
 
-        const appointment = await Appointment.findByPk(req.params.id);
-
-        const service = await Service.findByPk(appointment.serviceId);
-        const employee = await Employee.findByPk(appointment.employeeId);
-        const specialization = await Specialization.findByPk(service.specializationId);
-
-        appointment.serviceId = service;
-        appointment.employeeId = employee;
-        appointment.serviceId.specializationId = specialization;
+        
+        const appointment = await Appointment.findByPk(req.params.id, {
+            include: [
+                { model: Service, include: [Specialization] },
+                { model: Employee }
+            ]
+        });
 
 
         res.status(200).json({ appointment: appointment });
@@ -193,7 +183,7 @@ exports.rescheduleAppointment = async (req, res) => {
         const dateObj = new Date();
         dateObj.setHours(h, m + parseInt(service.duration), s || 0);
 
-        const result = await appointment.update({ date: date, start_time: time ,end_time: dateObj.toTimeString().split(" ")[0] }, { transaction: t });
+        const result = await appointment.update({ date: date, start_time: time, end_time: dateObj.toTimeString().split(" ")[0] }, { transaction: t });
 
         console.log(res);
 

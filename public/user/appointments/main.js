@@ -72,6 +72,7 @@ function toggleMenu() {
 
 async function getAppointments() {
 
+
     try {
 
         const token=localStorage.getItem('token');
@@ -107,14 +108,14 @@ async function getAppointments() {
 
 //SHOW SERVICES
 function showAppointments(appointment){
-    // console.log(service);
+    // console.log(appointment);
 
     const newRow=`<tr id=${appointment.id}>
                     <td>${new Date(appointment.date).toLocaleDateString("en-GB")}</</td>
-                    <td>${appointment.serviceId.name}</td>
-                    <td>${appointment.employeeId ? appointment.employeeId.name : '-'}</td>
-                    <td>${appointment.salonId.name}</td>
-                    <td><a href="../reschedule/rechedule.html?id=${appointment.salonId.id}&edit=${true}&appointmentId=${appointment.id}"><button>Reschedule</button></a></td>
+                    <td>${appointment.service.name}</td>
+                    <td>${appointment.employee ? appointment.employee.name : '-'}</td>
+                    <td>${appointment.salon.name}</td>
+                    <td><a href="../reschedule/rechedule.html?id=${appointment.salon.id}&edit=${true}&appointmentId=${appointment.id}"><button>Reschedule</button></a></td>
                     <td><button onclick="deleteAppointment(${appointment.id})">Cancel</button></td>
                 </tr>`
 

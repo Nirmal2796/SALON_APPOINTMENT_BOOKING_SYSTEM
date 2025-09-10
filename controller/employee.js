@@ -181,10 +181,6 @@ exports.editEmployeeSpecilization = async (req, res) => {
                     employeeId: employee.id,
                     specializationId: found_specialization.id
                 },
-                defaults: {
-                    employeeId: employee.id,
-                    specializationId: found_specialization.id
-                },
                 transaction: t
             });
 

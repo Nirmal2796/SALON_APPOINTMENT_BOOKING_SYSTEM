@@ -7,7 +7,6 @@ const cors = require('cors');
 const helemt = require('helmet');
 const morgan = require('morgan');
 
-const cron = require("cron");
 
 require('dotenv').config();
 
@@ -16,9 +15,9 @@ const app = express();
 const bodyParser = require('body-parser');
 
 const sequelize = require('./util/database');
-const { Op } = require('sequelize'); // Importing Sequelize operators like Op.lt (less than), Op.gt (greater than), etc.
 
 
+//MODELS
 const User = require('./models/user');
 const ForgotPasswordRequests = require('./models/forgotPasswordRequests');
 const Salon = require('./models/salon');
@@ -35,6 +34,7 @@ const Appointment = require('./models/appointment');
 const Review=require('./models/review');
 const Admin=require('./models/admin');
 
+//ROUTES
 const userRouter = require('./routes/user');
 const passwordRouter = require('./routes/password');
 const salonRouter = require('./routes/salon');
@@ -57,8 +57,9 @@ require('./jobs/appointmentReminderCron');
 //import delete closedperiod cron job and start it.
 require('./jobs/deleteExpiredClosedPeriodsCron');
 
-
+//TO WRITE IN ACCESS LOG
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
+
 
 app.use(helemt({ contentSecurityPolicy: false }));
 app.use(morgan('combined', { stream: accessLogStream }));
@@ -90,13 +91,8 @@ app.use(appointmentRouter);
 app.use(reviewRouter);
 app.use(adminRouter);
 
-// app.use((req,res) => {
-// console.log("URL>>>",req.url);
-// res.sendFile(path.join(__dirname, `public/${req.url}`));
-// });
 
-
-
+//MODEL ASSOCIATIONS (RELATIONS)
 User.hasMany(ForgotPasswordRequests);
 ForgotPasswordRequests.belongsTo(User);
 
@@ -139,7 +135,7 @@ Service.hasMany(Appointment);
 Appointment.belongsTo(Salon);  // Each appointment is at one salon
 Salon.hasMany(Appointment);
 
-Appointment.belongsTo(Employee,  { foreignKey: { allowNull: true } });
+Appointment.belongsTo(Employee);
 Employee.hasMany(Appointment);
 
 Appointment.belongsTo(Payment);     // many appointments → one payment

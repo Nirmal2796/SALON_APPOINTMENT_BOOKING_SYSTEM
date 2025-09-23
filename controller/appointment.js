@@ -61,10 +61,10 @@ exports.addAppointment = async (req, res) => {
 
             const employee = await Employee.findByPk(a.specialistId);
 
-            const [h, m, s] = a.start_time.split(":").map(Number);
+            const [h, m, s] = a.start_time.split(":").map(Number); //.map(Number) Converts each string in the array to a number. ["14", "30", "45"].map(Number) → [14, 30, 45]
 
             const dateObj = new Date();
-            dateObj.setHours(h, m + parseInt(service.duration), s || 0); // Add duration to minutes
+            dateObj.setHours(h, m + parseInt(service.duration), s || 0); // Add duration to minutes and If m + service.duration ≥ 60, JavaScript automatically adjusts the hours.
 
 
             booked_appointments.push(await Appointment.create({
@@ -152,14 +152,6 @@ exports.deleteAppointment = async (req, res) => {
         await t.rollback();
         console.log(err);
         res.status(500).json({ success: false });
-    }
-}
-
-exports.sendAppointmentReminder = async (req, res) => {
-    try {
-
-    } catch (error) {
-
     }
 }
 

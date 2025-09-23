@@ -198,6 +198,12 @@ async function addReview(e) {
         const review = await axios.post(`http://54.162.57.159:3000/add-review/${id}`, rating, { headers: { 'Auth': token } });
 
         console.log(review);
+        displayReviews(review.data.review);
+        ratingInput.value = 0;
+        stars.forEach(s =>{ s.classList.remove("selected"); s.style.color='#ccc'} );
+
+        review_form.reset();
+
 
     } catch (error) {
         console.log(error);
@@ -222,6 +228,7 @@ async function getReview() {
 
         reviewArray.forEach(review => {
             // console.log(review);
+            
             displayReviews(review);
         });
 

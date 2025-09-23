@@ -61,11 +61,11 @@ require('./jobs/deleteExpiredClosedPeriodsCron');
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' })
 
 
-app.use(helemt({ contentSecurityPolicy: false }));
-app.use(morgan('combined', { stream: accessLogStream }));
+app.use(helemt({ contentSecurityPolicy: false })); //adds security headers
+app.use(morgan('combined', { stream: accessLogStream })); //logs all requests
 
 
-app.use(cors());
+app.use(cors()); //allows your server to accept requests from other origins.
 
 //express.static() is a function that takes a path, and returns a middleware that serves all files in that path.
 app.use(express.static(path.join(__dirname, 'public')));

@@ -15,6 +15,7 @@ exports.addEmployee = async (req, res) => {
 
         // console.log('specialization_arr',specialization_arr);
 
+        //Create Employee
         const employee = await req.user.createEmployee({
             name: req.body.name,
             email: req.body.email,
@@ -24,6 +25,8 @@ exports.addEmployee = async (req, res) => {
         
         const specializations = [];
 
+
+        //Add specializations to employee
         for (let specialization in specialization_arr) {
 
             const found_specialization = await Specialization.findOne({

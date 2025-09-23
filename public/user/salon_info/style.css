@@ -248,10 +248,15 @@ tbody:before {
 .star-rating span {
     transition: color 0.3s ease;
 }
-.star-rating span.selected,
-.star-rating span:hover,
-.star-rating span:hover ~ span {
-    color: gold;
+
+.star-rating span.selected {
+  color: gold;
+}
+
+
+.star-rating span:not(.selected):hover,
+.star-rating span:not(.selected):hover ~ span:not(.selected) {
+  color: gold;
 }
 
 .reviews-section {

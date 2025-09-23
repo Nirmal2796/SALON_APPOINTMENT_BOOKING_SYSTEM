@@ -202,7 +202,7 @@ async function sendConfirmationEmail(user, salon, invoicePath) {
         const apiKey = client.authentications['api-key'];
         apiKey.apiKey = process.env.SENDINBLUE_API_KEY;
 
-        const tranEmailApi = new Sib.TransactionalEmailsApi(); // transactional email api when we need to send some confirmation or reset . and another is EmailCampaign is used when we have a newsletter or something like that.
+        const tranEmailApi = new SibApiV3Sdk.TransactionalEmailsApi(); // transactional email api when we need to send some confirmation or reset . and another is EmailCampaign is used when we have a newsletter or something like that.
 
         const sender = {
             email: 'nirmalgadekar2796@gmail.com',

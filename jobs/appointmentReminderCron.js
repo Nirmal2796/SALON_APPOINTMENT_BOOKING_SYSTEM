@@ -7,7 +7,7 @@ const Salon = require('../models/salon');
 const Service = require('../models/service');
 const Employee = require('../models/employee');
 const SibApiV3Sdk = require('sib-api-v3-sdk');
-
+const sentReminders = new Set();
 const job = new cron.CronJob('*/10 * * * * *', async () => {
 
   try {
@@ -24,6 +24,7 @@ const job = new cron.CronJob('*/10 * * * * *', async () => {
     const apiKey = client.authentications['api-key'];
     apiKey.apiKey = process.env.SENDINBLUE_API_KEY;
 
+    const tranEmailApi = new SibApiV3Sdk.TransactionalEmailsApi();
 
     const sender = {
       email: 'nirmalgadekar2796@gmail.com',
@@ -45,10 +46,11 @@ const job = new cron.CronJob('*/10 * * * * *', async () => {
 
     appointments.forEach((appt) => {
 
+      if (sentReminders.has(appt.id)) return;
+      
       console.log(`Send reminder to ${appt.name} for ${appt.date}`);
+      
       // trigger your notification/email logic here
-
-
       if (!groupedMap.has(appt.userId)) {
 
         groupedMap.set(appt.userId, []);
@@ -127,7 +129,7 @@ const appointmentRows = appointmentsArr.map(a => `
                   htmlContent
               });
 
-      
+      appointmentsArr.forEach(a => sentReminders.add(a.id));
     });
 
 

@@ -93,7 +93,7 @@ async function getSalons() {
 function showsalons(salon){
 
     const newsalon=`<div class="salon-card" id=${salon.id}>
-                    <img src="" alt="salon Image">
+                    <img src="../../image/image.png" alt="salon Image">
                     <h2>${salon.name}</h2>
                     <p>${salon.email}</p>
                     <a href="../salon_info/salon_info.html?id=${salon.id}">View salon</a>

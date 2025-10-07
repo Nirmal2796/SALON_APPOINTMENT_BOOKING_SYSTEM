@@ -21,4 +21,11 @@ router.get('/get-leave/:id',userAuthentication.authentication,userSalonControlle
 
 router.get('/get-booked-appointments/:id',userAuthentication.authentication,userSalonController.getBookedAppointments);
 
+router.get('/get-working-hours-user-salon/:id',userAuthentication.authentication,userSalonController.getWorkingHours);
+
+router.get('/get-leave-user-salon/:id',userAuthentication.authentication,userSalonController.getLeave);
+
+router.get('/get-employee-appointments/:id',userAuthentication.authentication,userSalonController.getEmployeeAppointments);
+
+
 module.exports=router;

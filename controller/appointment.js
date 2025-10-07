@@ -166,7 +166,7 @@ exports.rescheduleAppointment = async (req, res) => {
 
         // console.log(date, time);
 
-        const appointment = await Appointment.findByPk(req.params.id);
+        const appointment = await Appointment.findByPk(req.params.appointmentId);
 
         const service = await Service.findByPk(appointment.serviceId);
 

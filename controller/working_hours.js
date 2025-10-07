@@ -55,7 +55,9 @@ exports.getWorkingHours=async(req,res)=>{
 
     // const t=sequelize.transaction();
     try{
-        const userId = req.params.id || req.user.id;
+        // const userId = req.params.id || req.user.id;
+        const userId=req.user.id;
+        
         const user = await Salon.findByPk(userId);
 
         console.log(user)

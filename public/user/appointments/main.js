@@ -72,6 +72,7 @@ function toggleMenu() {
 
 async function getAppointments() {
 
+    // console.log('in get appointments');
 
     try {
 

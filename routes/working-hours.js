@@ -9,7 +9,7 @@ const salonAuthentication=require('../middleware/salonAuthentication');
 
 
 //The :id? means the id is optional.
-router.get('/get-working-hours/:id?',salonAuthentication.authentication,workingHoursController.getWorkingHours);
+router.get('/get-working-hours',salonAuthentication.authentication,workingHoursController.getWorkingHours);
 
 router.post('/set-working-hours',salonAuthentication.authentication,workingHoursController.addWorkingHours);
 

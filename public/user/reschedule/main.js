@@ -53,7 +53,7 @@ async function DomLoad() {
             await getWorkingHours(id);
             await getLeave(employee.id);
             await getClosedPeriod(id);
-            await getBookedAppointments(id);
+            await getEmployeeBookedAppointments(id);
         }
     }
     catch (err) {
@@ -172,9 +172,9 @@ async function getWorkingHours(id) {
     try {
 
         console.log('in working hours');
-        const res = await axios.get(`http://54.162.57.159:3000/get-working-hours/${id}`, { headers: { 'Auth': token } });
+        const res = await axios.get(`http://54.162.57.159:3000/get-working-hours-user-salon/${id}`, { headers: { 'Auth': token } });
 
-        console.log(res);
+        // console.log(res);
 
         // document.getElementById("date").removeEventListener("input");
 
@@ -198,7 +198,7 @@ async function getLeave(id) {
         // id = urlParams.get('id');
 
         console.log('in get leaves');
-        const res = await axios.get(`http://54.162.57.159:3000/get-leave/${id}`, { headers: { 'Auth': token } });
+        const res = await axios.get(`http://54.162.57.159:3000/get-leave-user-salon/${id}`, { headers: { 'Auth': token } });
 
         console.log(res);
 
@@ -320,9 +320,11 @@ function showTimeSlots(e) {
             // if( date == new Date().toISOString().split('T')[0]){
             // }
 
-            const isOverlapping = booked_appointments.some(app => {
+            
+            const isOverlapping = booked_appointments && booked_appointments.length > 0
+    ?booked_appointments.some(app => {
                 return timeStr24 >= app.start_time && timeStr24 < app.end_time;
-            });
+            }): false; 
 
 
             if (date.toDateString() === new Date().toDateString()) {
@@ -360,7 +362,7 @@ function showTimeSlots(e) {
 }
 
 //GET BOOKED APPOINTMENTS
-async function getBookedAppointments(id) {
+async function getEmployeeBookedAppointments(id) {
 
     const token = localStorage.getItem('token');
 
@@ -372,7 +374,7 @@ async function getBookedAppointments(id) {
         // console.log('Employees>>', employee);
 
 
-        const result = await axios.get(`http://54.162.57.159:3000/get-employee-appintments/${id}?employee=${employee}`, { headers: { 'Auth': token } });
+        const result = await axios.get(`http://54.162.57.159:3000/get-employee-appointments/${id}?employee=${employee.id}`, { headers: { 'Auth': token } });
 
         console.log(result);
         booked_appointments = result.data.appointments;
@@ -390,23 +392,23 @@ async function rescheduleAppointment(e) {
         const token = localStorage.getItem('token');
 
         const urlParams = new URLSearchParams(window.location.search);
-        id = urlParams.get('appointmentId');
-        admin = urlParams.get('appointmentId');
+        appointmentId = urlParams.get('appointmentId');
+        admin = urlParams.get('admin');
 
         date = {
             date: dateInput.value,
             time: timeDropDown.options[timeDropDown.selectedIndex].value
         }
 
-        console.log(id);
+        console.log(admin);
 
         if (admin) {
-            const result = await axios.post(`http://54.162.57.159:3000/reschedule-appointment/${id}`, date, { headers: { 'Auth': token } });
+            const result = await axios.post(`http://54.162.57.159:3000/reschedule-appointment/${appointmentId}`, date, { headers: { 'Auth': token } });
             window.location.href = "../../admin/admin.html";
         }
         else {
 
-            const result = await axios.post(`http://54.162.57.159:3000/reschedule-appointment/${id}`, date, { headers: { 'Auth': token } });
+            const result = await axios.post(`http://54.162.57.159:3000/reschedule-appointment/${appointmentId}`, date, { headers: { 'Auth': token } });
             console.log(result);
             window.location.href = "../appointments/appointments.html";
         }

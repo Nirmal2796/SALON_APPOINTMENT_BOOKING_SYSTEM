@@ -273,3 +273,73 @@ exports.getBookedAppointments = async (req, res) => {
         res.status(500).json({ message: 'Something went wrong' });
     }
 }
+
+exports.getWorkingHours=async(req,res)=>{
+
+    // const t=sequelize.transaction();
+    try{
+        // const userId = req.params.id || req.user.id;
+        const userId=req.params.id;
+        
+        const user = await Salon.findByPk(userId);
+
+        console.log(user)
+        const working_hours=await user.getWorking_hours();
+
+        // console.log('data',data);
+        res.status(200).json({data:working_hours});
+    }
+    catch (err) {
+        // await t.rollback();
+        console.log(err);
+        res.status(500).json({success:false});
+    }
+}
+
+
+exports.getLeave=async(req,res)=>{
+
+    try {
+
+        const id = req.params.id;
+
+        const employee=await Employee.findByPk(id);
+
+        const leave=await employee.getLeaves();
+        
+        res.status(200).json({data:leave});
+        // res.status(200).json({data:'leave'});
+    }
+    catch (err) {
+        // await t.rollback();
+        console.log(err);
+        res.status(500).json({success:false});
+    }
+}
+
+exports.getEmployeeAppointments = async (req, res) => {
+    // const t=await sequelize.transaction();
+
+    try {
+
+        const id = req.query.employee;
+        const salonId=req.params.id;
+
+        console.log(id, salonId);
+        
+        const appointments=await Appointment.findAll({
+            where:{
+                employeeId:id,
+                salonId:salonId
+            }
+        });
+
+       
+        res.status(200).json({ appointments:appointments });
+
+    } catch (error) {
+        // await t.rollback();
+        console.log(error);
+        res.status(500).json({ message: 'Something went wrong' });
+    }
+}

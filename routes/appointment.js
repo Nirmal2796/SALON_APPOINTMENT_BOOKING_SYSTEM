@@ -11,7 +11,7 @@ router.get('/get-appointments',userAuthentication.authentication,appointmentCont
 
 router.post('/add-apointment',userAuthentication.authentication,appointmentContorller.addAppointment);
 
-router.post('/reschedule-appointment/:id',userAuthentication.authentication,appointmentContorller.rescheduleAppointment);
+router.post('/reschedule-appointment/:appointmentId',userAuthentication.authentication,appointmentContorller.rescheduleAppointment);
 
 router.get('/get-appointment/:id',userAuthentication.authentication,appointmentContorller.getAppointment);
 

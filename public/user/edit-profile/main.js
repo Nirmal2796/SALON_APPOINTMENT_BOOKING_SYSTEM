@@ -43,7 +43,7 @@ async function changeProfileMenu() {
     try {
         const token = localStorage.getItem('token');
 
-        const res = await axios.get('http://54.162.57.159:3000/validate-token', { headers: { 'Auth': token } });
+        const res = await axios.get('http://localhost:3000/validate-token', { headers: { 'Auth': token } });
 
         // const status='false';
         // console.log(profile_menu_list);
@@ -92,11 +92,11 @@ async function editProfile(e) {
         };
 
         if(admin){
-            const res = await axios.post(`http://54.162.57.159:3000/edit-admin-user-profile/${id}`, user, { headers: { 'Auth': token } });
+            const res = await axios.post(`http://localhost:3000/edit-admin-user-profile/${id}`, user, { headers: { 'Auth': token } });
             window.location.href = "../../admin/admin.html";
         }
         else{
-            const res = await axios.post('http://54.162.57.159:3000/edit-profile', user, { headers: { 'Auth': token } });
+            const res = await axios.post('http://localhost:3000/edit-profile', user, { headers: { 'Auth': token } });
             window.location.href = "../home/home.html";
         }
     }
@@ -113,13 +113,13 @@ async function getUserDetails(admin, id) {
     try {
 
         if (admin) {
-            const res = await axios.get(`http://54.162.57.159:3000/get-admin-user/${id}`, { headers: { 'Auth': token } });
+            const res = await axios.get(`http://localhost:3000/get-admin-user/${id}`, { headers: { 'Auth': token } });
             username.value = res.data.user.name;
             email.value = res.data.user.email;
         }
         else {
 
-            const res = await axios.get('http://54.162.57.159:3000/get-user', { headers: { 'Auth': token } });
+            const res = await axios.get('http://localhost:3000/get-user', { headers: { 'Auth': token } });
 
             username.value = res.data.user.name;
             email.value = res.data.user.email;

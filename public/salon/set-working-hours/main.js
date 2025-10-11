@@ -43,7 +43,7 @@ async function changeProfileMenu() {
     try{
         const token=localStorage.getItem('token');
 
-        const res=await axios.get('http://54.162.57.159:3000/salon-validate-token',{ headers: { 'Auth': token } });
+        const res=await axios.get('http://localhost:3000/salon-validate-token',{ headers: { 'Auth': token } });
 
         // const status='false';
         // console.log(profile_menu_list);
@@ -158,7 +158,7 @@ async function setWorkingHours(e) {
   console.log(data);
 
 
-  const res=await axios.post('http://54.162.57.159:3000/set-working-hours',data, {headers : {'Auth': token}});
+  const res=await axios.post('http://localhost:3000/set-working-hours',data, {headers : {'Auth': token}});
 
   console.log(res);
 //   set_working_hours_form.reset();
@@ -187,7 +187,7 @@ async function setClosedPeriod(e) {
             description:closed_period_description.value
         };
 
-        const res=await axios.post('http://54.162.57.159:3000/set-closed-period',closed_period, {headers : {'Auth': token}});
+        const res=await axios.post('http://localhost:3000/set-closed-period',closed_period, {headers : {'Auth': token}});
 
         console.log(res.data.closed_period);
 
@@ -217,7 +217,7 @@ async function getWorkingHours() {
     
 
 
-  const res=await axios.get('http://54.162.57.159:3000/get-working-hours',{headers : {'Auth': token}});
+  const res=await axios.get('http://localhost:3000/get-working-hours',{headers : {'Auth': token}});
 
   console.log(res);
 //   set_working_hours_form.reset();
@@ -254,7 +254,7 @@ async function getClosedPeriod() {
 
         const token=localStorage.getItem('token');
         
-        const closed_period=await axios.get('http://54.162.57.159:3000/get-closed-period',{headers:{'Auth':token}});
+        const closed_period=await axios.get('http://localhost:3000/get-closed-period',{headers:{'Auth':token}});
 
         console.log(closed_period.data.data);
 
@@ -305,7 +305,7 @@ async function deleteClosedPeriod(id){
     try{
         const token=localStorage.getItem('token');
 
-        const res=await axios.delete(`http://54.162.57.159:3000/delete-closed-period/${id}`,{headers:{'Auth':token}});
+        const res=await axios.delete(`http://localhost:3000/delete-closed-period/${id}`,{headers:{'Auth':token}});
 
         document.getElementById(id).remove();
         alert(res.data.message);

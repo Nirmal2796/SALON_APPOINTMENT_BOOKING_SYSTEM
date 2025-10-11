@@ -122,7 +122,7 @@ exports.getSomeAppointments = async (req, res) => {
 
         }
 
-        console.log(appointments);
+        // console.log(appointments);
 
         res.status(200).json({ appointments: appointments });
     }

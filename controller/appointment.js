@@ -177,7 +177,7 @@ exports.rescheduleAppointment = async (req, res) => {
 
         const result = await appointment.update({ date: date, start_time: time, end_time: dateObj.toTimeString().split(" ")[0] }, { transaction: t });
 
-        console.log(res);
+        // console.log(res);
 
         await t.commit();
 

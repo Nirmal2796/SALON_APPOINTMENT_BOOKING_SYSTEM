@@ -27,6 +27,18 @@ let total_time = 0;
 document.addEventListener('DOMContentLoaded', DomLoad);
 
 
+//TOKEN
+const token = localStorage.getItem('token');
+
+//SOCKET INITIALIZATION
+var socket = io("http://localhost:3000",{
+    auth: {
+        token: token, // Send the token during the handshake
+        role: "user" 
+    }
+});
+
+
 //DOM CONTENT LOADED
 async function DomLoad() {
     try {
@@ -55,6 +67,8 @@ async function DomLoad() {
             await getClosedPeriod(id);
             await getEmployeeBookedAppointments(id);
         }
+
+        socket.emit('join-room', id);
     }
     catch (err) {
         console.log(err);
@@ -69,7 +83,7 @@ async function changeProfileMenu() {
     try {
         const token = localStorage.getItem('token');
 
-        const res = await axios.get('http://54.162.57.159:3000/validate-token', { headers: { 'Auth': token } });
+        const res = await axios.get('http://localhost:3000/validate-token', { headers: { 'Auth': token } });
 
         // const status='false';
         // console.log(profile_menu_list);
@@ -113,7 +127,7 @@ async function getAppointmentDetails() {
         const urlParams = new URLSearchParams(window.location.search);
         const appointmentId = urlParams.get('appointmentId');
 
-        const result = await axios.get(`http://54.162.57.159:3000/get-appointment/${appointmentId}`, { headers: { 'Auth': token } });
+        const result = await axios.get(`http://localhost:3000/get-appointment/${appointmentId}`, { headers: { 'Auth': token } });
 
         console.log(result.data);
         // const appointment = result.data.appointment;
@@ -172,7 +186,7 @@ async function getWorkingHours(id) {
     try {
 
         console.log('in working hours');
-        const res = await axios.get(`http://54.162.57.159:3000/get-working-hours-user-salon/${id}`, { headers: { 'Auth': token } });
+        const res = await axios.get(`http://localhost:3000/get-working-hours-user-salon/${id}`, { headers: { 'Auth': token } });
 
         // console.log(res);
 
@@ -198,7 +212,7 @@ async function getLeave(id) {
         // id = urlParams.get('id');
 
         console.log('in get leaves');
-        const res = await axios.get(`http://54.162.57.159:3000/get-leave-user-salon/${id}`, { headers: { 'Auth': token } });
+        const res = await axios.get(`http://localhost:3000/get-leave-user-salon/${id}`, { headers: { 'Auth': token } });
 
         console.log(res);
 
@@ -226,7 +240,7 @@ async function getClosedPeriod(id) {
 
     try {
 
-        const res = await axios.get(`http://54.162.57.159:3000/get-closedPeriod/${id}`, { headers: { 'Auth': token } });
+        const res = await axios.get(`http://localhost:3000/get-closedPeriod/${id}`, { headers: { 'Auth': token } });
 
         console.log(res.data.closedPeriod);
 
@@ -374,7 +388,7 @@ async function getEmployeeBookedAppointments(id) {
         // console.log('Employees>>', employee);
 
 
-        const result = await axios.get(`http://54.162.57.159:3000/get-employee-appointments/${id}?employee=${employee.id}`, { headers: { 'Auth': token } });
+        const result = await axios.get(`http://localhost:3000/get-employee-appointments/${id}?employee=${employee.id}`, { headers: { 'Auth': token } });
 
         console.log(result);
         booked_appointments = result.data.appointments;
@@ -394,6 +408,7 @@ async function rescheduleAppointment(e) {
         const urlParams = new URLSearchParams(window.location.search);
         appointmentId = urlParams.get('appointmentId');
         admin = urlParams.get('admin');
+        salonId = urlParams.get('id');
 
         date = {
             date: dateInput.value,
@@ -402,16 +417,23 @@ async function rescheduleAppointment(e) {
 
         console.log(admin);
 
+        
+         
+        
+
         if (admin) {
-            const result = await axios.post(`http://54.162.57.159:3000/reschedule-appointment/${appointmentId}`, date, { headers: { 'Auth': token } });
+            const result = await axios.post(`http://localhost:3000/reschedule-appointment/${appointmentId}`, date, { headers: { 'Auth': token } });
             window.location.href = "../../admin/admin.html";
         }
         else {
 
-            const result = await axios.post(`http://54.162.57.159:3000/reschedule-appointment/${appointmentId}`, date, { headers: { 'Auth': token } });
-            console.log(result);
+            const result = await axios.post(`http://localhost:3000/reschedule-appointment/${appointmentId}`, date, { headers: { 'Auth': token } });
+            // console.log(result);
+            //SEND MESSAGE SOCKET
+            socket.emit('reschedule_appointment', salonId,appointmentId);
             window.location.href = "../appointments/appointments.html";
         }
+
 
 
     } catch (error) {

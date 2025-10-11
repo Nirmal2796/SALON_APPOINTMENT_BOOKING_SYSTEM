@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const http = require('http');
 
 const express = require('express');
 
@@ -11,6 +12,10 @@ const morgan = require('morgan');
 require('dotenv').config();
 
 const app = express();
+
+const server = http.createServer(app); // Create HTTP server
+const io = require('socket.io')(server); // Attach socket.io to the server instance
+
 
 const bodyParser = require('body-parser');
 
@@ -50,6 +55,8 @@ const appointmentRouter = require('./routes/appointment');
 const reviewRouter=require('./routes/review');
 const adminRouter=require('./routes/admin');
 
+//IMPORT SOCKET AUTHENTICATION MIDDLEWARE
+const socketAuthMiddleware = require('./middleware/socketUserAuthentication');
 
 //import appointment reminder cron job and start it.
 require('./jobs/appointmentReminderCron');
@@ -90,6 +97,41 @@ app.use(paymentRouter);
 app.use(appointmentRouter);
 app.use(reviewRouter);
 app.use(adminRouter);
+
+
+//SOCKET AUTHENTICATION MIDDLEWARE
+io.use(socketAuthMiddleware.authentication);
+
+//SOCKET IO CONNECTION 
+io.on('connection', socket => {
+
+    console.log('SCOKET ID:::::',socket.id);
+  // When user reschedules
+  socket.on('reschedule_appointment', ( salonId, appointmentId ) => {
+    // Send message to the salon room
+    console.log('appointment recheduled ..................................',salonId,appointmentId);
+    io.to(`${salonId}`).emit('appointment_rescheduled', appointmentId);
+  });
+
+  console.log(socket.handshake.auth.role,' ..................................');
+
+  if(socket.handshake.auth.role === 'salon') {
+    socket.join(`${socket.user.id}`);
+    console.log(`Salon joined room: ${socket.user.id}`);
+  }
+
+
+  socket.on('join-room', (salonId) => {
+    socket.join(`${salonId}`);
+    console.log(`User joined room: ${salonId}`);
+  });
+  
+    //ON DISCONNECT
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+
+});
 
 
 //MODEL ASSOCIATIONS (RELATIONS)
@@ -148,9 +190,9 @@ sequelize
   // .sync({force:true})
   // .sync({alter:true})
   .then(result => {
-    // app.listen(3000);
-    app.listen(3000, "0.0.0.0", () => {
-  console.log("Server running on port 3000");
-});
+    server.listen(3000);
+//     app.listen(3000, "0.0.0.0", () => {
+//   console.log("Server running on port 3000");
+// });
   })
   .catch(err => console.log(err));

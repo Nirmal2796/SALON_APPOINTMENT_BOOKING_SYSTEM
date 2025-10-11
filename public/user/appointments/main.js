@@ -33,7 +33,7 @@ async function changeProfileMenu() {
     try{
         const token=localStorage.getItem('token');
 
-        const res=await axios.get('http://54.162.57.159:3000/validate-token',{ headers: { 'Auth': token } });
+        const res=await axios.get('http://localhost:3000/validate-token',{ headers: { 'Auth': token } });
 
         // const status='false';
         // console.log(profile_menu_list);
@@ -78,7 +78,7 @@ async function getAppointments() {
 
         const token=localStorage.getItem('token');
 
-        const result=await axios.get('http://54.162.57.159:3000/get-appointments',{ headers: { 'Auth': token } });
+        const result=await axios.get('http://localhost:3000/get-appointments',{ headers: { 'Auth': token } });
 
         console.log(result.data.appointments);
 
@@ -129,7 +129,7 @@ async function deleteAppointment(id){
     try{
         const token=localStorage.getItem('token');
 
-        const res=await axios.delete(`http://54.162.57.159:3000/delete-appointment/${id}`,{headers:{'Auth':token}});
+        const res=await axios.delete(`http://localhost:3000/delete-appointment/${id}`,{headers:{'Auth':token}});
 
         document.getElementById(id).remove();
         alert(res.data.message);

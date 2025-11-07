@@ -38,6 +38,7 @@ const Payment = require('./models/payment');
 const Appointment = require('./models/appointment');
 const Review=require('./models/review');
 const Admin=require('./models/admin');
+const Notificaiton=require('./models/notification');
 
 //ROUTES
 const userRouter = require('./routes/user');
@@ -54,6 +55,7 @@ const paymentRouter = require('./routes/payment');
 const appointmentRouter = require('./routes/appointment');
 const reviewRouter=require('./routes/review');
 const adminRouter=require('./routes/admin');
+const notificaitonRouter=require('./routes/notification');
 
 //IMPORT SOCKET AUTHENTICATION MIDDLEWARE
 const socketAuthMiddleware = require('./middleware/socketUserAuthentication');
@@ -97,7 +99,7 @@ app.use(paymentRouter);
 app.use(appointmentRouter);
 app.use(reviewRouter);
 app.use(adminRouter);
-
+app.use(notificaitonRouter);
 
 //SOCKET AUTHENTICATION MIDDLEWARE
 io.use(socketAuthMiddleware.authentication);
@@ -107,10 +109,10 @@ io.on('connection', socket => {
 
     console.log('SCOKET ID:::::',socket.id);
   // When user reschedules
-  socket.on('reschedule_appointment', ( salonId, appointmentId ) => {
+  socket.on('reschedule_appointment', ( salonId, message ) => {
     // Send message to the salon room
-    console.log('appointment recheduled ..................................',salonId,appointmentId);
-    io.to(`${salonId}`).emit('appointment_rescheduled', appointmentId);
+    console.log('appointment recheduled ..................................',salonId,message);
+    io.to(`${salonId}`).emit('appointment_rescheduled', message);
   });
 
   console.log(socket.handshake.auth.role,' ..................................');
@@ -183,6 +185,11 @@ Employee.hasMany(Appointment);
 Appointment.belongsTo(Payment);     // many appointments → one payment
 Payment.hasMany(Appointment);
 
+Notificaiton.belongsTo(User);
+User.hasMany(Notificaiton);
+
+Notificaiton.belongsTo(Salon);
+Salon.hasMany(Notificaiton);
 
 
 sequelize

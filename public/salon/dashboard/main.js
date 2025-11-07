@@ -11,16 +11,7 @@ const service_table_body = document.getElementById('service-table-body');
 document.addEventListener('DOMContentLoaded', DomLoad);
 
 
-//TOKEN
-const token = localStorage.getItem('token');
 
-
-var socket = io("http://localhost:3000", {
-    auth: {
-        token: token, // Send the token during the handshake
-        role: "salon"
-    }
-});
 
 //DOM CONTENT LOADED
 async function DomLoad() {
@@ -28,12 +19,6 @@ async function DomLoad() {
         // console.log('Dom Loaded');
         changeProfileMenu();
         window.scrollTo(0, 0);
-
-        // Listen for appointment reschedule notifications
-        socket.on('appointment_rescheduled', ( appointmentId ) => {
-            console.log(`Appointment ${appointmentId} was rescheduled`);
-            // You can also update your UI here, like show a toast or notification
-        });
 
         showAppointments();
         showServices();

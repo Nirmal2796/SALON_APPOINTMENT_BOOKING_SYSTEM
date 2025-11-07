@@ -429,8 +429,10 @@ async function rescheduleAppointment(e) {
 
             const result = await axios.post(`http://localhost:3000/reschedule-appointment/${appointmentId}`, date, { headers: { 'Auth': token } });
             // console.log(result);
+            message=`Appointment ${appointmentId} rescheduled`;
+            const res = await axios.post(`http://localhost:3000/send-notification`, {message,salonId:salonId}, { headers: { 'Auth': token } });
             //SEND MESSAGE SOCKET
-            socket.emit('reschedule_appointment', salonId,appointmentId);
+            socket.emit('reschedule_appointment', salonId,message);
             window.location.href = "../appointments/appointments.html";
         }
 

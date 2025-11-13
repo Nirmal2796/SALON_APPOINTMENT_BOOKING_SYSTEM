@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salon</title>
+    <title>AI Help</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     
@@ -31,42 +31,25 @@
         </ul>
     </div>
 
-    <div>
-    <div class="appointment-table-div" id="appointment-table-div">
-        <table id="appointment-table" class="appointment-table">
-            <thead id="appointment-table-head" class="appointment-table-head">
-                <tr>
-                    <th>Date</th>
-                    <th>Service</th>
-                    <th>Specialist</th>
-                    <th>Salon</th>
-                    <th>Reschedule</th>
-                    <th>Cancel</th>
-                </tr>
-            </thead>
-            <tbody id="appointment-table-body" class="appointment-table-body">
-                <tr>
-                    <!-- <td>Date</td>
-                    <td>Service</td>
-                    <td>Specialist</td>
-                    <td>Salon</td>
-                    <td><a href="../book_appoointment/book_apointment.html"><button>Reschedule</button></a></td>
-                    <td><button>Cancel</button></td> -->
-                </tr>
-                
-            </tbody>
-        </table>
-    </div>
-    <div id="appointment-message-div" hidden>
-    </div>
-</div>
-    
+    <div class="askaidiv" id="askaidiv">
+        <h1>Ask Anything</h1>
+        <div class="formdiv" id="formdiv">
+            
+            <form action="" id="askaiform">
+                <input type="text">
+                <button type="submit">GO</button>        
+            </form>
+        </div>
 
-    
+        <div class="responsediv">
+            
+        </div>
+
+
+    </div>
+ 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
-    
     <script src="main.js"></script>
-    
 </body>
 </html>

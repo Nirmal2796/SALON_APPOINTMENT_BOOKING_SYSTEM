@@ -56,6 +56,7 @@ const appointmentRouter = require('./routes/appointment');
 const reviewRouter=require('./routes/review');
 const adminRouter=require('./routes/admin');
 const notificaitonRouter=require('./routes/notification');
+const aihelpRouter=require('./routes/aihelp');
 
 //IMPORT SOCKET AUTHENTICATION MIDDLEWARE
 const socketAuthMiddleware = require('./middleware/socketUserAuthentication');
@@ -100,6 +101,7 @@ app.use(appointmentRouter);
 app.use(reviewRouter);
 app.use(adminRouter);
 app.use(notificaitonRouter);
+app.use(aihelpRouter);
 
 //SOCKET AUTHENTICATION MIDDLEWARE
 io.use(socketAuthMiddleware.authentication);
